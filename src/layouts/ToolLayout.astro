@@ -4,12 +4,12 @@ import { TbChevronRight } from "solid-icons/tb";
 import BaseLayout from "./BaseLayout.astro";
 import SidebarContents from "~/components/SidebarContents.astro";
 
-const paths = new URL(import.meta.url).pathname
-  .split("/")
-  .filter((p) => p !== "" && p !== "tools");
+type Props = {
+  category: string;
+  tool: string;
+};
 
-const category = paths[0];
-const tool = paths[1];
+const { category, tool }: Props = Astro.props;
 ---
 
 <BaseLayout title={tool}>
