@@ -1,0 +1,6 @@
+{
+    "prettier.configPath": ".prettierc",
+    "editor.codeActionsOnSave": {
+        "quickfix.biome": "explicit"
+    }
+}

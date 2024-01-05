@@ -1,0 +1,40 @@
+---
+import { OverlayScrollbarsComponent } from "overlayscrollbars-solid";
+
+import { tools } from "~/lib/tools";
+---
+
+<aside
+  class="invisible fixed z-50 hidden h-[calc(100svh-4.5rem)] py-4 md:visible md:sticky md:block"
+>
+  <OverlayScrollbarsComponent
+    defer
+    client:load
+    options={{ scrollbars: { autoHide: "leave" } }}
+  >
+    <div class="flex h-[calc(100svh-7rem)] flex-col gap-8">
+      {
+        tools.map((toolCategory) => (
+          <div class="flex flex-col gap-1">
+            <h4 class="mb-2 text-lg font-semibold">{toolCategory.name}</h4>
+            {toolCategory.tools.map((tool) => (
+              <a
+                href={tool.href}
+                class="text-sm text-muted-foreground hover:text-foreground active:text-foreground data-[current-path]:font-semibold data-[current-path]:text-foreground"
+              >
+                {tool.name}
+              </a>
+            ))}
+          </div>
+        ))
+      }
+      <script>
+        const currentUrl = new URL(window.location.href);
+        const pathname = currentUrl.pathname;
+        document.querySelector<HTMLAnchorElement>(
+          "a[href='" + pathname + "']",
+        )!.dataset.currentPath = "true";
+      </script>
+    </div>
+  </OverlayScrollbarsComponent>
+</aside>
