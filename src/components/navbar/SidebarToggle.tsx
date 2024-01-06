@@ -27,12 +27,12 @@ export default () => {
 						>
 							<div class="flex gap-6 h-screen flex-col">
 								<For each={tools}>
-									{(toolCategory) => (
+									{(category) => (
 										<div class="flex flex-col gap-1">
 											<h4 class="font-semibold text-lg mb-2">
-												{toolCategory.name}
+												{category.name}
 											</h4>
-											<For each={toolCategory.tools}>
+											<For each={category.tools}>
 												{(tool) => (
 													<a
 														href={tool.href}
