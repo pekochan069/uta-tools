@@ -14,10 +14,10 @@ import { tools } from "~/lib/tools";
   >
     <div class="flex h-[calc(100svh-7rem)] flex-col gap-8">
       {
-        tools.map((toolCategory) => (
+        tools.map((category) => (
           <div class="flex flex-col gap-1">
-            <h4 class="mb-2 text-lg font-semibold">{toolCategory.name}</h4>
-            {toolCategory.tools.map((tool) => (
+            <h4 class="mb-2 text-lg font-semibold">{category.name}</h4>
+            {category.tools.map((tool) => (
               <a
                 href={tool.href}
                 class="text-sm text-muted-foreground hover:text-foreground active:text-foreground data-[current-path]:font-semibold data-[current-path]:text-foreground"
