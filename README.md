@@ -1,4 +1,4 @@
-# Uta Music
+# Uta Tool
 
 ## Project setup
 
