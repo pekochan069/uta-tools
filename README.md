@@ -1,33 +1,62 @@
-# Astro Starter Kit: Minimal
+# Uta Music
+
+## Project setup
+
+### Requirements
+
+Requires [node.js](https://nodejs.org) or [Bun](https://bun.sh)
+
+### Get project
+
+Install [git](https://git-scm.com/) from your preferred package manager
 
 ```sh
-npm create astro@latest -- --template minimal
+git clone https://github.com/pekochan069/uta-music.git
+cd ./uta-music
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+With [GitHub CLI](https://cli.github.com/)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```sh
+gh repo clone pekochan069/uta-music
+cd ./uta-music
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+### Install dependencies
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+using `bun` (preferred way)
 
-Any static assets, like images, can be placed in the `public/` directory.
+```sh
+bun i
+bun build
+bun start
+```
+
+using `npm`
+
+```sh
+npm i
+npm run build
+npm run start
+```
+
+using `yarn`
+
+```sh
+corepack prepare yarn@latest --activate
+yarn
+yarn build
+yarn start
+```
+
+using `pnpm`
+
+```sh
+corepack prepare yarn@latest --activate
+pnpm i
+pnpm build
+pnpm start
+```
 
 ## 🧞 Commands
 
@@ -35,13 +64,13 @@ All commands are run from the root of the project, from a terminal:
 
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| `bun install`             | Installs dependencies                            |
+| `bun dev`             | Starts local dev server at `localhost:4321`      |
+| `bun build`           | Build your production site to `./dist/`          |
+| `bun preview`         | Preview your build locally, before deploying     |
+| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `bun astro -- --help` | Get help using the Astro CLI                     |
+| `bun format:prettier` | Format source files with `prettier`                     |
+| `bun format:biome` | Format source files with `biome`                     |
+| `bun lint` | Lint source files with `biome`                     |
+| `bun vercel` | Run [vercel](https://vercel.com/dashboard) CLI Tool |
