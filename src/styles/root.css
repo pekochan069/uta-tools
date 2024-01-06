@@ -92,12 +92,14 @@
 
     --radius: 0.5rem;
   }
+
 }
 
 @layer base {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
     font-feature-settings:
@@ -664,4 +666,10 @@
     transition: none !important;
     animation: none !important;
   }
+}
+
+.os-scrollbar {
+  --os-handle-bg: hsl(var(--muted-foreground));
+  --os-handle-bg-hover: hsl(var(--foreground));
+  --os-handle-bg-active: hsl(var(--foreground));
 }
