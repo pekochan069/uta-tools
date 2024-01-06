@@ -1,3 +1,6 @@
+import type { JSX } from "astro/jsx-runtime";
+import * as Icons from "~/components/icons";
+
 type ToolCategory = {
 	name: string;
 	description: string;
@@ -8,6 +11,7 @@ type Tool = {
 	name: string;
 	description: string;
 	href: string;
+	icon: () => JSX.Element;
 };
 
 export const tools: ToolCategory[] = [
@@ -19,23 +23,25 @@ export const tools: ToolCategory[] = [
 				name: "Base64",
 				description: "Encode/Decode base64 formatted strings",
 				href: "/tools/converters/base64",
+				icon: Icons.Base64Icon,
+			},
+			{
+				name: "Base64 Image",
+				description: "Convert an image to a base64 encoded string",
+				href: "/tools/converters/base64-image",
+				icon: Icons.Base64ImageIcon,
 			},
 			{
 				name: "Hex",
 				description: "Encode/Decode hex values to/from strings",
 				href: "/tools/converters/hex",
+				icon: Icons.HexIcon,
 			},
 		],
 	},
 	{
 		name: "Image",
 		description: "Image manipulation tools",
-		tools: [
-			{
-				name: "Image Base64",
-				description: "Convert an image to a base64 encoded string",
-				href: "/tools/image/image-base64",
-			},
-		],
+		tools: [],
 	},
 ];
