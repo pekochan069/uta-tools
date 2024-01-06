@@ -1,0 +1,14 @@
+---
+import ToolLayout from "~/layouts/ToolLayout.astro";
+import Base64ImageContents from "~/components/tools/converters/Base64ImageContents";
+
+const paths = Astro.url.pathname
+  .split("/")
+  .filter((p) => p !== "" && p !== "tools");
+const category = paths[0];
+const tool = paths[1].replace("-", " ");
+---
+
+<ToolLayout category={category} tool={tool}>
+  <Base64ImageContents client:only />
+</ToolLayout>
