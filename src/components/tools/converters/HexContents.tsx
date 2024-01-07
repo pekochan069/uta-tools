@@ -171,7 +171,7 @@ export default () => {
 					<label for="output" class="text-sm font-semibold">
 						Output
 					</label>
-					<CopyButton copyType="text" copyContent={output()} />
+					<CopyButton copyType="text" copyContent={output() ?? ""} />
 				</div>
 				<TextField.Root value={output()}>
 					<TextField.TextArea

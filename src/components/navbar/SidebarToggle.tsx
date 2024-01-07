@@ -1,10 +1,10 @@
+import { For, createSignal } from "solid-js";
 import { RiSystemMenu2Fill } from "solid-icons/ri";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-solid";
 
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { tools } from "~/lib/tools";
-import { For, createSignal, onMount } from "solid-js";
 
 export default () => {
 	const pathname = new URL(window.location.href).pathname;

@@ -1,7 +1,8 @@
 import { type JSX } from "solid-js";
 import { FaSolidCopy } from "solid-icons/fa";
-import { Button } from "~/components/ui/button";
 import { toast } from "solid-sonner";
+
+import { Button } from "~/components/ui/button";
 import {
 	Tooltip,
 	TooltipContent,
@@ -9,17 +10,44 @@ import {
 } from "~/components/ui/tooltip";
 
 interface CopyButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	copyContent: any;
-	copyType: "text";
+	copyContent: string;
+	copyType: "text" | "image";
 }
 
 export default (props: CopyButtonProps) => {
 	const copy = () => {
+		if (props.copyContent === "") return;
+
 		if (props.copyType === "text") {
 			navigator.clipboard.writeText(props.copyContent);
+		} else {
+			const imageBase64 = props.copyContent;
+
+			const image = new Image();
+			image.src = imageBase64;
+			image.onerror = () => {
+				toast.error("Failed to copy image to clipboard");
+			};
+			image.onload = () => {
+				const canvas = document.createElement("canvas");
+				canvas.width = image.width;
+				canvas.height = image.height;
+				const ctx = canvas.getContext("2d");
+				ctx?.drawImage(image, 0, 0);
+				canvas.toBlob((blob) => {
+					if (!blob) {
+						return;
+					}
+
+					toast("Copied to clipboard");
+					return navigator.clipboard.write([
+						new ClipboardItem({
+							[blob.type]: blob,
+						}),
+					]);
+				});
+			};
 		}
-		toast("Copied to clipboard");
 	};
 
 	return (

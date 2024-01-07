@@ -1,22 +1,12 @@
-import { Show, createEffect, createSignal } from "solid-js";
-import { type UploadFile, createDropzone } from "@solid-primitives/upload";
+import { Show, createEffect, createSignal, onCleanup, onMount } from "solid-js";
 import { TextField } from "@kobalte/core";
 import { BiSolidImageAdd, BiSolidImageAlt } from "solid-icons/bi";
 import { toast } from "solid-sonner";
 
-import {
-	ToolConfig,
-	ToolConfigLabel,
-	ToolConfigRoot,
-	ToolConfigSection,
-} from "~/components/tools/common/Config";
-import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
-import { Switch } from "~/components/ui/switch";
 import CopyButton from "~/components/tools/common/CopyButton";
 import PasteButton from "~/components/tools/common/PasteButton";
 import ClearButton from "~/components/tools/common/ClearButton";
-import { set } from "astro/zod";
 
 export default () => {
 	let imageAddIconRef: SVGSVGElement | undefined;
@@ -24,59 +14,91 @@ export default () => {
 
 	const [text, setText] = createSignal("");
 	const [image, setImage] = createSignal("");
+	const [file, setFile] = createSignal<File>();
 	const [validImage, setValidImage] = createSignal(false);
-	const { setRef: dropzoneRef, files: droppedFiles } = createDropzone({
-		onDrop: (files) => {
-			const reader = new FileReader();
-			const droppedImage = files[0].file;
-			reader.readAsDataURL(droppedImage);
-
-			reader.onload = () => {
-				setText(reader.result as string);
-			};
-
-			if (!imageAddIconRef) return;
-			if (imageAddIconRef.classList.contains("text-muted-foreground")) {
-				imageAddIconRef.classList.remove("text-muted-foreground");
-			}
-		},
-		onDragEnter: () => {
-			if (!imageAddIconRef) return;
-			if (!imageAddIconRef.classList.contains("text-muted-foreground")) {
-				imageAddIconRef.classList.add("text-muted-foreground");
-			}
-		},
-		onDragLeave: () => {
-			if (!imageAddIconRef) return;
-			if (imageAddIconRef.classList.contains("text-muted-foreground")) {
-				imageAddIconRef.classList.remove("text-muted-foreground");
-			}
-		},
-	});
 
 	const textToBase64Image = (str: string) => {
 		return `data:image/png;base64,${btoa(str)}`;
 	};
+
+	const windowDropEvent = (e: DragEvent) => {
+		e.preventDefault();
+		// if (e.dataTransfer?.files[0]) {
+		// 	setFile(e.dataTransfer?.files[0].name);
+		// }
+	};
+
+	onMount(() => {
+		window.addEventListener("drop", windowDropEvent);
+		window.addEventListener("dragover", windowDropEvent);
+	});
+
+	onCleanup(() => {
+		window.removeEventListener("drop", windowDropEvent);
+		window.removeEventListener("dragover", windowDropEvent);
+	});
 
 	createEffect(() => {
 		setValidImage(true);
 		setImage(text());
 	});
 
+	createEffect(() => {
+		console.log(file()?.name);
+
+		const reader = new FileReader();
+
+		if (!file()) return;
+		reader.readAsDataURL(file() as File);
+
+		reader.onload = () => {
+			setText(reader.result as string);
+		};
+	});
+
 	return (
 		<div class="flex flex-col gap-6">
 			<div>
-				<div
-					ref={dropzoneRef}
+				<Input
+					type="file"
+					multiple
+					accept="image/*"
+					id="input-file"
+					onInput={(e) => {
+						const files = e.currentTarget.files;
+
+						if (files?.[0]) {
+							setFile(files[0]);
+						}
+					}}
+					class="hidden"
+				/>
+				<label
+					for="input-file"
+					onDragEnter={(e) => {
+						e.preventDefault();
+						if (!imageAddIconRef) return;
+						if (!imageAddIconRef.classList.contains("text-muted-foreground")) {
+							imageAddIconRef.classList.add("text-muted-foreground");
+						}
+					}}
+					onDragLeave={(e) => {
+						e.preventDefault();
+						imageAddIconRef?.classList.remove("text-muted-foreground");
+					}}
+					onDrop={(e) => {
+						e.preventDefault();
+						e.stopPropagation();
+						imageAddIconRef?.classList.remove("text-muted-foreground");
+
+						if (e.dataTransfer?.files[0]) {
+							setFile(e.dataTransfer?.files[0]);
+						}
+					}}
 					class="border-[1px] rounded-md grid place-content-center h-32"
 				>
-					<div
-						id="drop-1"
-						class="flex flex-col gap-y-2 justify-center items-center"
-					>
-						<BiSolidImageAdd ref={imageAddIconRef} class="w-16 h-16" />
-					</div>
-				</div>
+					<BiSolidImageAdd ref={imageAddIconRef} class="w-16 h-16" />
+				</label>
 			</div>
 			<div class="flex flex-col gap-2">
 				<div class="mb-4">
@@ -124,7 +146,7 @@ export default () => {
 			<div>
 				<div class="flex mb-2 items-end justify-between">
 					<p class="text-sm font-semibold">Image</p>
-					{/* <CopyButton copyType="text" copyContent={output()} /> */}
+					<CopyButton copyType="image" copyContent={image()} />
 				</div>
 				<div class="aspect-video border-[1px] grid place-content-center rounded-md overflow-hidden">
 					<Show
@@ -138,6 +160,11 @@ export default () => {
 							class="w-full object-contain"
 							onError={() => {
 								setValidImage(false);
+								imgRef?.classList.add("hidden");
+							}}
+							onLoad={() => {
+								setValidImage(true);
+								imgRef?.classList.remove("hidden");
 							}}
 						/>
 					</Show>

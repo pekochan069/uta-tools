@@ -2,6 +2,7 @@ import { Show, createSignal } from "solid-js";
 import { TbPlus, TbMinus } from "solid-icons/tb";
 import { IoSwapVertical } from "solid-icons/io";
 import { TextField } from "@kobalte/core";
+import { toast } from "solid-sonner";
 
 import {
 	ToolConfig,
@@ -15,7 +16,6 @@ import { Switch } from "~/components/ui/switch";
 import CopyButton from "~/components/tools/common/CopyButton";
 import ClearButton from "~/components/tools/common/ClearButton";
 import PasteButton from "~/components/tools/common/PasteButton";
-import { toast } from "solid-sonner";
 
 export default () => {
 	const [isEncode, setIsEncode] = createSignal(true);
@@ -157,7 +157,7 @@ export default () => {
 					<label for="output" class="text-sm font-semibold">
 						Output
 					</label>
-					<CopyButton copyType="text" copyContent={output()} />
+					<CopyButton copyType="text" copyContent={output() ?? ""} />
 				</div>
 				<TextField.Root value={output()}>
 					<TextField.TextArea
