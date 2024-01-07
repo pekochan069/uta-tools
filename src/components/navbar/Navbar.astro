@@ -20,8 +20,12 @@ import SidebarToggle from "./SidebarToggle";
       </a>
     </nav>
     <div class="flex gap-2">
-      <ThemeToggle client:load />
-      <SidebarToggle client:only />
+      <div class="h-10 w-10">
+        <ThemeToggle client:only />
+      </div>
+      <div class="h-10 w-10 md:hidden">
+        <SidebarToggle client:only />
+      </div>
     </div>
   </div>
 </header>

@@ -5,6 +5,7 @@ import { OverlayScrollbarsComponent } from "overlayscrollbars-solid";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { tools } from "~/lib/tools";
+import { Tooltip, TooltipTrigger, TooltipContent } from "../ui/tooltip";
 
 export default () => {
 	const pathname = new URL(window.location.href).pathname;
@@ -14,10 +15,15 @@ export default () => {
 		<div class="md:hidden md:invisible">
 			<Sheet open={open()} onOpenChange={setOpen}>
 				<SheetTrigger>
-					<Button variant="ghost" size="icon">
-						<RiSystemMenu2Fill class="w-[1.2rem] h-[1.2rem]" />
-						<span class="sr-only">Toggle sidebar</span>
-					</Button>
+					<Tooltip>
+						<TooltipTrigger>
+							<Button variant="ghost" size="icon">
+								<RiSystemMenu2Fill class="w-[1.2rem] h-[1.2rem]" />
+								<span class="sr-only">Toggle sidebar</span>
+							</Button>
+						</TooltipTrigger>
+						<TooltipContent>Toggle sidebar</TooltipContent>
+					</Tooltip>
 				</SheetTrigger>
 				<SheetContent position="left" size="lg">
 					<div class="pt-6">
