@@ -1,10 +1,21 @@
-# Uta Tool
+# Uta Tools
 
 ## Project setup
 
 ### Requirements
 
-Requires [node.js](https://nodejs.org) or [Bun](https://bun.sh)
+Requires [Bun](https://bun.sh)
+
+```sh
+curl -fsSL https://bun.sh/install | bash // Linux, macOS, WSL
+
+# Windows WARNING: No stability is guaranteed on the experimental Windows builds
+powershell -c "irm bun.sh/install.ps1|iex"
+# Or use scoop instead
+scoop bucket add versions
+scoop install bun-canary
+
+```
 
 ### Get project
 
@@ -22,40 +33,12 @@ gh repo clone pekochan069/uta-music
 cd ./uta-music
 ```
 
-### Install dependencies
-
-using `bun` (preferred way)
+### Project Setup & Run
 
 ```sh
 bun i
 bun build
 bun start
-```
-
-using `npm`
-
-```sh
-npm i
-npm run build
-npm run start
-```
-
-using `yarn`
-
-```sh
-corepack prepare yarn@latest --activate
-yarn
-yarn build
-yarn start
-```
-
-using `pnpm`
-
-```sh
-corepack prepare yarn@latest --activate
-pnpm i
-pnpm build
-pnpm start
 ```
 
 ## 🧞 Commands
