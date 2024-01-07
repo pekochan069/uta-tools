@@ -7,7 +7,7 @@
 Requires [Bun](https://bun.sh)
 
 ```sh
-curl -fsSL https://bun.sh/install | bash // Linux, macOS, WSL
+curl -fsSL https://bun.sh/install | bash # Linux, macOS, WSL
 
 # Windows WARNING: No stability is guaranteed on the experimental Windows builds
 powershell -c "irm bun.sh/install.ps1|iex"
