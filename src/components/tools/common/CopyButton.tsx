@@ -20,6 +20,7 @@ export default (props: CopyButtonProps) => {
 
 		if (props.copyType === "text") {
 			navigator.clipboard.writeText(props.copyContent);
+			toast("Copied text to clipboard");
 		} else {
 			const imageBase64 = props.copyContent;
 
@@ -39,7 +40,7 @@ export default (props: CopyButtonProps) => {
 						return;
 					}
 
-					toast("Copied to clipboard");
+					toast("Copied image to clipboard");
 					return navigator.clipboard.write([
 						new ClipboardItem({
 							[blob.type]: blob,
