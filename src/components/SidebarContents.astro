@@ -28,13 +28,13 @@ import { tools } from "~/lib/tools";
           </div>
         ))
       }
-      <script>
-        const currentUrl = new URL(window.location.href);
-        const pathname = currentUrl.pathname;
-        document.querySelector<HTMLAnchorElement>(
-          "a[href='" + pathname + "']",
-        )!.dataset.currentPath = "true";
-      </script>
     </div>
   </OverlayScrollbarsComponent>
+  <script>
+    const currentUrl = new URL(window.location.href);
+    const pathname = currentUrl.pathname;
+    document.querySelector<HTMLAnchorElement>(
+      "a[href='" + pathname + "']",
+    )!.dataset.currentPath = "true";
+  </script>
 </aside>

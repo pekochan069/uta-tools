@@ -3,14 +3,18 @@ import { TbTools } from "solid-icons/tb";
 
 import ThemeToggle from "./ThemeToggle";
 import SidebarToggle from "./SidebarToggle";
+
+import Logo64 from "~/assets/logo/64.png";
+import { Image } from "astro:assets";
 ---
 
-<header class="container px-4 py-2 md:px-6 md:py-4">
+<header class="container px-4 py-2 md:px-6 md:py-3">
   <div class="flex items-center justify-between">
     <nav>
       <a href="/">
-        <div class="flex w-fit items-center gap-2 text-xl font-bold leading-5">
-          <TbTools class="h-5 w-5" />
+        <div class="flex w-fit items-center gap-1 text-xl font-bold leading-5">
+          <!-- <TbTools class="h-5 w-5" /> -->
+          <Image src={Logo64} alt="Uta/Tools" class="h-10 w-10" />
           <div>
             <span class="text-violet-500 dark:text-violet-400">Uta</span>/<span
               >Tools</span
