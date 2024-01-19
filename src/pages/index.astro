@@ -10,9 +10,7 @@ import { tools } from "~/lib/tools";
       {
         tools.map((category) => (
           <div>
-            <h3 class="mb-4 text-xl font-semibold tracking-wide">
-              {category.name}
-            </h3>
+            <h3 class="mb-4 text-xl font-semibold">{category.name}</h3>
             <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {category.tools.map((tool) => (
                 <a
