@@ -1,0 +1,20 @@
+---
+import ToolLayout from "~/layouts/ToolLayout.astro";
+import TimelineContents from "~/components/tools/youtube/TimelineContents";
+
+const paths = Astro.url.pathname
+  .split("/")
+  .filter((p) => p !== "" && p !== "tools");
+const category = paths[0];
+const tool = paths[1];
+---
+
+<ToolLayout category={category} tool={tool}>
+  <TimelineContents client:only />
+  <script is:inline>
+    let tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    let firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  </script>
+</ToolLayout>

@@ -41,6 +41,18 @@ export const tools: ToolCategory[] = [
 		],
 	},
 	{
+		name: "Youtube",
+		description: "Youtube related tools",
+		tools: [
+			{
+				name: "Timeline",
+				description: "Create a timeline of a youtube video",
+				href: "/tools/youtube/timeline",
+				icon: Icons.TimelineIcon,
+			},
+		],
+	},
+	{
 		name: "Image",
 		description: "Image manipulation tools",
 		tools: [],
