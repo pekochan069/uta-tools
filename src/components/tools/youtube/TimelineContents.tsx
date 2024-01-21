@@ -55,7 +55,7 @@ export default () => {
 	const [playerReady, setPlayerReady] = createSignal(false);
 
 	const addTimeline = (text: string) => {
-		// if (videoId() === "" || player() === null) return;
+		if (videoId() === "" || player() === null) return;
 
 		const currentTime = player()?.getCurrentTime()?.toString() ?? 0;
 
@@ -98,10 +98,7 @@ export default () => {
 
 		if (videoId() === "") return;
 
-		// setPlayerReady(false);
-
 		if (untrack(playerReady)) {
-			// setPlayerReady(true);
 			player().loadVideoById(videoId(), 0, "large");
 			return;
 		}
@@ -122,10 +119,6 @@ export default () => {
 				}),
 			);
 		});
-	});
-
-	onMount(() => {
-		// addTimeline();
 	});
 
 	return (
