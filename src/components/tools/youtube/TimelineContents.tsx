@@ -61,7 +61,7 @@ export default () => {
 	const [playerReady, setPlayerReady] = createSignal(false);
 
 	const addTimeline = (text: string) => {
-		if (videoId() === "" || player() === null) return;
+		// if (videoId() === "" || player() === null) return;
 
 		const seconds = player()?.getCurrentTime() ?? 0;
 		const currentTime = secondsToTime(seconds);
@@ -287,7 +287,7 @@ export default () => {
 			<Table class="mt-4">
 				<TableHeader>
 					<TableRow>
-						<TableHead class="w-4 md:w-8 py-2 pl-0 pr-4 md:p-4">
+						<TableHead class="w-4 md:w-8 py-2 pl-0 pr-4 md:p-4 hidden invisible sm:table-cell sm:visible">
 							<Checkbox
 								checked={
 									timelines.length > 0 &&
@@ -304,13 +304,13 @@ export default () => {
 								}}
 							/>
 						</TableHead>
-						<TableHead class="w-[4.5rem] py-2 pl-0 pr-4 md:w-[5.5rem] md:p-4">
+						<TableHead class="w-[5.5rem] py-2 sm:pl-0 pr-4 md:p-4">
 							Time
 						</TableHead>
 						<TableHead class="p-2 pl-0 md:px-4">
 							<div class="flex items-center">
 								<div class="flex-1">Text</div>
-								<div class="flex xl:gap-2">
+								<div class="hidden invisible sm:flex sm:visible xl:gap-2">
 									<CopyButton
 										copyType="text"
 										copyContent={timelines
@@ -342,13 +342,14 @@ export default () => {
 								</div>
 							</div>
 						</TableHead>
+						<TableHead class="w-6 md:w-8 p-0" />
 					</TableRow>
 				</TableHeader>
 				<TableBody>
 					<Index each={timelines}>
 						{(item, index) => (
 							<TableRow>
-								<TableCell class="w-4 md:w-8 py-2 pl-0 pr-4 md:p-4">
+								<TableCell class="w-4 md:w-8 py-2 pl-0 pr-4 md:p-4 hidden invisible sm:table-cell sm:visible">
 									<Checkbox
 										checked={item().checked}
 										onChange={() =>
@@ -360,7 +361,7 @@ export default () => {
 										}
 									/>
 								</TableCell>
-								<TableCell class="w-[4.5rem] py-2 pl-0 pr-4 md:w-[5.5rem] md:p-4">
+								<TableCell class="w-[5.5rem] py-2 sm:pl-0 pr-4 md:p-4">
 									<Popover>
 										<PopoverTrigger>{item().formattedTime}</PopoverTrigger>
 										<PopoverContent>
@@ -503,6 +504,11 @@ export default () => {
 												<TooltipContent>Remove</TooltipContent>
 											</Tooltip>
 										</div>
+									</div>
+								</TableCell>
+								<TableCell class="w-6 md:w-8 p-0">
+									<div class="grid place-content-center">
+										<TbDotsVertical class="w-6 h-6" />
 									</div>
 								</TableCell>
 							</TableRow>
