@@ -508,7 +508,7 @@ export default () => {
 								</TableCell>
 								<TableCell class="w-6 md:w-8 p-0">
 									<div class="grid place-content-center">
-										<TbDotsVertical class="w-6 h-6" />
+										<TbDotsVertical class="w-6 h-6 text-muted" />
 									</div>
 								</TableCell>
 							</TableRow>
