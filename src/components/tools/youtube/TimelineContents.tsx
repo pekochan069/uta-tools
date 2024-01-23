@@ -255,6 +255,7 @@ export default () => {
 
 									sortTimelines();
 								}}
+								class="font-semibold"
 							>
 								Sort
 							</Button>
@@ -274,6 +275,7 @@ export default () => {
 											navigator.clipboard.writeText(text);
 											toast("Copied timeline to clipboard");
 										}}
+										class="font-semibold"
 									>
 										Copy
 									</Button>
