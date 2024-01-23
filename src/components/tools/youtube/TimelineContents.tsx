@@ -61,7 +61,7 @@ export default () => {
 	const [playerReady, setPlayerReady] = createSignal(false);
 
 	const addTimeline = (text: string) => {
-		// if (videoId() === "" || player() === null) return;
+		if (videoId() === "" || player() === null) return;
 
 		const seconds = player()?.getCurrentTime() ?? 0;
 		const currentTime = secondsToTime(seconds);
