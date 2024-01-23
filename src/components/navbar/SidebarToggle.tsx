@@ -42,7 +42,7 @@ export default () => {
 												{(tool) => (
 													<a
 														href={tool.href}
-														class="text-muted-foreground text-sm hover:text-foreground active:text-foreground data-[current-path]:text-foreground data-[current-path]:font-semibold outline-none"
+														class="text-muted-foreground text-sm hover:text-foreground active:text-foreground data-[current-path]:text-foreground data-[current-path]:font-semibold outline-none data-[current-path]:underline"
 														{...(pathname === tool.href
 															? { "data-current-path": "" }
 															: {})}
