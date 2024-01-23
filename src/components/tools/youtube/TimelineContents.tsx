@@ -11,7 +11,7 @@ import { createStore, produce } from "solid-js/store";
 import { TbCirclePlus, TbDotsVertical, TbX } from "solid-icons/tb";
 import { toast } from "solid-sonner";
 
-import { getVideoId } from "~/lib/youtube";
+import { checkUrl, getVideoId } from "~/lib/youtube";
 import {
 	ToolConfig,
 	ToolConfigLabel,
@@ -192,6 +192,7 @@ export default () => {
 						<TextField.Root value={url()} onChange={setUrl}>
 							<TextField.Input
 								type="text"
+								placeholder="https://www.youtube.com/watch?v={videoId}"
 								class="border-input ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-w-[16rem] xl:min-w-[24rem]"
 							/>
 						</TextField.Root>
@@ -218,35 +219,51 @@ export default () => {
 			</div>
 			<div class="mt-6 md:mt-8">
 				<div class="flex gap-4 w-full max-w-xl mx-auto flex-col md:flex-row">
-					<div class="flex flex-1 gap-2">
-						<TextField.Root
-							value={mainInput()}
-							onChange={setMainInput}
-							class="flex-1"
-						>
-							<TextField.Input
-								type="text"
-								class="border-input ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-							/>
-						</TextField.Root>
-						<Tooltip>
-							<TooltipTrigger>
-								<Button
-									size="icon"
-									variant="ghost"
-									onClick={() => {
-										batch(() => {
-											addTimeline(mainInput());
-											setMainInput("");
-										});
-									}}
-								>
-									<TbCirclePlus class="w-[1.6rem] h-[1.6rem]" />
-								</Button>
-							</TooltipTrigger>
-							<TooltipContent>Add timeline</TooltipContent>
-						</Tooltip>
-					</div>
+					<form
+						onSubmit={(event) => {
+							event.preventDefault();
+
+							if (mainInput() === "") return;
+
+							batch(() => {
+								addTimeline(mainInput());
+								setMainInput("");
+							});
+						}}
+						class="flex-1"
+					>
+						<div class="flex gap-2">
+							<TextField.Root
+								value={mainInput()}
+								onChange={(value) => {
+									if (player() === undefined) {
+										if (checkUrl(value)) {
+											setUrl(value);
+										}
+
+										return;
+									}
+
+									setMainInput(value);
+								}}
+								class="flex-1"
+							>
+								<TextField.Input
+									type="text"
+									placeholder="Add timeline"
+									class="border-input ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+								/>
+							</TextField.Root>
+							<Tooltip>
+								<TooltipTrigger>
+									<Button size="icon" variant="ghost">
+										<TbCirclePlus class="w-[1.6rem] h-[1.6rem]" />
+									</Button>
+								</TooltipTrigger>
+								<TooltipContent>Add timeline</TooltipContent>
+							</Tooltip>
+						</div>
+					</form>
 					<div class="flex justify-end">
 						<div class="grid grid-cols-2 gap-2">
 							<Button
