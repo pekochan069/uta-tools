@@ -5,5 +5,5 @@ export default {
 	"./src/**/*.{astro,js,jsx,ts,tsx}"
   ],
   presets: [require("./ui.preset.js")],
-  plugins: [require("@kobalte/tailwindcss")]
+  plugins: [require("@kobalte/tailwindcss"), require('@tailwindcss/container-queries')]
 }
