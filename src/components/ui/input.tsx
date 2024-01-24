@@ -4,7 +4,8 @@ import { Show, splitProps } from "solid-js";
 
 import { cn } from "~/lib/utils";
 
-type InputProps = ComponentProps<"input"> & {
+type InputProps = Omit<ComponentProps<"input">, "onChange" | "onchange"> & {
+	rootClass?: string;
 	value?: string;
 	defaultValue?: string;
 	onChange?: (value: string) => void;
@@ -19,6 +20,7 @@ type InputProps = ComponentProps<"input"> & {
 
 const Input: Component<InputProps> = (props) => {
 	const [, rest] = splitProps(props, [
+		"rootClass",
 		"value",
 		"defaultValue",
 		"onChange",
@@ -35,6 +37,7 @@ const Input: Component<InputProps> = (props) => {
 
 	return (
 		<TextField.Root
+			class={props.rootClass}
 			value={props.value}
 			defaultValue={props.defaultValue}
 			onChange={props.onChange}
