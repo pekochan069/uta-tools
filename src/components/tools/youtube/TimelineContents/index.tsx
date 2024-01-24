@@ -46,40 +46,7 @@ export default () => {
 	const [prevVideoId, setPrevVideoId] = createSignal("");
 	const [mainInput, setMainInput] = createSignal("");
 	const [lastId, setLastId] = createSignal(1);
-	const [timelines, setTimelines] = createStore<TimelineType[]>([
-		{
-			id: 1,
-			time: [0, 0, 0],
-			seconds: 0,
-			formattedTime: "0:00:00",
-			text: "",
-			checked: false,
-		},
-		{
-			id: 5555,
-			time: [1, 1, 1],
-			seconds: 3661,
-			formattedTime: "1:01:01",
-			text: "",
-			checked: false,
-		},
-		{
-			id: 2,
-			time: [2, 2, 2],
-			seconds: 7322,
-			formattedTime: "2:02:02",
-			text: "",
-			checked: false,
-		},
-		{
-			id: 3,
-			time: [3, 3, 3],
-			seconds: 7322,
-			formattedTime: "3:03:03",
-			text: "",
-			checked: false,
-		},
-	]);
+	const [timelines, setTimelines] = createStore<TimelineType[]>([]);
 	// biome-ignore lint/suspicious/noExplicitAny: youtube iframe
 	const [player, setPlayer] = createSignal<any>();
 	const [playerReady, setPlayerReady] = createSignal(false);
