@@ -1,12 +1,4 @@
-import { TextField } from "@kobalte/core";
-import {
-	Index,
-	Show,
-	batch,
-	createEffect,
-	createSignal,
-	untrack,
-} from "solid-js";
+import { Index, Show, batch, createEffect, createSignal, untrack } from "solid-js";
 import { createStore, produce } from "solid-js/store";
 import { TbCirclePlus, TbDotsVertical, TbX } from "solid-icons/tb";
 import { toast } from "solid-sonner";
@@ -18,9 +10,9 @@ import {
 	ToolConfigRoot,
 	ToolConfigSection,
 } from "~/components/tools/common/Config";
-import PasteButton from "../common/PasteButton";
-import ClearButton from "../common/ClearButton";
-import CopyButton from "../common/CopyButton";
+import PasteButton from "~/components/tools/common/PasteButton";
+import ClearButton from "~/components/tools/common/ClearButton";
+import CopyButton from "~/components/tools/common/CopyButton";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import {
@@ -31,16 +23,9 @@ import {
 	TableHeader,
 	TableRow,
 } from "~/components/ui/table";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "~/components/ui/tooltip";
-import {
-	Popover,
-	PopoverContent,
-	PopoverTrigger,
-} from "~/components/ui/popover";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
+import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
+import { Input } from "~/components/ui/input";
 
 type Timeline = {
 	time: [number, number, number];
@@ -61,14 +46,12 @@ export default () => {
 	const [playerReady, setPlayerReady] = createSignal(false);
 
 	const addTimeline = (text: string) => {
-		if (videoId() === "" || player() === null) return;
+		if (playerReady() === false || player() === null) return;
 
 		const seconds = player()?.getCurrentTime() ?? 0;
 		const currentTime = secondsToTime(seconds);
 
-		const insertIndex = timelines.findIndex(
-			(timeline) => seconds < timeline.seconds,
-		);
+		const insertIndex = timelines.findIndex((timeline) => seconds < timeline.seconds);
 		const timelineIndex = insertIndex === -1 ? timelines.length : insertIndex;
 
 		setTimelines(
@@ -82,24 +65,36 @@ export default () => {
 		);
 	};
 
-	const changeTime = (
-		type: "hour" | "minute" | "second",
-		index: number,
-		value: number,
-	) => {
+	const changeTime = (type: "hour" | "minute" | "second", index: number, value: string) => {
 		if (timelines.length === 0) return;
 
+		const parsedValue = parseInt(value);
+
 		let time = timelines[index].time;
+		const formattedValue = Number.isNaN(parsedValue) ? 0 : parsedValue;
+		let formattedTime = time;
 
 		switch (type) {
 			case "hour":
-				time = [value, time[1], time[2]];
+				if (parsedValue < 0 || parsedValue > 99) return;
+				if (parsedValue === time[0]) return;
+
+				time = [parsedValue, time[1], time[2]];
+				formattedTime = [formattedValue, time[1], time[2]];
 				break;
 			case "minute":
-				time = [time[0], value, time[2]];
+				if (parsedValue < 0 || parsedValue > 59) return;
+				if (parsedValue === time[1]) return;
+
+				time = [time[0], parsedValue, time[2]];
+				formattedTime = [time[0], formattedValue, time[2]];
 				break;
 			case "second":
-				time = [time[0], time[1], value];
+				if (parsedValue < 0 || parsedValue > 59) return;
+				if (parsedValue === time[2]) return;
+
+				time = [time[0], time[1], parsedValue];
+				formattedTime = [time[0], time[1], formattedValue];
 				break;
 		}
 
@@ -109,7 +104,7 @@ export default () => {
 					...timelines[index],
 					time: time,
 					seconds: time[0] * 3600 + time[1] * 60 + time[2],
-					formattedTime: formatTime(time),
+					formattedTime: formatTime(formattedTime),
 				};
 			}),
 		);
@@ -145,9 +140,7 @@ export default () => {
 	createEffect(() => {
 		if (typeof window === "undefined") return;
 
-		if (videoId() === "") return;
-
-		if (videoId() === prevVideoId()) return;
+		if (videoId() === "" || videoId() === prevVideoId()) return;
 
 		if (untrack(playerReady)) {
 			batch(() => {
@@ -189,13 +182,13 @@ export default () => {
 						description="Link to a YouTube video to generate a timeline for"
 					/>
 					<ToolConfig>
-						<TextField.Root value={url()} onChange={setUrl}>
-							<TextField.Input
-								type="text"
-								placeholder="https://www.youtube.com/watch?v={videoId}"
-								class="border-input ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 min-w-[16rem] xl:min-w-[24rem]"
-							/>
-						</TextField.Root>
+						<Input
+							value={url()}
+							onChange={setUrl}
+							type="text"
+							placeholder="http://youtu.be/{videoId}"
+							class=" min-w-[16rem] xl:min-w-[24rem]"
+						/>
 					</ToolConfig>
 				</ToolConfigRoot>
 			</ToolConfigSection>
@@ -203,12 +196,8 @@ export default () => {
 				<div class="w-full max-w-xl bg-muted rounded-md shadow-sm">
 					<div class="h-0 relative pb-[56.25%] w-full">
 						<Show
-							when={
-								playerReady() === false && videoId() === "" && player() !== null
-							}
-							fallback={
-								<div id="player" class="top-0 left-0 w-full h-full absolute" />
-							}
+							when={playerReady() === false && videoId() === "" && player() !== null}
+							fallback={<div id="player" class="top-0 left-0 w-full h-full absolute" />}
 						>
 							<div class="w-full h-full absolute grid place-content-center">
 								<img src="/logo/128.png" alt="Waiting for input" />
@@ -233,7 +222,7 @@ export default () => {
 						class="flex-1"
 					>
 						<div class="flex gap-2">
-							<TextField.Root
+							<Input
 								value={mainInput()}
 								onChange={(value) => {
 									if (player() === undefined) {
@@ -246,14 +235,8 @@ export default () => {
 
 									setMainInput(value);
 								}}
-								class="flex-1"
-							>
-								<TextField.Input
-									type="text"
-									placeholder="Add timeline"
-									class="border-input ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-								/>
-							</TextField.Root>
+								rootClass="flex-1"
+							/>
 							<Tooltip>
 								<TooltipTrigger>
 									<Button size="icon" variant="ghost">
@@ -283,10 +266,7 @@ export default () => {
 											if (timelines.length === 0) return;
 
 											const text = timelines
-												.map(
-													(timeline) =>
-														`${timeline.formattedTime} ${timeline.text}`,
-												)
+												.map((timeline) => `${timeline.formattedTime} ${timeline.text}`)
 												.join("\n");
 
 											navigator.clipboard.writeText(text);
@@ -308,10 +288,7 @@ export default () => {
 					<TableRow>
 						<TableHead class="w-4 md:w-8 py-2 pl-0 pr-4 md:p-4 hidden invisible sm:table-cell sm:visible">
 							<Checkbox
-								checked={
-									timelines.length > 0 &&
-									timelines.every((current) => current.checked)
-								}
+								checked={timelines.length > 0 && timelines.every((current) => current.checked)}
 								onChange={(checked) => {
 									setTimelines(
 										produce((timelines) => {
@@ -323,9 +300,7 @@ export default () => {
 								}}
 							/>
 						</TableHead>
-						<TableHead class="w-[5.5rem] py-2 sm:pl-0 pr-4 md:p-4">
-							Time
-						</TableHead>
+						<TableHead class="w-[5.5rem] py-2 sm:pl-0 pr-4 md:p-4">Time</TableHead>
 						<TableHead class="p-2 pl-0 md:px-4">
 							<div class="flex items-center">
 								<div class="flex-1">Text</div>
@@ -334,10 +309,7 @@ export default () => {
 										copyType="text"
 										copyContent={timelines
 											.filter((timeline) => timeline.checked)
-											.map(
-												(timeline) =>
-													`${timeline.formattedTime} ${timeline.text}`,
-											)
+											.map((timeline) => `${timeline.formattedTime} ${timeline.text}`)
 											.join("\n")}
 										class="hover:bg-foreground active:bg-foreground hover:text-background active:text-background text-foreground"
 									/>
@@ -347,9 +319,7 @@ export default () => {
 												size="icon"
 												variant="ghost"
 												onClick={() => {
-													setTimelines(
-														timelines.filter((timeline) => !timeline.checked),
-													);
+													setTimelines(timelines.filter((timeline) => !timeline.checked));
 												}}
 												class="hover:bg-foreground active:bg-foreground hover:text-background active:text-background text-foreground"
 											>
@@ -385,95 +355,53 @@ export default () => {
 										<PopoverTrigger>{item().formattedTime}</PopoverTrigger>
 										<PopoverContent>
 											<div class="grid grid-cols-3 gap-2">
-												<TextField.Root
+												<Input
 													value={item().time[0].toString()}
-													onChange={(value) => {
-														if (Number.isNaN(value)) return;
-
-														const hours = parseInt(value) ?? item().time[0];
-
-														if (hours < 0 || hours > 99) return;
-														if (hours === item().time[0]) return;
-
-														changeTime("hour", index, hours);
-													}}
+													onChange={(value) => changeTime("hour", index, value)}
+													type="number"
+													min={0}
+													max={99}
+													labelClass="text-sm"
 												>
-													<TextField.Label class="text-sm">
-														Hour
-													</TextField.Label>
-													<TextField.Input
-														type="number"
-														min={0}
-														max={99}
-														class="border-input ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-													/>
-												</TextField.Root>
-												<TextField.Root
+													Hour
+												</Input>
+												<Input
 													value={item().time[1].toString()}
-													onChange={(value) => {
-														if (Number.isNaN(value)) return;
-
-														const minutes = parseInt(value) ?? item().time[1];
-
-														if (minutes < 0 || minutes > 59) return;
-														if (minutes === item().time[1]) return;
-
-														changeTime("minute", index, minutes);
-													}}
+													onChange={(value) => changeTime("minute", index, value)}
+													type="number"
+													min={0}
+													max={59}
+													labelClass="text-sm"
 												>
-													<TextField.Label class="text-sm">
-														Minutes
-													</TextField.Label>
-													<TextField.Input
-														type="number"
-														min={0}
-														max={59}
-														class="border-input ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-													/>
-												</TextField.Root>
-												<TextField.Root
+													Minutes
+												</Input>
+												<Input
 													value={item().time[2].toString()}
-													onChange={(value) => {
-														if (Number.isNaN(value)) return;
-
-														const seconds = parseInt(value) ?? item().time[2];
-
-														if (seconds < 0 || seconds > 59) return;
-														if (seconds === item().time[2]) return;
-
-														changeTime("second", index, seconds);
-													}}
+													onChange={(value) => changeTime("second", index, value)}
+													type="number"
+													min={0}
+													max={59}
+													labelClass="text-sm"
 												>
-													<TextField.Label class="text-sm mb-1">
-														Seconds
-													</TextField.Label>
-													<TextField.Input
-														type="number"
-														min={0}
-														max={59}
-														class="border-input ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-													/>
-												</TextField.Root>
+													Seconds
+												</Input>
 											</div>
 										</PopoverContent>
 									</Popover>
 								</TableCell>
 								<TableCell class="p-2 pl-0 md:p-4">
 									<div class="flex gap-2 md:gap-4">
-										<TextField.Root class="flex-1">
-											<TextField.Input
+										<Input rootClass="flex-1"
 												type="text"
 												value={item().text}
-												onChange={(event) => {
+												onChange={(value) => {
 													setTimelines(
 														produce((timelines) => {
-															timelines[index].text = event.currentTarget.value;
+															timelines[index].text = value;
 														}),
 													);
 												}}
-												class="border-input ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border bg-transparent px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
 											/>
-										</TextField.Root>
 										<div class="flex xl:gap-2">
 											<ClearButton
 												onClick={() =>
