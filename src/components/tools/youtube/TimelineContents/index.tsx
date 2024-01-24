@@ -1,7 +1,17 @@
-import { Index, Show, batch, createEffect, createSignal, untrack } from "solid-js";
+import { For, Index, Show, batch, createEffect, createSignal, untrack } from "solid-js";
 import { createStore, produce } from "solid-js/store";
 import { TbCirclePlus, TbDotsVertical, TbX } from "solid-icons/tb";
 import { toast } from "solid-sonner";
+import {
+	DragDropProvider,
+	DragDropSensors,
+	DragOverlay,
+	SortableProvider,
+	createSortable,
+	closestCenter,
+	useDragDropContext,
+	type Id,
+} from "@thisbeyond/solid-dnd";
 
 import { checkUrl, getVideoId } from "~/lib/youtube";
 import {
@@ -27,23 +37,54 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
 import { Input } from "~/components/ui/input";
 
-type Timeline = {
-	time: [number, number, number];
-	seconds: number;
-	formattedTime: string;
-	text: string;
-	checked: boolean;
-};
+import type { TimelineType } from "./timelineTypes";
+import TimelineRow from "./TimelineRow";
 
 export default () => {
 	const [url, setUrl] = createSignal("");
 	const videoId = () => getVideoId(url());
 	const [prevVideoId, setPrevVideoId] = createSignal("");
 	const [mainInput, setMainInput] = createSignal("");
-	const [timelines, setTimelines] = createStore<Timeline[]>([]);
+	const [lastId, setLastId] = createSignal(1);
+	const [timelines, setTimelines] = createStore<TimelineType[]>([
+		{
+			id: 1,
+			time: [0, 0, 0],
+			seconds: 0,
+			formattedTime: "0:00:00",
+			text: "",
+			checked: false,
+		},
+		{
+			id: 5555,
+			time: [1, 1, 1],
+			seconds: 3661,
+			formattedTime: "1:01:01",
+			text: "",
+			checked: false,
+		},
+		{
+			id: 2,
+			time: [2, 2, 2],
+			seconds: 7322,
+			formattedTime: "2:02:02",
+			text: "",
+			checked: false,
+		},
+		{
+			id: 3,
+			time: [3, 3, 3],
+			seconds: 7322,
+			formattedTime: "3:03:03",
+			text: "",
+			checked: false,
+		},
+	]);
 	// biome-ignore lint/suspicious/noExplicitAny: youtube iframe
 	const [player, setPlayer] = createSignal<any>();
 	const [playerReady, setPlayerReady] = createSignal(false);
+	const timelineIds = () => timelines.map((item) => item.id);
+	const [activeId, setActiveId] = createSignal<Id | null>(null);
 
 	const addTimeline = (text: string) => {
 		if (playerReady() === false || player() === null) return;
@@ -54,23 +95,31 @@ export default () => {
 		const insertIndex = timelines.findIndex((timeline) => seconds < timeline.seconds);
 		const timelineIndex = insertIndex === -1 ? timelines.length : insertIndex;
 
-		setTimelines(
-			timelines.toSpliced(timelineIndex, 0, {
-				time: currentTime,
-				seconds,
-				formattedTime: formatTime(currentTime),
-				text,
-				checked: false,
-			}),
-		);
+		batch(() => {
+			setTimelines(
+				timelines.toSpliced(timelineIndex, 0, {
+					id: lastId(),
+					time: currentTime,
+					seconds,
+					formattedTime: formatTime(currentTime),
+					text,
+					checked: false,
+				}),
+			);
+			setLastId((prev) => prev + 1);
+		});
 	};
 
-	const changeTime = (type: "hour" | "minute" | "second", index: number, value: string) => {
+	const changeTime = (type: "hour" | "minute" | "second", id: number, value: string) => {
 		if (timelines.length === 0) return;
 
 		const parsedValue = parseInt(value);
 
-		let time = timelines[index].time;
+		const timeline = timelines.find((timeline) => timeline.id === id);
+
+		if (timeline === undefined) return;
+
+		let time = timeline.time;
 		const formattedValue = Number.isNaN(parsedValue) ? 0 : parsedValue;
 		let formattedTime = time;
 
@@ -99,13 +148,11 @@ export default () => {
 		}
 
 		setTimelines(
-			produce((timelines) => {
-				timelines[index] = {
-					...timelines[index],
-					time: time,
-					seconds: time[0] * 3600 + time[1] * 60 + time[2],
-					formattedTime: formatTime(formattedTime),
-				};
+			(timeline) => timeline.id === id,
+			produce((timeline) => {
+				timeline.time = time;
+				timeline.formattedTime = formatTime(formattedTime);
+				timeline.seconds = formattedTime[0] * 3600 + formattedTime[1] * 60 + formattedTime[2];
 			}),
 		);
 	};
@@ -171,6 +218,10 @@ export default () => {
 				}),
 			);
 		});
+	});
+
+	createEffect(() => {
+		console.log(timelines);
 	});
 
 	return (
@@ -283,7 +334,7 @@ export default () => {
 					</div>
 				</div>
 			</div>
-			<Table class="mt-4">
+			<Table class="mt-4 overflow-hidden">
 				<TableHeader>
 					<TableRow>
 						<TableHead class="w-4 md:w-8 py-2 pl-0 pr-4 md:p-4 hidden invisible sm:table-cell sm:visible">
@@ -335,132 +386,76 @@ export default () => {
 					</TableRow>
 				</TableHeader>
 				<TableBody>
-					<Index each={timelines}>
-						{(item, index) => (
-							<TableRow>
-								<TableCell class="w-4 md:w-8 py-2 pl-0 pr-4 md:p-4 hidden invisible sm:table-cell sm:visible">
-									<Checkbox
-										checked={item().checked}
-										onChange={() =>
+					<DragDropProvider
+						// collisionDetector={closestCenter}
+						onDragStart={({ draggable }) => setActiveId(draggable.id)}
+						onDragEnd={({ draggable, droppable }) => {
+							if (draggable && droppable) {
+								const currentItems = timelineIds();
+								const from = currentItems.indexOf(draggable.id as number);
+								const to = currentItems.indexOf(droppable.id as number);
+								// if (from !== to) {
+									setTimelines(
+										produce((timelines) => {
+											const [removed] = timelines.splice(from, 1);
+											timelines.splice(to, 0, removed);
+										}),
+									);
+								// }
+							}
+							setActiveId(null);
+						}}
+					>
+						<DragDropSensors />
+						<SortableProvider ids={timelineIds()}>
+							<For each={timelines}>
+								{(item, index) => (
+									<TimelineRow
+										item={item}
+										setChecked={(checked) => {
 											setTimelines(
-												produce((timelines) => {
-													timelines[index].checked = !timelines[index].checked;
+												(timeline) => timeline.id === item.id,
+												produce((timeline) => {
+													timeline.checked = checked;
 												}),
-											)
-										}
+											);
+										}}
+										onTimeChange={(type, value) => {
+											changeTime(type, item.id, value);
+										}}
+										onTimelineChange={(value) => {
+											setTimelines(
+												(timeline) => timeline.id === item.id,
+												produce((timeline) => {
+													timeline.text = value;
+												}),
+											);
+										}}
+										deleteTimeline={() => {
+											setTimelines((prev) => prev.toSpliced(index(), 1));
+										}}
 									/>
-								</TableCell>
-								<TableCell class="w-[5.5rem] py-2 sm:pl-0 pr-4 md:p-4">
-									<Popover>
-										<PopoverTrigger>{item().formattedTime}</PopoverTrigger>
-										<PopoverContent>
-											<div class="grid grid-cols-3 gap-2">
-												<Input
-													value={item().time[0].toString()}
-													onChange={(value) => changeTime("hour", index, value)}
-													type="number"
-													min={0}
-													max={99}
-													labelClass="text-sm"
-												>
-													Hour
-												</Input>
-												<Input
-													value={item().time[1].toString()}
-													onChange={(value) => changeTime("minute", index, value)}
-													type="number"
-													min={0}
-													max={59}
-													labelClass="text-sm"
-												>
-													Minutes
-												</Input>
-												<Input
-													value={item().time[2].toString()}
-													onChange={(value) => changeTime("second", index, value)}
-													type="number"
-													min={0}
-													max={59}
-													labelClass="text-sm"
-												>
-													Seconds
-												</Input>
-											</div>
-										</PopoverContent>
-									</Popover>
-								</TableCell>
-								<TableCell class="p-2 pl-0 md:p-4">
-									<div class="flex gap-2 md:gap-4">
-										<Input rootClass="flex-1"
-												type="text"
-												value={item().text}
-												onChange={(value) => {
-													setTimelines(
-														produce((timelines) => {
-															timelines[index].text = value;
-														}),
-													);
-												}}
-											/>
-										<div class="flex xl:gap-2">
-											<ClearButton
-												onClick={() =>
-													setTimelines(
-														produce((timelines) => {
-															timelines[index].text = "";
-														}),
-													)
-												}
-												class="hidden invisible xl:flex xl:visible hover:bg-foreground active:bg-foreground hover:text-background active:text-background"
-											/>
-											<PasteButton
-												paste={async (pasteItem) => {
-													try {
-														const data = await pasteItem.getType("text/plain");
-														const textData = await data.text();
-														setTimelines(
-															produce((timelines) => {
-																timelines[index].text = textData;
-															}),
-														);
-													} catch {
-														toast.error("Cannot paste text from clipboard");
-														return;
-													}
-												}}
-												class="hidden invisible xl:flex xl:visible hover:bg-foreground active:bg-foreground hover:text-background active:text-background"
-											/>
-											<CopyButton
-												copyType="text"
-												copyContent={`${item().formattedTime} ${item().text}`}
-												class="hidden invisible xl:flex xl:visible hover:bg-foreground active:bg-foreground hover:text-background active:text-background"
-											/>
-											<Tooltip>
-												<TooltipTrigger>
-													<Button
-														size="icon"
-														variant="ghost"
-														onClick={() => {
-															setTimelines((prev) => prev.toSpliced(index, 1));
-														}}
-														class="hover:bg-foreground active:bg-foreground hover:text-background active:text-background"
-													>
-														<TbX class="w-[1.2rem] h-[1.2rem]" />
-													</Button>
-												</TooltipTrigger>
-												<TooltipContent>Remove</TooltipContent>
-											</Tooltip>
-										</div>
-									</div>
-								</TableCell>
-								<TableCell class="w-6 md:w-8 p-0">
-									<div class="grid place-content-center">
-										<TbDotsVertical class="w-6 h-6 text-muted" />
-									</div>
-								</TableCell>
-							</TableRow>
-						)}
-					</Index>
+								)}
+							</For>
+						</SortableProvider>
+						<DragOverlay>
+							{activeId() !== null && (
+								<Index each={timelines}>
+									{(timeline) => {
+										if (timeline().id === activeId()) {
+											return (
+												<div class="w-full h-12 bg-foreground rounded-md shadow-lg flex items-center justify-center">
+													<div class="text-background font-semibold">
+														{timeline().formattedTime}
+													</div>
+												</div>
+											);
+										}
+									}}
+								</Index>
+							)}
+						</DragOverlay>
+					</DragDropProvider>
 				</TableBody>
 			</Table>
 			<div class="grid place-content-center mt-2">
