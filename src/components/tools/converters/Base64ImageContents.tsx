@@ -125,7 +125,6 @@ export default () => {
 							<CopyButton copyType="text" copyContent={text()} />
 						</div>
 					</div>
-
 					<TextField.Root
 						value={text()}
 						onChange={setText}
