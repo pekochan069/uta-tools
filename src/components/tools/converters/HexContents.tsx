@@ -58,64 +58,63 @@ export default () => {
 	};
 
 	return (
-		<div class="flex flex-col gap-6">
-			<ToolConfigSection>
-				<ToolConfigRoot>
-					<ToolConfigLabel
-						tool="Operation"
-						description="Select whether to encode or decode the input"
-					/>
-					<ToolConfig>
-						<label for="operation">
-							<Show when={isEncode()} fallback="Decode">
-								Encode
-							</Show>
-						</label>
-						<Switch
-							id="operation"
-							checked={isEncode()}
-							onChange={() => setIsEncode((prev) => !prev)}
+		<div class="flex flex-col">
+			<div class="mb-6">
+				<ToolConfigSection>
+					<ToolConfigRoot>
+						<ToolConfigLabel
+							tool="Operation"
+							description="Select whether to encode or decode the input"
 						/>
-					</ToolConfig>
-				</ToolConfigRoot>
-				<ToolConfigRoot>
-					<ToolConfigLabel
-						tool="Repeat"
-						description="Set repeat count for operation"
-					/>
-					<ToolConfig>
-						<Button
-							variant="outline"
-							onClick={() => {
-								if (repeat() > 1) {
-									setRepeat((prev) => prev - 1);
-								}
-							}}
-						>
-							<TbMinus />
-						</Button>
-						<Input
-							type="number"
-							min="1"
-							max="9"
-							readOnly
-							value={repeat()}
-							class="w-12 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-						/>
-						<Button
-							variant="outline"
-							onClick={() => {
-								if (repeat() < 9) {
-									setRepeat((prev) => prev + 1);
-								}
-							}}
-						>
-							<TbPlus />
-						</Button>
-					</ToolConfig>
-				</ToolConfigRoot>
-			</ToolConfigSection>
-			<div class="flex flex-col gap-2">
+						<ToolConfig>
+							<label for="operation">
+								<Show when={isEncode()} fallback="Decode">
+									Encode
+								</Show>
+							</label>
+							<Switch
+								id="operation"
+								checked={isEncode()}
+								onChange={() => setIsEncode((prev) => !prev)}
+							/>
+						</ToolConfig>
+					</ToolConfigRoot>
+					<ToolConfigRoot>
+						<ToolConfigLabel tool="Repeat" description="Set repeat count for operation" />
+						<ToolConfig>
+							<Button
+								variant="outline"
+								onClick={() => {
+									if (repeat() > 1) {
+										setRepeat((prev) => prev - 1);
+									}
+								}}
+							>
+								<TbMinus />
+							</Button>
+							<Input
+								type="number"
+								min="1"
+								max="9"
+								readOnly
+								value={repeat().toString()}
+								class="w-12 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+							/>
+							<Button
+								variant="outline"
+								onClick={() => {
+									if (repeat() < 9) {
+										setRepeat((prev) => prev + 1);
+									}
+								}}
+							>
+								<TbPlus />
+							</Button>
+						</ToolConfig>
+					</ToolConfigRoot>
+				</ToolConfigSection>
+			</div>
+			<div class="flex flex-col gap-2 md:mb-2">
 				<div class="mb-4">
 					<div class="flex mb-2 items-end justify-between">
 						<label for="input" class="text-sm font-semibold">
@@ -155,7 +154,7 @@ export default () => {
 					</TextField.Root>
 				</div>
 			</div>
-			<div class="grid place-content-center">
+			<div class="grid place-content-center md:mb-2">
 				<Button
 					variant="ghost"
 					class="h-full"

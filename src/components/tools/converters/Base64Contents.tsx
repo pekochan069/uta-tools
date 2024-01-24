@@ -64,10 +64,7 @@ export default () => {
 						</ToolConfig>
 					</ToolConfigRoot>
 					<ToolConfigRoot>
-						<ToolConfigLabel
-							tool="Repeat"
-							description="Set repeat count for operation"
-						/>
+						<ToolConfigLabel tool="Repeat" description="Set repeat count for operation" />
 						<ToolConfig>
 							<Button
 								variant="outline"
@@ -84,7 +81,7 @@ export default () => {
 								min="1"
 								max="9"
 								readOnly
-								value={repeat()}
+								value={repeat().toString()}
 								class="w-12 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
 							/>
 							<Button
