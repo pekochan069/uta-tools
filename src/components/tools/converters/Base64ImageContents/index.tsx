@@ -95,7 +95,7 @@ export default () => {
 							setFile(e.dataTransfer?.files[0]);
 						}
 					}}
-					class="border-[1px] rounded-md grid place-content-center h-32"
+					class="border-[1px] rounded-md grid place-content-center h-32 hover:cursor-pointer"
 				>
 					<BiSolidImageAdd ref={imageAddIconRef} class="w-16 h-16" />
 				</label>
