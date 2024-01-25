@@ -7,9 +7,7 @@ import {
 	DragDropSensors,
 	DragOverlay,
 	SortableProvider,
-	createSortable,
 	closestCenter,
-	useDragDropContext,
 	type Id,
 } from "@thisbeyond/solid-dnd";
 
@@ -20,21 +18,11 @@ import {
 	ToolConfigRoot,
 	ToolConfigSection,
 } from "~/components/tools/common/Config";
-import PasteButton from "~/components/tools/common/PasteButton";
-import ClearButton from "~/components/tools/common/ClearButton";
 import CopyButton from "~/components/tools/common/CopyButton";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "~/components/ui/table";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "~/components/ui/table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
-import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
 import { Input } from "~/components/ui/input";
 
 import type { TimelineType } from "./timelineTypes";
@@ -125,6 +113,8 @@ export default () => {
 	};
 
 	const sortTimelines = () => {
+		if (timelines.length === 0) return;
+
 		setTimelines(
 			timelines.toSorted((a, b) => {
 				const aSeconds = a.time[0] * 3600 + a.time[1] * 60 + a.time[2];
@@ -185,10 +175,6 @@ export default () => {
 				}),
 			);
 		});
-	});
-
-	createEffect(() => {
-		console.log(timelines);
 	});
 
 	return (
@@ -253,6 +239,7 @@ export default () => {
 
 									setMainInput(value);
 								}}
+								placeholder="30:30 Ado / Show"
 								rootClass="flex-1"
 							/>
 							<Tooltip>
@@ -267,14 +254,7 @@ export default () => {
 					</form>
 					<div class="flex justify-end">
 						<div class="grid grid-cols-2 gap-2">
-							<Button
-								onClick={() => {
-									if (timelines.length === 0) return;
-
-									sortTimelines();
-								}}
-								class="font-semibold"
-							>
+							<Button onClick={() => sortTimelines()} class="font-semibold">
 								Sort
 							</Button>
 							<Tooltip>
@@ -349,26 +329,26 @@ export default () => {
 								</div>
 							</div>
 						</TableHead>
-						<TableHead class="w-6 md:w-8 p-0" />
+						<TableHead class="w-6 md:w-8 p-0 hidden invisible sm:table-cell sm:visible" />
 					</TableRow>
 				</TableHeader>
 				<TableBody>
 					<DragDropProvider
-						// collisionDetector={closestCenter}
+						collisionDetector={closestCenter}
 						onDragStart={({ draggable }) => setActiveId(draggable.id)}
 						onDragEnd={({ draggable, droppable }) => {
 							if (draggable && droppable) {
 								const currentItems = timelineIds();
 								const from = currentItems.indexOf(draggable.id as number);
 								const to = currentItems.indexOf(droppable.id as number);
-								// if (from !== to) {
+								if (from !== to) {
 									setTimelines(
 										produce((timelines) => {
 											const [removed] = timelines.splice(from, 1);
 											timelines.splice(to, 0, removed);
 										}),
 									);
-								// }
+								}
 							}
 							setActiveId(null);
 						}}

@@ -126,7 +126,7 @@ export default (props: TimelineRowProps) => {
 					</div>
 				</div>
 			</TableCell>
-			<TableCell class="w-6 md:w-8 p-0">
+			<TableCell class="w-6 md:w-8 p-0 hidden invisible sm:table-cell sm:visible">
 				<div class="grid place-content-center text-muted-foreground hover:text-foreground" {...sortable.dragActivators}>
 					<TbDotsVertical class="w-6 h-6" />
 				</div>
