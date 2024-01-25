@@ -10,9 +10,16 @@ type Props = {
 };
 
 const { category, tool }: Props = Astro.props;
+
+const capitalize = (str: string) => {
+  return str
+    .split("-")
+    .map((s) => s[0].toUpperCase() + s.substring(1))
+    .join(" ");
+};
 ---
 
-<BaseLayout title={tool}>
+<BaseLayout title={capitalize(tool)}>
   <div
     class="md:grid md:grid-cols-[160px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"
   >
