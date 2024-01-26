@@ -304,6 +304,24 @@ export default () => {
 						<TableHead class="p-2 pl-0 md:px-4">
 							<div class="flex items-center">
 								<div class="flex-1">Text</div>
+								<div class="sm:invisible sm:hidden">
+									<Tooltip>
+										<TooltipTrigger>
+											<Button
+												size="icon"
+												variant="ghost"
+												onClick={() => {
+													setFold((prev) => !prev);
+												}}
+												data-fold={fold() ? "fold" : "unfold"}
+												class="hover:bg-foreground active:bg-foreground hover:text-background active:text-background text-foreground data-[fold=fold]:bg-destructive data-[fold=fold]:text-destructive-foreground"
+											>
+												<TbDotsVertical class="w-[1.2rem] h-[1.2rem]" />
+											</Button>
+										</TooltipTrigger>
+										<TooltipContent>{fold() ? "More" : "Fold"}</TooltipContent>
+									</Tooltip>
+								</div>
 								<div class="hidden invisible sm:flex sm:visible xl:gap-2">
 									<CopyButton
 										copyType="text"
@@ -313,7 +331,6 @@ export default () => {
 											.join("\n")}
 										class="hover:bg-foreground active:bg-foreground hover:text-background active:text-background text-foreground"
 									/>
-
 									<Tooltip>
 										<TooltipTrigger>
 											<Button
@@ -332,7 +349,7 @@ export default () => {
 								</div>
 							</div>
 						</TableHead>
-						<TableHead class="w-6 md:w-8 pr-2 pl-0">
+						<TableHead class="w-6 md:w-8 px-2 hidden invisible md:table-cell md:visible">
 							<Tooltip>
 								<TooltipTrigger>
 									<Button
