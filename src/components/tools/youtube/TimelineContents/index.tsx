@@ -38,8 +38,12 @@ export default () => {
 	// biome-ignore lint/suspicious/noExplicitAny: youtube iframe
 	const [player, setPlayer] = createSignal<any>();
 	const [playerReady, setPlayerReady] = createSignal(false);
-	const timelineIds = () => timelines.map((item) => item.id);
 	const [activeId, setActiveId] = createSignal<Id | null>(null);
+	const [fold, setFold] = createSignal(false);
+
+	const timelineIds = () => timelines.map((item) => item.id);
+
+	const FOLD_MAX_ROWS = 3;
 
 	const addTimeline = (text: string) => {
 		if (playerReady() === false || player() === null) return;
@@ -216,8 +220,6 @@ export default () => {
 						onSubmit={(event) => {
 							event.preventDefault();
 
-							if (mainInput() === "") return;
-
 							batch(() => {
 								addTimeline(mainInput());
 								setMainInput("");
@@ -311,6 +313,7 @@ export default () => {
 											.join("\n")}
 										class="hover:bg-foreground active:bg-foreground hover:text-background active:text-background text-foreground"
 									/>
+
 									<Tooltip>
 										<TooltipTrigger>
 											<Button
@@ -329,13 +332,32 @@ export default () => {
 								</div>
 							</div>
 						</TableHead>
-						<TableHead class="w-6 md:w-8 p-0 hidden invisible sm:table-cell sm:visible" />
+						<TableHead class="w-6 md:w-8 pr-2 pl-0">
+							<Tooltip>
+								<TooltipTrigger>
+									<Button
+										size="icon"
+										variant="ghost"
+										onClick={() => {
+											setFold((prev) => !prev);
+										}}
+										data-fold={fold() ? "fold" : "unfold"}
+										class="hover:bg-foreground active:bg-foreground hover:text-background active:text-background text-foreground data-[fold=fold]:bg-destructive data-[fold=fold]:text-destructive-foreground"
+									>
+										<TbDotsVertical class="w-[1.2rem] h-[1.2rem]" />
+									</Button>
+								</TooltipTrigger>
+								<TooltipContent>{fold() ? "More" : "Fold"}</TooltipContent>
+							</Tooltip>
+						</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
 					<DragDropProvider
 						collisionDetector={closestCenter}
-						onDragStart={({ draggable }) => setActiveId(draggable.id)}
+						onDragStart={({ draggable }) => {
+							setActiveId(draggable.id);
+						}}
 						onDragEnd={({ draggable, droppable }) => {
 							if (draggable && droppable) {
 								const currentItems = timelineIds();
@@ -355,32 +377,31 @@ export default () => {
 					>
 						<DragDropSensors />
 						<SortableProvider ids={timelineIds()}>
-							<For each={timelines}>
+							<For
+								each={fold() ? timelines.toSpliced(0, timelines.length - FOLD_MAX_ROWS) : timelines}
+							>
 								{(item, index) => (
 									<TimelineRow
 										item={item}
-										setChecked={(checked) => {
+										fold={fold()}
+										onTimeChange={(type, value) => changeTime(type, item.id, value)}
+										deleteTimeline={() => setTimelines((prev) => prev.toSpliced(index(), 1))}
+										setChecked={(checked) =>
 											setTimelines(
 												(timeline) => timeline.id === item.id,
 												produce((timeline) => {
 													timeline.checked = checked;
 												}),
-											);
-										}}
-										onTimeChange={(type, value) => {
-											changeTime(type, item.id, value);
-										}}
-										onTimelineChange={(value) => {
+											)
+										}
+										onTimelineChange={(value) =>
 											setTimelines(
 												(timeline) => timeline.id === item.id,
 												produce((timeline) => {
 													timeline.text = value;
 												}),
-											);
-										}}
-										deleteTimeline={() => {
-											setTimelines((prev) => prev.toSpliced(index(), 1));
-										}}
+											)
+										}
 									/>
 								)}
 							</For>
@@ -414,10 +435,12 @@ export default () => {
 							onClick={() => {
 								addTimeline("");
 
-								scroll({
-									top: document.body.scrollHeight,
-									behavior: "smooth",
-								});
+								if (!fold()) {
+									scroll({
+										top: document.body.scrollHeight,
+										behavior: "smooth",
+									});
+								}
 							}}
 							class="h-12 w-12"
 						>

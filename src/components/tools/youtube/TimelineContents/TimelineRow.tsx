@@ -14,6 +14,7 @@ import { TbDotsVertical, TbX } from "solid-icons/tb";
 
 type TimelineRowProps = {
 	item: TimelineType;
+	fold: boolean;
 	setChecked: (checked: boolean) => void;
 	onTimeChange: (type: "hour" | "minute" | "second", value: string) => void;
 	onTimelineChange: (value: string) => void;
@@ -129,8 +130,9 @@ export default (props: TimelineRowProps) => {
 			</TableCell>
 			<TableCell class="w-6 md:w-8 p-0 hidden invisible sm:table-cell sm:visible">
 				<div
-					class="grid place-content-center text-muted-foreground hover:text-foreground"
-					{...sortable.dragActivators}
+					data-fold={props.fold ? "fold" : "unfold"}
+					class="grid place-content-center text-muted-foreground hover:text-foreground data-[fold=fold]:text-muted"
+					{...(props.fold ? {} : sortable.dragActivators)}
 				>
 					<TbDotsVertical class="w-6 h-6" />
 				</div>
