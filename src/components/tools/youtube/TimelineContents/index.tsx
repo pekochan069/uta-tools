@@ -239,7 +239,7 @@ export default () => {
 
 									setMainInput(value);
 								}}
-								placeholder="30:30 Ado / Show"
+								placeholder="Ado / Show"
 								rootClass="flex-1"
 							/>
 							<Tooltip>
