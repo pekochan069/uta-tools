@@ -43,7 +43,7 @@ export default () => {
 
 	const timelineIds = () => timelines.map((item) => item.id);
 
-	const FOLD_MAX_ROWS = 3;
+	const FOLD_MAX_ROWS = 2;
 
 	const addTimeline = (text: string) => {
 		if (playerReady() === false || player() === null) return;
