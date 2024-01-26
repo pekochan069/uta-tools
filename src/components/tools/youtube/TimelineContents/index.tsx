@@ -349,7 +349,7 @@ export default () => {
 								</div>
 							</div>
 						</TableHead>
-						<TableHead class="w-6 md:w-8 px-2 hidden invisible md:table-cell md:visible">
+						<TableHead class="w-6 md:w-8 px-2 hidden invisible sm:table-cell sm:visible">
 							<Tooltip>
 								<TooltipTrigger>
 									<Button
