@@ -22,6 +22,7 @@ type TimelineRowProps = {
 
 export default (props: TimelineRowProps) => {
 	const sortable = createSortable(props.item.id);
+	// @ts-ignore
 	const [state] = useDragDropContext();
 
 	return (
@@ -127,7 +128,10 @@ export default (props: TimelineRowProps) => {
 				</div>
 			</TableCell>
 			<TableCell class="w-6 md:w-8 p-0 hidden invisible sm:table-cell sm:visible">
-				<div class="grid place-content-center text-muted-foreground hover:text-foreground" {...sortable.dragActivators}>
+				<div
+					class="grid place-content-center text-muted-foreground hover:text-foreground"
+					{...sortable.dragActivators}
+				>
 					<TbDotsVertical class="w-6 h-6" />
 				</div>
 			</TableCell>
