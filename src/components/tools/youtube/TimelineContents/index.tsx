@@ -1,4 +1,15 @@
-import { For, Index, Show, batch, createEffect, createSignal, untrack } from "solid-js";
+import {
+	For,
+	Index,
+	Show,
+	batch,
+	createEffect,
+	createSignal,
+	on,
+	onCleanup,
+	onMount,
+	untrack,
+} from "solid-js";
 import { createStore, produce } from "solid-js/store";
 import { TbCirclePlus, TbDotsVertical, TbX } from "solid-icons/tb";
 import { toast } from "solid-sonner";
@@ -28,7 +39,39 @@ import { Input } from "~/components/ui/input";
 import type { TimelineType } from "./timelineTypes";
 import TimelineRow from "./TimelineRow";
 
+const FoldButton = (props: {
+	fold: boolean;
+	setFold: (value: boolean) => void;
+	scrollToWorkingArea: () => void;
+}) => {
+	return (
+		<Tooltip>
+			<TooltipTrigger>
+				<Button
+					size="icon"
+					variant="ghost"
+					onClick={() => {
+						if (!props.fold) {
+							props.scrollToWorkingArea();
+						}
+
+						props.setFold(!props.fold);
+					}}
+					data-fold={props.fold ? "fold" : "unfold"}
+					class="hover:bg-foreground active:bg-foreground hover:text-background active:text-background text-foreground data-[fold=fold]:bg-destructive data-[fold=fold]:text-destructive-foreground"
+				>
+					<TbDotsVertical class="w-[1.2rem] h-[1.2rem]" />
+				</Button>
+			</TooltipTrigger>
+			<TooltipContent>{props.fold ? "More" : "Fold"}</TooltipContent>
+		</Tooltip>
+	);
+};
+
 export default () => {
+	let tableBodyRef: HTMLTableSectionElement | undefined;
+	let playerContainerRef: HTMLDivElement | undefined;
+
 	const [url, setUrl] = createSignal("");
 	const videoId = () => getVideoId(url());
 	const [prevVideoId, setPrevVideoId] = createSignal("");
@@ -40,13 +83,12 @@ export default () => {
 	const [playerReady, setPlayerReady] = createSignal(false);
 	const [activeId, setActiveId] = createSignal<Id | null>(null);
 	const [fold, setFold] = createSignal(false);
+	const [maxRows, setMaxRows] = createSignal(2);
 
 	const timelineIds = () => timelines.map((item) => item.id);
 
-	const FOLD_MAX_ROWS = 2;
-
 	const addTimeline = (text: string) => {
-		if (playerReady() === false || player() === null) return;
+		// if (playerReady() === false || player() === null) return;
 
 		const seconds = player()?.getCurrentTime() ?? 0;
 		const currentTime = secondsToTime(seconds);
@@ -145,6 +187,43 @@ export default () => {
 		return `${hours}${minutes}:${seconds}`;
 	};
 
+	const calculateMaxRows = () => {
+		if (tableBodyRef === undefined || playerContainerRef === undefined) return;
+
+		const tableBodyStart =
+			tableBodyRef.getBoundingClientRect().top + document.documentElement.scrollTop;
+		const playerContainerStart =
+			playerContainerRef.getBoundingClientRect().top + document.documentElement.scrollTop;
+		const rowHeight = window.innerWidth < 768 ? 56.5 : 72.5;
+
+		const newMaxRows =
+			Math.floor((window.innerHeight - (tableBodyStart - playerContainerStart + 16)) / rowHeight) -
+			1;
+
+		setMaxRows(newMaxRows < 2 ? 2 : newMaxRows);
+	};
+
+	const scrollToWorkingArea = () => {
+		if (playerContainerRef === undefined) return;
+
+		const playerContainerStart =
+			playerContainerRef.getBoundingClientRect().top + document.documentElement.scrollTop;
+
+		window.scroll({
+			top: playerContainerStart - 16,
+			behavior: "smooth",
+		});
+	};
+
+	onMount(() => {
+		calculateMaxRows();
+		window.addEventListener("resize", calculateMaxRows);
+	});
+
+	onCleanup(() => {
+		window.removeEventListener("resize", calculateMaxRows);
+	});
+
 	createEffect(() => {
 		if (typeof window === "undefined") return;
 
@@ -174,6 +253,7 @@ export default () => {
 							});
 
 							event.target.playVideo();
+							scrollToWorkingArea();
 						},
 					},
 				}),
@@ -201,7 +281,7 @@ export default () => {
 				</ToolConfigRoot>
 			</ToolConfigSection>
 			<div class="flex justify-center mt-6 md:mt-8">
-				<div class="w-full max-w-xl bg-muted rounded-md shadow-sm">
+				<div ref={playerContainerRef} class="w-full max-w-xl bg-muted rounded-md shadow-sm">
 					<div class="h-0 relative pb-[56.25%] w-full">
 						<Show
 							when={playerReady() === false && videoId() === "" && player() !== null}
@@ -305,22 +385,11 @@ export default () => {
 							<div class="flex items-center">
 								<div class="flex-1">Text</div>
 								<div class="sm:invisible sm:hidden">
-									<Tooltip>
-										<TooltipTrigger>
-											<Button
-												size="icon"
-												variant="ghost"
-												onClick={() => {
-													setFold((prev) => !prev);
-												}}
-												data-fold={fold() ? "fold" : "unfold"}
-												class="hover:bg-foreground active:bg-foreground hover:text-background active:text-background text-foreground data-[fold=fold]:bg-destructive data-[fold=fold]:text-destructive-foreground"
-											>
-												<TbDotsVertical class="w-[1.2rem] h-[1.2rem]" />
-											</Button>
-										</TooltipTrigger>
-										<TooltipContent>{fold() ? "More" : "Fold"}</TooltipContent>
-									</Tooltip>
+									<FoldButton
+										fold={fold()}
+										setFold={(value) => setFold(value)}
+										scrollToWorkingArea={scrollToWorkingArea}
+									/>
 								</div>
 								<div class="hidden invisible sm:flex sm:visible xl:gap-2">
 									<CopyButton
@@ -350,26 +419,15 @@ export default () => {
 							</div>
 						</TableHead>
 						<TableHead class="w-6 md:w-8 px-2 hidden invisible sm:table-cell sm:visible">
-							<Tooltip>
-								<TooltipTrigger>
-									<Button
-										size="icon"
-										variant="ghost"
-										onClick={() => {
-											setFold((prev) => !prev);
-										}}
-										data-fold={fold() ? "fold" : "unfold"}
-										class="hover:bg-foreground active:bg-foreground hover:text-background active:text-background text-foreground data-[fold=fold]:bg-destructive data-[fold=fold]:text-destructive-foreground"
-									>
-										<TbDotsVertical class="w-[1.2rem] h-[1.2rem]" />
-									</Button>
-								</TooltipTrigger>
-								<TooltipContent>{fold() ? "More" : "Fold"}</TooltipContent>
-							</Tooltip>
+							<FoldButton
+								fold={fold()}
+								setFold={(value) => setFold(value)}
+								scrollToWorkingArea={scrollToWorkingArea}
+							/>
 						</TableHead>
 					</TableRow>
 				</TableHeader>
-				<TableBody>
+				<TableBody ref={tableBodyRef} class="overflow-hidden">
 					<DragDropProvider
 						collisionDetector={closestCenter}
 						onDragStart={({ draggable }) => {
@@ -394,9 +452,7 @@ export default () => {
 					>
 						<DragDropSensors />
 						<SortableProvider ids={timelineIds()}>
-							<For
-								each={fold() ? timelines.toSpliced(0, timelines.length - FOLD_MAX_ROWS) : timelines}
-							>
+							<For each={fold() ? timelines.toSpliced(0, timelines.length - maxRows()) : timelines}>
 								{(item, index) => (
 									<TimelineRow
 										item={item}
@@ -453,10 +509,14 @@ export default () => {
 								addTimeline("");
 
 								if (!fold()) {
-									scroll({
-										top: document.body.scrollHeight,
-										behavior: "smooth",
-									});
+									if (timelines.length > maxRows()) {
+										setFold(true);
+									} else {
+										scroll({
+											top: document.body.scrollHeight,
+											behavior: "smooth",
+										});
+									}
 								}
 							}}
 							class="h-12 w-12"
