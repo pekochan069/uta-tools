@@ -280,252 +280,256 @@ export default () => {
 					</ToolConfig>
 				</ToolConfigRoot>
 			</ToolConfigSection>
-			<div class="flex justify-center mt-6 md:mt-8">
-				<div ref={playerContainerRef} class="w-full max-w-xl bg-muted rounded-md shadow-sm">
-					<div class="h-0 relative pb-[56.25%] w-full">
-						<Show
-							when={playerReady() === false && videoId() === "" && player() !== null}
-							fallback={<div id="player" class="top-0 left-0 w-full h-full absolute" />}
-						>
-							<div class="w-full h-full absolute grid place-content-center">
-								<img src="/logo/128.png" alt="Waiting for input" />
-							</div>
-						</Show>
-					</div>
-				</div>
-			</div>
-			<div class="mt-6 md:mt-8">
-				<div class="flex gap-4 w-full max-w-xl mx-auto flex-col md:flex-row">
-					<form
-						onSubmit={(event) => {
-							event.preventDefault();
-
-							batch(() => {
-								addTimeline(mainInput());
-								setMainInput("");
-							});
-						}}
-						class="flex-1"
-					>
-						<div class="flex gap-2">
-							<Input
-								value={mainInput()}
-								onChange={(value) => {
-									if (player() === undefined) {
-										if (checkUrl(value)) {
-											setUrl(value);
-										}
-
-										return;
-									}
-
-									setMainInput(value);
-								}}
-								placeholder="Ado / Show"
-								rootClass="flex-1"
-							/>
-							<Tooltip>
-								<TooltipTrigger>
-									<Button size="icon" variant="ghost">
-										<TbCirclePlus class="w-[1.6rem] h-[1.6rem]" />
-									</Button>
-								</TooltipTrigger>
-								<TooltipContent>Add timeline</TooltipContent>
-							</Tooltip>
-						</div>
-					</form>
-					<div class="flex justify-end">
-						<div class="grid grid-cols-2 gap-2">
-							<Button onClick={() => sortTimelines()} class="font-semibold">
-								Sort
-							</Button>
-							<Tooltip>
-								<TooltipTrigger>
-									<Button
-										onClick={() => {
-											if (timelines.length === 0) return;
-
-											const text = timelines
-												.map((timeline) => `${timeline.formattedTime} ${timeline.text}`)
-												.join("\n");
-
-											navigator.clipboard.writeText(text);
-											toast("Copied timeline to clipboard");
-										}}
-										class="font-semibold"
-									>
-										Copy
-									</Button>
-								</TooltipTrigger>
-								<TooltipContent>Copy all timeline</TooltipContent>
-							</Tooltip>
+			<div class="min-h-[100svh]">
+				<div class="flex justify-center mt-6 md:mt-8">
+					<div ref={playerContainerRef} class="w-full max-w-xl bg-muted rounded-md shadow-sm">
+						<div class="h-0 relative pb-[56.25%] w-full">
+							<Show
+								when={playerReady() === false && videoId() === "" && player() !== null}
+								fallback={<div id="player" class="top-0 left-0 w-full h-full absolute" />}
+							>
+								<div class="w-full h-full absolute grid place-content-center">
+									<img src="/logo/128.png" alt="Waiting for input" />
+								</div>
+							</Show>
 						</div>
 					</div>
 				</div>
-			</div>
-			<Table class="mt-4 overflow-hidden">
-				<TableHeader>
-					<TableRow>
-						<TableHead class="w-4 md:w-8 py-2 pl-0 pr-4 md:p-4 hidden invisible sm:table-cell sm:visible">
-							<Checkbox
-								checked={timelines.length > 0 && timelines.every((current) => current.checked)}
-								onChange={(checked) => {
-									setTimelines(
-										produce((timelines) => {
-											for (const timeline of timelines) {
-												timeline.checked = checked;
-											}
-										}),
-									);
-								}}
-							/>
-						</TableHead>
-						<TableHead class="w-[5.5rem] py-2 sm:pl-0 pr-4 md:p-4">Time</TableHead>
-						<TableHead class="p-2 pl-0 md:px-4">
-							<div class="flex items-center">
-								<div class="flex-1">Text</div>
-								<div class="sm:invisible sm:hidden">
-									<FoldButton
-										fold={fold()}
-										setFold={(value) => setFold(value)}
-										scrollToWorkingArea={scrollToWorkingArea}
-									/>
-								</div>
-								<div class="hidden invisible sm:flex sm:visible xl:gap-2">
-									<CopyButton
-										copyType="text"
-										copyContent={timelines
-											.filter((timeline) => timeline.checked)
-											.map((timeline) => `${timeline.formattedTime} ${timeline.text}`)
-											.join("\n")}
-										class="hover:bg-foreground active:bg-foreground hover:text-background active:text-background text-foreground"
-									/>
-									<Tooltip>
-										<TooltipTrigger>
-											<Button
-												size="icon"
-												variant="ghost"
-												onClick={() => {
-													setTimelines(timelines.filter((timeline) => !timeline.checked));
-												}}
-												class="hover:bg-foreground active:bg-foreground hover:text-background active:text-background text-foreground"
-											>
-												<TbX class="w-[1.2rem] h-[1.2rem]" />
-											</Button>
-										</TooltipTrigger>
-										<TooltipContent>Remove</TooltipContent>
-									</Tooltip>
-								</div>
-							</div>
-						</TableHead>
-						<TableHead class="w-6 md:w-8 px-2 hidden invisible sm:table-cell sm:visible">
-							<FoldButton
-								fold={fold()}
-								setFold={(value) => setFold(value)}
-								scrollToWorkingArea={scrollToWorkingArea}
-							/>
-						</TableHead>
-					</TableRow>
-				</TableHeader>
-				<TableBody ref={tableBodyRef} class="overflow-hidden">
-					<DragDropProvider
-						collisionDetector={closestCenter}
-						onDragStart={({ draggable }) => {
-							setActiveId(draggable.id);
-						}}
-						onDragEnd={({ draggable, droppable }) => {
-							if (draggable && droppable) {
-								const currentItems = timelineIds();
-								const from = currentItems.indexOf(draggable.id as number);
-								const to = currentItems.indexOf(droppable.id as number);
-								if (from !== to) {
-									setTimelines(
-										produce((timelines) => {
-											const [removed] = timelines.splice(from, 1);
-											timelines.splice(to, 0, removed);
-										}),
-									);
-								}
-							}
-							setActiveId(null);
-						}}
-					>
-						<DragDropSensors />
-						<SortableProvider ids={timelineIds()}>
-							<For each={fold() ? timelines.toSpliced(0, timelines.length - maxRows()) : timelines}>
-								{(item, index) => (
-									<TimelineRow
-										item={item}
-										fold={fold()}
-										onTimeChange={(type, value) => changeTime(type, item.id, value)}
-										deleteTimeline={() => setTimelines((prev) => prev.toSpliced(index(), 1))}
-										setChecked={(checked) =>
-											setTimelines(
-												(timeline) => timeline.id === item.id,
-												produce((timeline) => {
-													timeline.checked = checked;
-												}),
-											)
-										}
-										onTimelineChange={(value) =>
-											setTimelines(
-												(timeline) => timeline.id === item.id,
-												produce((timeline) => {
-													timeline.text = value;
-												}),
-											)
-										}
-									/>
-								)}
-							</For>
-						</SortableProvider>
-						<DragOverlay>
-							{activeId() !== null && (
-								<Index each={timelines}>
-									{(timeline) => {
-										if (timeline().id === activeId()) {
-											return (
-												<div class="w-full h-12 bg-foreground rounded-md shadow-lg flex items-center justify-center">
-													<div class="text-background font-semibold">
-														{timeline().formattedTime}
-													</div>
-												</div>
-											);
-										}
-									}}
-								</Index>
-							)}
-						</DragOverlay>
-					</DragDropProvider>
-				</TableBody>
-			</Table>
-			<div class="grid place-content-center mt-2">
-				<Tooltip>
-					<TooltipTrigger>
-						<Button
-							size="icon"
-							variant="ghost"
-							onClick={() => {
-								addTimeline("");
+				<div class="mt-6 md:mt-8">
+					<div class="flex gap-4 w-full max-w-xl mx-auto flex-col md:flex-row">
+						<form
+							onSubmit={(event) => {
+								event.preventDefault();
 
-								if (!fold()) {
-									if (timelines.length > maxRows()) {
-										setFold(true);
-									} else {
-										scroll({
-											top: document.body.scrollHeight,
-											behavior: "smooth",
-										});
-									}
-								}
+								batch(() => {
+									addTimeline(mainInput());
+									setMainInput("");
+								});
 							}}
-							class="h-12 w-12"
+							class="flex-1"
 						>
-							<TbCirclePlus class="w-8 h-8" />
-						</Button>
-					</TooltipTrigger>
-					<TooltipContent>Add empty timeline</TooltipContent>
-				</Tooltip>
+							<div class="flex gap-2">
+								<Input
+									value={mainInput()}
+									onChange={(value) => {
+										if (player() === undefined) {
+											if (checkUrl(value)) {
+												setUrl(value);
+											}
+
+											return;
+										}
+
+										setMainInput(value);
+									}}
+									placeholder="Ado / Show"
+									rootClass="flex-1"
+								/>
+								<Tooltip>
+									<TooltipTrigger>
+										<Button size="icon" variant="ghost">
+											<TbCirclePlus class="w-[1.6rem] h-[1.6rem]" />
+										</Button>
+									</TooltipTrigger>
+									<TooltipContent>Add timeline</TooltipContent>
+								</Tooltip>
+							</div>
+						</form>
+						<div class="flex justify-end">
+							<div class="grid grid-cols-2 gap-2">
+								<Button onClick={() => sortTimelines()} class="font-semibold">
+									Sort
+								</Button>
+								<Tooltip>
+									<TooltipTrigger>
+										<Button
+											onClick={() => {
+												if (timelines.length === 0) return;
+
+												const text = timelines
+													.map((timeline) => `${timeline.formattedTime} ${timeline.text}`)
+													.join("\n");
+
+												navigator.clipboard.writeText(text);
+												toast("Copied timeline to clipboard");
+											}}
+											class="font-semibold"
+										>
+											Copy
+										</Button>
+									</TooltipTrigger>
+									<TooltipContent>Copy all timeline</TooltipContent>
+								</Tooltip>
+							</div>
+						</div>
+					</div>
+				</div>
+				<Table class="mt-4 overflow-hidden">
+					<TableHeader>
+						<TableRow>
+							<TableHead class="w-4 md:w-8 py-2 pl-0 pr-4 md:p-4 hidden invisible sm:table-cell sm:visible">
+								<Checkbox
+									checked={timelines.length > 0 && timelines.every((current) => current.checked)}
+									onChange={(checked) => {
+										setTimelines(
+											produce((timelines) => {
+												for (const timeline of timelines) {
+													timeline.checked = checked;
+												}
+											}),
+										);
+									}}
+								/>
+							</TableHead>
+							<TableHead class="w-[5.5rem] py-2 sm:pl-0 pr-4 md:p-4">Time</TableHead>
+							<TableHead class="p-2 pl-0 md:px-4">
+								<div class="flex items-center">
+									<div class="flex-1">Text</div>
+									<div class="sm:invisible sm:hidden">
+										<FoldButton
+											fold={fold()}
+											setFold={(value) => setFold(value)}
+											scrollToWorkingArea={scrollToWorkingArea}
+										/>
+									</div>
+									<div class="hidden invisible sm:flex sm:visible xl:gap-2">
+										<CopyButton
+											copyType="text"
+											copyContent={timelines
+												.filter((timeline) => timeline.checked)
+												.map((timeline) => `${timeline.formattedTime} ${timeline.text}`)
+												.join("\n")}
+											class="hover:bg-foreground active:bg-foreground hover:text-background active:text-background text-foreground"
+										/>
+										<Tooltip>
+											<TooltipTrigger>
+												<Button
+													size="icon"
+													variant="ghost"
+													onClick={() => {
+														setTimelines(timelines.filter((timeline) => !timeline.checked));
+													}}
+													class="hover:bg-foreground active:bg-foreground hover:text-background active:text-background text-foreground"
+												>
+													<TbX class="w-[1.2rem] h-[1.2rem]" />
+												</Button>
+											</TooltipTrigger>
+											<TooltipContent>Remove</TooltipContent>
+										</Tooltip>
+									</div>
+								</div>
+							</TableHead>
+							<TableHead class="w-6 md:w-8 px-2 hidden invisible sm:table-cell sm:visible">
+								<FoldButton
+									fold={fold()}
+									setFold={(value) => setFold(value)}
+									scrollToWorkingArea={scrollToWorkingArea}
+								/>
+							</TableHead>
+						</TableRow>
+					</TableHeader>
+					<TableBody ref={tableBodyRef} class="overflow-hidden">
+						<DragDropProvider
+							collisionDetector={closestCenter}
+							onDragStart={({ draggable }) => {
+								setActiveId(draggable.id);
+							}}
+							onDragEnd={({ draggable, droppable }) => {
+								if (draggable && droppable) {
+									const currentItems = timelineIds();
+									const from = currentItems.indexOf(draggable.id as number);
+									const to = currentItems.indexOf(droppable.id as number);
+									if (from !== to) {
+										setTimelines(
+											produce((timelines) => {
+												const [removed] = timelines.splice(from, 1);
+												timelines.splice(to, 0, removed);
+											}),
+										);
+									}
+								}
+								setActiveId(null);
+							}}
+						>
+							<DragDropSensors />
+							<SortableProvider ids={timelineIds()}>
+								<For
+									each={fold() ? timelines.toSpliced(0, timelines.length - maxRows()) : timelines}
+								>
+									{(item, index) => (
+										<TimelineRow
+											item={item}
+											fold={fold()}
+											onTimeChange={(type, value) => changeTime(type, item.id, value)}
+											deleteTimeline={() => setTimelines((prev) => prev.toSpliced(index(), 1))}
+											setChecked={(checked) =>
+												setTimelines(
+													(timeline) => timeline.id === item.id,
+													produce((timeline) => {
+														timeline.checked = checked;
+													}),
+												)
+											}
+											onTimelineChange={(value) =>
+												setTimelines(
+													(timeline) => timeline.id === item.id,
+													produce((timeline) => {
+														timeline.text = value;
+													}),
+												)
+											}
+										/>
+									)}
+								</For>
+							</SortableProvider>
+							<DragOverlay>
+								{activeId() !== null && (
+									<Index each={timelines}>
+										{(timeline) => {
+											if (timeline().id === activeId()) {
+												return (
+													<div class="w-full h-12 bg-foreground rounded-md shadow-lg flex items-center justify-center">
+														<div class="text-background font-semibold">
+															{timeline().formattedTime}
+														</div>
+													</div>
+												);
+											}
+										}}
+									</Index>
+								)}
+							</DragOverlay>
+						</DragDropProvider>
+					</TableBody>
+				</Table>
+				<div class="grid place-content-center mt-2">
+					<Tooltip>
+						<TooltipTrigger>
+							<Button
+								size="icon"
+								variant="ghost"
+								onClick={() => {
+									addTimeline("");
+
+									if (!fold()) {
+										if (timelines.length > maxRows()) {
+											setFold(true);
+										} else {
+											scroll({
+												top: document.body.scrollHeight,
+												behavior: "smooth",
+											});
+										}
+									}
+								}}
+								class="h-12 w-12"
+							>
+								<TbCirclePlus class="w-8 h-8" />
+							</Button>
+						</TooltipTrigger>
+						<TooltipContent>Add empty timeline</TooltipContent>
+					</Tooltip>
+				</div>
 			</div>
 		</div>
 	);
