@@ -4,6 +4,7 @@ import "overlayscrollbars/overlayscrollbars.css";
 import { Toaster } from "solid-sonner";
 
 import Navbar from "../components/navbar/Navbar.astro";
+import ScrollToTop from "~/components/ScrollToTop.astro";
 
 import "~/styles/root.css";
 
@@ -37,6 +38,7 @@ const { title = "Uta Tools", useTransitions = false } = Astro.props;
         position="bottom-right"
         client:load
       />
+      <ScrollToTop />
     </div>
   </body>
   <script>

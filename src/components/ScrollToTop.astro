@@ -1,0 +1,33 @@
+---
+import { TbArrowBigUpLineFilled } from "solid-icons/tb";
+---
+
+<button
+  class="fixed bottom-6 right-8 z-50 hidden h-8 w-8 place-content-center rounded-full bg-primary text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+  id="scroll-to-top"
+>
+  <TbArrowBigUpLineFilled />
+  <span class="sr-only">Scroll to top</span>
+</button>
+<script>
+  window.addEventListener("scroll", () => {
+    const scrollToTop = document.querySelector("#scroll-to-top");
+
+    if (!scrollToTop) return;
+
+    if (
+      document.body.scrollTop > 20 ||
+      document.documentElement.scrollTop > 20
+    ) {
+      scrollToTop.classList.remove("hidden");
+      scrollToTop.classList.add("grid");
+    } else {
+      scrollToTop.classList.add("hidden");
+      scrollToTop.classList.remove("grid");
+    }
+  });
+
+  document.querySelector("#scroll-to-top")?.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+</script>
