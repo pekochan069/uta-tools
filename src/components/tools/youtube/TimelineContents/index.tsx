@@ -88,7 +88,7 @@ export default () => {
 	const timelineIds = () => timelines.map((item) => item.id);
 
 	const addTimeline = (text: string) => {
-		// if (playerReady() === false || player() === null) return;
+		if (playerReady() === false || player() === null) return;
 
 		const seconds = player()?.getCurrentTime() ?? 0;
 		const currentTime = secondsToTime(seconds);
