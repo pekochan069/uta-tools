@@ -233,6 +233,7 @@ export default () => {
 			batch(() => {
 				player().loadVideoById(videoId(), 0, "large");
 				setPrevVideoId(videoId());
+				scrollToWorkingArea();
 			});
 
 			return;
