@@ -1,12 +1,12 @@
 import { Type } from "@sinclair/typebox";
 import { wrap } from "@decs/typeschema";
-import { shortLink } from "drizzle/schema";
 import { eq, sql } from "drizzle-orm";
 
 import { publicProcedure, router } from ".";
 import { db } from "~/server/db";
 import { Err, None, Ok, Some, type Result, type Maybe } from "~/lib/types";
 import { createId } from "~/lib/nanoid";
+import { shortLink } from "../db/schema";
 
 export const trpcRouter = router({
 	checkSlug: publicProcedure.input(wrap(Type.String())).query(async ({ input }) => {
