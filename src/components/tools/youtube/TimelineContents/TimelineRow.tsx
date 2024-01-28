@@ -36,7 +36,7 @@ export default (props: TimelineRowProps) => {
 			class="sortable"
 			style={transformStyle(sortable.transform)}
 		>
-			<TableCell class="w-4 md:w-8 py-2 pl-0 pr-4 md:p-4 hidden invisible sm:table-cell sm:visible">
+			<TableCell class="w-4 md:w-8 py-2 pl-0 pr-4 md:p-4">
 				<Checkbox
 					checked={props.item.checked}
 					onChange={() => props.setChecked(!props.item.checked)}

@@ -5,12 +5,12 @@ import {
 	batch,
 	createEffect,
 	createSignal,
-	on,
 	onCleanup,
 	onMount,
 	untrack,
 } from "solid-js";
 import { createStore, produce } from "solid-js/store";
+import { BsPersonWorkspace } from "solid-icons/bs";
 import { TbCirclePlus, TbDotsVertical, TbX } from "solid-icons/tb";
 import { toast } from "solid-sonner";
 import {
@@ -38,11 +38,11 @@ import { Input } from "~/components/ui/input";
 
 import type { TimelineType } from "./timelineTypes";
 import TimelineRow from "./TimelineRow";
+import PasteButton from "../../common/PasteButton";
 
 const FoldButton = (props: {
 	fold: boolean;
 	setFold: (value: boolean) => void;
-	scrollToWorkingArea: () => void;
 }) => {
 	return (
 		<Tooltip>
@@ -51,10 +51,6 @@ const FoldButton = (props: {
 					size="icon"
 					variant="ghost"
 					onClick={() => {
-						if (!props.fold) {
-							props.scrollToWorkingArea();
-						}
-
 						props.setFold(!props.fold);
 					}}
 					data-fold={props.fold ? "fold" : "unfold"}
@@ -84,6 +80,7 @@ export default () => {
 	const [activeId, setActiveId] = createSignal<Id | null>(null);
 	const [fold, setFold] = createSignal(false);
 	const [maxRows, setMaxRows] = createSignal(2);
+	const [onMobile, setOnMobile] = createSignal(false);
 
 	const timelineIds = () => timelines.map((item) => item.id);
 
@@ -215,13 +212,31 @@ export default () => {
 		});
 	};
 
+	const onWindowScroll = () => {
+		const width = window.innerWidth;
+
+		if (width < 768 && onMobile()) {
+			return;
+		}
+
+		calculateMaxRows();
+
+		if (width < 768 && !onMobile()) {
+			setOnMobile(true);
+		}
+
+		if (width >= 768 && onMobile()) {
+			setOnMobile(false);
+		}
+	};
+
 	onMount(() => {
 		calculateMaxRows();
-		window.addEventListener("resize", calculateMaxRows);
+		window.addEventListener("resize", onWindowScroll);
 	});
 
 	onCleanup(() => {
-		window.removeEventListener("resize", calculateMaxRows);
+		window.removeEventListener("resize", onWindowScroll);
 	});
 
 	createEffect(() => {
@@ -368,7 +383,7 @@ export default () => {
 				<Table class="mt-4 overflow-hidden">
 					<TableHeader>
 						<TableRow>
-							<TableHead class="w-4 md:w-8 py-2 pl-0 pr-4 md:p-4 hidden invisible sm:table-cell sm:visible">
+							<TableHead class="w-4 md:w-8 py-2 pl-0 pr-4 md:p-4">
 								<Checkbox
 									checked={timelines.length > 0 && timelines.every((current) => current.checked)}
 									onChange={(checked) => {
@@ -386,22 +401,34 @@ export default () => {
 							<TableHead class="p-2 pl-0 md:px-4">
 								<div class="flex items-center">
 									<div class="flex-1">Text</div>
-									<div class="sm:invisible sm:hidden">
-										<FoldButton
-											fold={fold()}
-											setFold={(value) => setFold(value)}
-											scrollToWorkingArea={scrollToWorkingArea}
-										/>
-									</div>
-									<div class="hidden invisible sm:flex sm:visible xl:gap-2">
-										<CopyButton
-											copyType="text"
-											copyContent={timelines
-												.filter((timeline) => timeline.checked)
-												.map((timeline) => `${timeline.formattedTime} ${timeline.text}`)
-												.join("\n")}
-											class="hover:bg-foreground active:bg-foreground hover:text-background active:text-background text-foreground"
-										/>
+									<div class="flex-0 flex gap-1 sm:gap-2">
+										<div class="sm:invisible sm:hidden">
+											<FoldButton fold={fold()} setFold={(value) => setFold(value)} />
+										</div>
+										<Tooltip>
+											<TooltipTrigger>
+												<Button
+													size="icon"
+													variant="ghost"
+													onClick={() => scrollToWorkingArea()}
+													class="hover:bg-foreground active:bg-foreground hover:text-background active:text-background text-foreground"
+												>
+													<BsPersonWorkspace class="w-[1.2rem] h-[1.2rem]" />
+												</Button>
+											</TooltipTrigger>
+											<TooltipContent>Scroll to Workspace</TooltipContent>
+										</Tooltip>
+										<div class="hidden invisible sm:block sm:visible">
+											<CopyButton
+												copyType="text"
+												copyContent={timelines
+													.filter((timeline) => timeline.checked)
+													.map((timeline) => `${timeline.formattedTime} ${timeline.text}`)
+													.join("\n")}
+												tooltip="Copy selected"
+												class="hover:bg-foreground active:bg-foreground hover:text-background active:text-background text-foreground"
+											/>
+										</div>
 										<Tooltip>
 											<TooltipTrigger>
 												<Button
@@ -415,17 +442,13 @@ export default () => {
 													<TbX class="w-[1.2rem] h-[1.2rem]" />
 												</Button>
 											</TooltipTrigger>
-											<TooltipContent>Remove</TooltipContent>
+											<TooltipContent>Remove Selected</TooltipContent>
 										</Tooltip>
 									</div>
 								</div>
 							</TableHead>
 							<TableHead class="w-6 md:w-8 px-2 hidden invisible sm:table-cell sm:visible">
-								<FoldButton
-									fold={fold()}
-									setFold={(value) => setFold(value)}
-									scrollToWorkingArea={scrollToWorkingArea}
-								/>
+								<FoldButton fold={fold()} setFold={(value) => setFold(value)} />
 							</TableHead>
 						</TableRow>
 					</TableHeader>
@@ -503,7 +526,20 @@ export default () => {
 						</DragDropProvider>
 					</TableBody>
 				</Table>
-				<div class="grid place-content-center mt-2">
+				<div class="flex gap-4 justify-center mt-2">
+					<Tooltip>
+						<TooltipTrigger>
+							<Button
+								size="icon"
+								variant="ghost"
+								class="w-12 h-12"
+								onClick={() => scrollToWorkingArea()}
+							>
+								<BsPersonWorkspace class="w-8 h-8" />
+							</Button>
+						</TooltipTrigger>
+						<TooltipContent>Scroll to Workspace</TooltipContent>
+					</Tooltip>
 					<Tooltip>
 						<TooltipTrigger>
 							<Button
@@ -514,8 +550,6 @@ export default () => {
 
 									if (!fold()) {
 										if (timelines.length > maxRows()) {
-											setFold(true);
-										} else {
 											scroll({
 												top: document.body.scrollHeight,
 												behavior: "smooth",
