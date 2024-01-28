@@ -12,6 +12,7 @@ import {
 interface CopyButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
 	copyContent: string;
 	copyType: "text" | "image";
+	tooltip?: string;
 }
 
 export default (props: CopyButtonProps) => {
@@ -65,7 +66,7 @@ export default (props: CopyButtonProps) => {
 					<FaSolidCopy class="w-[1.2rem] h-[1.2rem]" />
 				</Button>
 			</TooltipTrigger>
-			<TooltipContent>Copy</TooltipContent>
+			<TooltipContent>{props.tooltip ? props.tooltip : "Copy"}</TooltipContent>
 		</Tooltip>
 	);
 };

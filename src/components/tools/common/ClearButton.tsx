@@ -7,7 +7,17 @@ import {
 	TooltipTrigger,
 } from "~/components/ui/tooltip";
 
-export default (props: JSX.ButtonHTMLAttributes<HTMLButtonElement>) => {
+// interface CopyButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
+// 	copyContent: string;
+// 	copyType: "text" | "image";
+// 	tooltip?: string;
+// }
+
+interface ClearButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
+	tooltip?: string;
+}
+
+export default (props: ClearButtonProps) => {
 	return (
 		<Tooltip>
 			<TooltipTrigger>
@@ -15,7 +25,7 @@ export default (props: JSX.ButtonHTMLAttributes<HTMLButtonElement>) => {
 					<VsClearAll class="w-[1.2rem] h-[1.2rem]" />
 				</Button>
 			</TooltipTrigger>
-			<TooltipContent>Clear</TooltipContent>
+			<TooltipContent>{props.tooltip ? props.tooltip : "Clear"}</TooltipContent>
 		</Tooltip>
 	);
 };
