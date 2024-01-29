@@ -3,12 +3,10 @@ import { TbChevronRight } from "solid-icons/tb";
 
 import WithSidebar from "./WithSidebar.astro";
 
-type Props = {
-  category: string;
-  tool: string;
-};
+const { category, name, frontmatter } = Astro.props;
 
-const { category, tool }: Props = Astro.props;
+const c = category ? category : frontmatter.category;
+const n = name ? name : frontmatter.name;
 
 const capitalize = (str: string) => {
   return str
@@ -18,15 +16,15 @@ const capitalize = (str: string) => {
 };
 ---
 
-<WithSidebar title={capitalize(tool)}>
+<WithSidebar title={capitalize(n)}>
   <main class="py-4">
     <div class="mb-4 flex items-center gap-x-1 text-sm text-muted-foreground">
       <h2 class="capitalize">
-        {category}
+        {c}
       </h2>
       <TbChevronRight class="inline-block h-4 w-4" />
       <h3 class="font-semibold capitalize">
-        {tool}
+        {n}
       </h3>
     </div>
     <slot />

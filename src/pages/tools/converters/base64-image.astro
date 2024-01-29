@@ -9,6 +9,6 @@ const category = paths[0];
 const tool = paths[1].replace("-", " ");
 ---
 
-<ContentLayout category={category} tool={tool}>
+<ContentLayout category={category} name={tool}>
   <Base64ImageContents client:only />
 </ContentLayout>
