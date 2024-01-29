@@ -1,5 +1,5 @@
 /** Represents a failed computation.*/
-export interface Err<T, E> {
+export interface Left<T, E> {
 	ok: false;
 	error: E;
 	/*** Returns the value of the Result if it is successful, otherwise throws an error.*/
@@ -9,13 +9,13 @@ export interface Err<T, E> {
 	/*** Returns the value of the Result if it is successful, otherwise calls the provided function with the error and returns its result.*/
 	unwrapOrElse(fn: (error: E) => T): T;
 	/*** Returns true if the Result is an error, false otherwise.*/
-	isErr(this: Result<T, E>): this is Err<T, E>;
+	isErr(this: Result<T, E>): this is Left<T, E>;
 	/*** Returns true if the Result is successful, false otherwise.*/
-	isOk(this: Result<T, E>): this is Ok<T, E>;
+	isOk(this: Result<T, E>): this is Right<T, E>;
 }
 
 /** Represents a successful computation.*/
-export interface Ok<T, E> {
+export interface Right<T, E> {
 	ok: true;
 	value: T;
 	/*** Returns the value of the Result.*/
@@ -25,12 +25,12 @@ export interface Ok<T, E> {
 	/*** Returns the value of the Result.*/
 	unwrapOrElse(fn: (error: E) => T): T;
 	/*** Returns true if the Result is an error, false otherwise.*/
-	isErr(this: Result<T, E>): this is Err<T, E>;
+	isErr(this: Result<T, E>): this is Left<T, E>;
 	/*** Returns true if the Result is successful, false otherwise.*/
-	isOk(this: Result<T, E>): this is Ok<T, E>;
+	isOk(this: Result<T, E>): this is Right<T, E>;
 }
 
-export type Result<T, E = Error> = Ok<T, E> | Err<T, E>;
+export type Result<T, E = Error> = Right<T, E> | Left<T, E>;
 
 /** Creates a successful Result with the given value.
  * @param value The value of the successful computation.
@@ -44,7 +44,7 @@ export function Ok<T, E>(value: T): Result<T, E> {
 		unwrapOrElse: () => value,
 		isErr: () => false,
 		isOk: () => true,
-	};
+	} as Right<T, E>;
 }
 
 /**
@@ -63,7 +63,7 @@ export function Err<T, E>(error: E): Result<T, E> {
 		unwrapOrElse: (fn: (error: E) => T) => fn(error),
 		isErr: () => true,
 		isOk: () => false,
-	};
+	} as Left<T, E>;
 }
 
 export interface Some<T> {
