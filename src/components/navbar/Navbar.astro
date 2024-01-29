@@ -1,8 +1,9 @@
 ---
+import { TbBrandGithub } from "solid-icons/tb";
+import { Image } from "astro:assets";
+
 import ThemeToggle from "./ThemeToggle";
 import SidebarToggle from "./SidebarToggle";
-
-import { Image } from "astro:assets";
 ---
 
 <header class="container px-4 py-2 md:px-6 md:py-3">
@@ -20,6 +21,16 @@ import { Image } from "astro:assets";
       </a>
     </nav>
     <div class="flex gap-2">
+      <div class="h-10 w-10">
+        <a
+          href="https://github.com/pekochan069/uta-tools"
+          target="_blank"
+          rel="noreferrer"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+        >
+          <TbBrandGithub class="h-[1.2rem] w-[1.2rem]" />
+        </a>
+      </div>
       <div class="h-10 w-10">
         <ThemeToggle client:only />
       </div>
