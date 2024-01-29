@@ -28,8 +28,8 @@ import {
 	ToolConfigLabel,
 	ToolConfigRoot,
 	ToolConfigSection,
-} from "~/components/contents/tools/common/Config";
-import CopyButton from "~/components/contents/tools/common/CopyButton";
+} from "~/components/common/Config";
+import CopyButton from "~/components/common/CopyButton";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "~/components/ui/table";

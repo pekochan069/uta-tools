@@ -3,9 +3,9 @@ import { toast } from "solid-sonner";
 import { TbDotsVertical, TbX } from "solid-icons/tb";
 
 import type { TimelineType } from "./timelineTypes";
-import ClearButton from "~/components/contents/tools/common/ClearButton";
-import PasteButton from "~/components/contents/tools/common/PasteButton";
-import CopyButton from "~/components/contents/tools/common/CopyButton";
+import ClearButton from "~/components/common/ClearButton";
+import PasteButton from "~/components/common/PasteButton";
+import CopyButton from "~/components/common/CopyButton";
 import { TableCell, TableRow } from "~/components/ui/table";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";

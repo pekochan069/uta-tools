@@ -5,9 +5,9 @@ import { toast } from "solid-sonner";
 
 import { trpc } from "~/lib/trpc";
 import { Err, Ok, type Left } from "~/lib/types";
-import ClearButton from "~/components/contents/tools/common/ClearButton";
-import CopyButton from "~/components/contents/tools/common/CopyButton";
-import PasteButton from "~/components/contents/tools/common/PasteButton";
+import ClearButton from "~/components/common/ClearButton";
+import CopyButton from "~/components/common/CopyButton";
+import PasteButton from "~/components/common/PasteButton";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";

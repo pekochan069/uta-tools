@@ -1,25 +1,13 @@
 import type { JSX } from "astro/jsx-runtime";
 
 import * as Icons from "~/components/icons";
+import type { ContentsCategory } from "./contents-types";
 
-type ToolCategory = {
-	name: string;
-	description: string;
-	tools: Tool[];
-};
-
-type Tool = {
-	name: string;
-	description: string;
-	href: string;
-	icon: () => JSX.Element;
-};
-
-export const tools: ToolCategory[] = [
+export const tools: ContentsCategory[] = [
 	{
 		name: "Converters",
 		description: "Convert between different formats",
-		tools: [
+		contents: [
 			{
 				name: "Base64",
 				description: "Encode/Decode base64 formatted strings",
@@ -43,7 +31,7 @@ export const tools: ToolCategory[] = [
 	{
 		name: "Youtube",
 		description: "Youtube related tools",
-		tools: [
+		contents: [
 			{
 				name: "Timeline",
 				description: "Create a timeline of a youtube video",
@@ -53,9 +41,9 @@ export const tools: ToolCategory[] = [
 		],
 	},
 	{
-		name: "Url",
+		name: "URL",
 		description: "Url related tools",
-		tools: [
+		contents: [
 			{
 				name: "Shortener",
 				description: "Create a Shortened url",

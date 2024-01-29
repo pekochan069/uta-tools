@@ -1,0 +1,41 @@
+---
+import { Card, CardContent, CardHeader } from "~/components/ui/card";
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import WithSidebar from "~/layouts/WithSidebar.astro";
+import { tools } from "~/lib/contents/tools";
+---
+
+<WithSidebar title="Uta Tools">
+  <main class="py-4">
+    <div class="flex flex-col gap-8 md:gap-12">
+      {
+        tools.map((category) => (
+          <div>
+            <h3 class="mb-4 text-xl font-semibold">{category.name}</h3>
+            <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+              {category.contents.map((tool) => (
+                <a
+                  href={tool.href}
+                  class="scale-[98%] transition-transform hover:scale-100"
+                >
+                  <Card class="">
+                    <CardHeader>
+                      <div class="grid aspect-square select-none place-content-center rounded-md border-[1px]">
+                        <tool.icon />
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <p class="text-center text-lg font-semibold">
+                        {tool.name}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </main>
+</WithSidebar>

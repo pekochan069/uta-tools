@@ -1,6 +1,6 @@
 ---
 import ContentLayout from "~/layouts/ContentLayout.astro";
-import Base64ImageContents from "~/components/contents/tools/converters/Base64ImageContents";
+import YpDlpContents from "~/components/contents/tldr/video/YpDlpContents.astro";
 
 const paths = Astro.url.pathname
   .split("/")
@@ -10,5 +10,5 @@ const tool = paths[1].replace("-", " ");
 ---
 
 <ContentLayout category={category} tool={tool}>
-  <Base64ImageContents client:only />
+  <YpDlpContents />
 </ContentLayout>

@@ -1,5 +1,5 @@
 ---
-import ToolLayout from "~/layouts/ToolLayout.astro";
+import ContentLayout from "~/layouts/ContentLayout.astro";
 import TimelineContents from "~/components/contents/tools/youtube/TimelineContents";
 
 const paths = Astro.url.pathname
@@ -9,7 +9,7 @@ const category = paths[0];
 const tool = paths[1];
 ---
 
-<ToolLayout category={category} tool={tool}>
+<ContentLayout category={category} tool={tool}>
   <TimelineContents client:only />
   <script is:inline>
     let tag = document.createElement("script");
@@ -17,4 +17,4 @@ const tool = paths[1];
     let firstScriptTag = document.getElementsByTagName("script")[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
   </script>
-</ToolLayout>
+</ContentLayout>

@@ -2,6 +2,7 @@
 import { OverlayScrollbarsComponent } from "overlayscrollbars-solid";
 
 import { tools } from "~/lib/contents/tools";
+import { contents } from "~/lib/contents/contents";
 ---
 
 <aside
@@ -12,29 +13,45 @@ import { tools } from "~/lib/contents/tools";
     client:load
     options={{ scrollbars: { autoHide: "leave" } }}
   >
-    <div class="flex h-[calc(100svh-7rem)] flex-col gap-8">
+    <div class="flex h-[calc(100svh-7rem)] flex-col gap-10">
       {
-        tools.map((category) => (
-          <div class="flex flex-col gap-1">
-            <h4 class="mb-2 text-lg font-semibold">{category.name}</h4>
-            {category.tools.map((tool) => (
-              <a
-                href={tool.href}
-                class="text-sm text-muted-foreground hover:text-foreground active:text-foreground data-[current-path]:font-semibold data-[current-path]:text-foreground data-[current-path]:underline"
-              >
-                {tool.name}
-              </a>
-            ))}
-          </div>
-        ))
+        contents.map((largeCategory) => {
+          return (
+            <div class="flex flex-col gap-1">
+              <h3 class="mb-2 text-2xl font-semibold">{largeCategory.name}</h3>
+              <div class="flex flex-col gap-4">
+                {largeCategory.categories.map((category) => {
+                  return (
+                    <div class="flex flex-col gap-1">
+                      <h4 class="mb-1 text-lg font-semibold">
+                        {category.name}
+                      </h4>
+                      {category.contents.map((content) => (
+                        <a
+                          href={content.href}
+                          class="text-sm text-muted-foreground hover:text-foreground active:text-foreground data-[current-path]:font-semibold data-[current-path]:text-foreground data-[current-path]:underline"
+                        >
+                          {content.name}
+                        </a>
+                      ))}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })
       }
     </div>
   </OverlayScrollbarsComponent>
   <script>
     const currentUrl = new URL(window.location.href);
     const pathname = currentUrl.pathname;
-    document.querySelector<HTMLAnchorElement>(
+    const anchorElement = document.querySelector<HTMLAnchorElement>(
       "a[href='" + pathname + "']",
-    )!.dataset.currentPath = "true";
+    );
+    if (anchorElement) {
+      anchorElement.dataset.currentPath = "true";
+    }
   </script>
 </aside>

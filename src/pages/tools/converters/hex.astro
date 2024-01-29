@@ -1,5 +1,5 @@
 ---
-import ToolLayout from "~/layouts/ToolLayout.astro";
+import ContentLayout from "~/layouts/ContentLayout.astro";
 import HexContents from "~/components/contents/tools/converters/HexContents";
 
 const paths = Astro.url.pathname
@@ -9,6 +9,6 @@ const category = paths[0];
 const tool = paths[1];
 ---
 
-<ToolLayout category={category} tool={tool}>
+<ContentLayout category={category} tool={tool}>
   <HexContents client:only />
-</ToolLayout>
+</ContentLayout>

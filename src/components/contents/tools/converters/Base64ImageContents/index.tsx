@@ -4,9 +4,9 @@ import { BiSolidImageAdd, BiSolidImageAlt } from "solid-icons/bi";
 import { toast } from "solid-sonner";
 
 import { Input } from "~/components/ui/input";
-import CopyButton from "~/components/contents/tools/common/CopyButton";
-import PasteButton from "~/components/contents/tools/common/PasteButton";
-import ClearButton from "~/components/contents/tools/common/ClearButton";
+import CopyButton from "~/components/common/CopyButton";
+import PasteButton from "~/components/common/PasteButton";
+import ClearButton from "~/components/common/ClearButton";
 
 export default () => {
 	let imageAddIconRef: SVGSVGElement | undefined;

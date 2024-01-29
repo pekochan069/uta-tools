@@ -1,0 +1,19 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import SidebarContents from "~/components/SidebarContents.astro";
+
+type Props = {
+  title: string;
+};
+
+const { title } = Astro.props;
+---
+
+<BaseLayout title={title}>
+  <div
+    class="md:grid md:grid-cols-[160px_minmax(0,1fr)] md:gap-6 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10"
+  >
+    <SidebarContents />
+    <slot />
+  </div>
+</BaseLayout>

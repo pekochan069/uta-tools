@@ -1,5 +1,5 @@
 ---
-import ToolLayout from "~/layouts/ToolLayout.astro";
+import ContentLayout from "~/layouts/ContentLayout.astro";
 import Base64Contents from "~/components/contents/tools/converters/Base64Contents";
 
 const paths = Astro.url.pathname
@@ -9,6 +9,6 @@ const category = paths[0];
 const tool = paths[1].replace("-", " ");
 ---
 
-<ToolLayout category={category} tool={tool}>
+<ContentLayout category={category} tool={tool}>
   <Base64Contents client:only />
-</ToolLayout>
+</ContentLayout>

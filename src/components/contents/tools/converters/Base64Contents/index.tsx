@@ -9,10 +9,10 @@ import {
 	ToolConfigLabel,
 	ToolConfigRoot,
 	ToolConfigSection,
-} from "~/components/contents/tools/common/Config";
-import CopyButton from "~/components/contents/tools/common/CopyButton";
-import ClearButton from "~/components/contents/tools/common/ClearButton";
-import PasteButton from "~/components/contents/tools/common/PasteButton";
+} from "~/components/common/Config";
+import CopyButton from "~/components/common/CopyButton";
+import ClearButton from "~/components/common/ClearButton";
+import PasteButton from "~/components/common/PasteButton";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Switch } from "~/components/ui/switch";

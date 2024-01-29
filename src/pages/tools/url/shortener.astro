@@ -1,5 +1,5 @@
 ---
-import ToolLayout from "~/layouts/ToolLayout.astro";
+import ContentLayout from "~/layouts/ContentLayout.astro";
 import UrlShortenerContents from "~/components/contents/tools/url/ShortenerContents";
 
 const paths = Astro.url.pathname
@@ -9,6 +9,6 @@ const category = paths[0];
 const tool = paths[1];
 ---
 
-<ToolLayout category={category} tool={tool}>
+<ContentLayout category={category} tool={tool}>
   <UrlShortenerContents client:only />
-</ToolLayout>
+</ContentLayout>
