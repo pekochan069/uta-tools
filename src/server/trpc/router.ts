@@ -4,7 +4,7 @@ import { eq, sql } from "drizzle-orm";
 
 import { publicProcedure, router } from ".";
 import { db } from "~/server/db";
-import { Err, None, Ok, Some, type Result, type Maybe } from "~/lib/types";
+import { Err, Ok } from "~/lib/types";
 import { createId } from "~/lib/nanoid";
 import { shortLink } from "../db/schema";
 
@@ -33,11 +33,11 @@ export const trpcRouter = router({
 			const find = await db.select().from(shortLink).where(eq(shortLink.url, input));
 
 			if (find.length > 0) {
-				return Ok(find[0].slug);
+				return Ok<string, Error>(find[0].slug);
 			}
 		} catch (e) {
 			console.error(e);
-			return Err(e);
+			return Err<string, Error>(new Error("Cannot fetch data from database"));
 		}
 
 		for (let i = 0; i < MAX_ATTEMPTS; i++) {
@@ -53,14 +53,14 @@ export const trpcRouter = router({
 					.onDuplicateKeyUpdate({ set: { id: sql`id` } });
 
 				if (res.insertId !== "0") {
-					return Ok(slug);
+					return Ok<string, Error>(slug);
 				}
 			} catch (e) {
 				console.error(e);
 			}
 		}
 
-		return Err(new Error("Cannot create short link"));
+		return Err<string, Error>(new Error("Cannot create short link"));
 	}),
 });
 
