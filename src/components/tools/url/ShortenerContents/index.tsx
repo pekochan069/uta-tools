@@ -125,6 +125,8 @@ export default () => {
 										<div class="flex justify-between items-center w-full">
 											<a
 												href={result()?.unwrap()}
+												target="_blank"
+												rel="noreferrer"
 												class="text-lg text-blue-600 hover:underline selection:bg-blue-500 selection:text-white underline-offset-2 dark:text-blue-500 dark:selection:bg-blue-600"
 											>
 												{result()?.unwrap()}
