@@ -9,13 +9,13 @@ import {
 	ToolConfigLabel,
 	ToolConfigRoot,
 	ToolConfigSection,
-} from "~/components/tools/common/Config";
+} from "~/components/contents/tools/common/Config";
+import CopyButton from "~/components/contents/tools/common/CopyButton";
+import ClearButton from "~/components/contents/tools/common/ClearButton";
+import PasteButton from "~/components/contents/tools/common/PasteButton";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Switch } from "~/components/ui/switch";
-import CopyButton from "~/components/tools/common/CopyButton";
-import ClearButton from "~/components/tools/common/ClearButton";
-import PasteButton from "~/components/tools/common/PasteButton";
 
 export default () => {
 	const [isEncode, setIsEncode] = createSignal(true);

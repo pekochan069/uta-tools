@@ -28,8 +28,8 @@ import {
 	ToolConfigLabel,
 	ToolConfigRoot,
 	ToolConfigSection,
-} from "~/components/tools/common/Config";
-import CopyButton from "~/components/tools/common/CopyButton";
+} from "~/components/contents/tools/common/Config";
+import CopyButton from "~/components/contents/tools/common/CopyButton";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "~/components/ui/table";
@@ -38,7 +38,6 @@ import { Input } from "~/components/ui/input";
 
 import type { TimelineType } from "./timelineTypes";
 import TimelineRow from "./TimelineRow";
-import PasteButton from "../../common/PasteButton";
 
 const FoldButton = (props: {
 	fold: boolean;

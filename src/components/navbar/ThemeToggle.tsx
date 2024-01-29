@@ -10,7 +10,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { Tooltip, TooltipTrigger, TooltipContent } from "../ui/tooltip";
+import { Tooltip, TooltipTrigger, TooltipContent } from "~/components/ui/tooltip";
 
 export default () => {
 	const [theme, setTheme] = createSignal<"light" | "dark" | "system">("light");
@@ -23,8 +23,7 @@ export default () => {
 	createEffect(() => {
 		const isDark =
 			theme() === "dark" ||
-			(theme() === "system" &&
-				window.matchMedia("(prefers-color-scheme: dark)").matches);
+			(theme() === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
 		document.documentElement.classList[isDark ? "add" : "remove"]("dark");
 	});
 

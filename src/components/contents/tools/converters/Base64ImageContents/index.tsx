@@ -4,9 +4,9 @@ import { BiSolidImageAdd, BiSolidImageAlt } from "solid-icons/bi";
 import { toast } from "solid-sonner";
 
 import { Input } from "~/components/ui/input";
-import CopyButton from "~/components/tools/common/CopyButton";
-import PasteButton from "~/components/tools/common/PasteButton";
-import ClearButton from "~/components/tools/common/ClearButton";
+import CopyButton from "~/components/contents/tools/common/CopyButton";
+import PasteButton from "~/components/contents/tools/common/PasteButton";
+import ClearButton from "~/components/contents/tools/common/ClearButton";
 
 export default () => {
 	let imageAddIconRef: SVGSVGElement | undefined;
@@ -148,10 +148,7 @@ export default () => {
 					<CopyButton copyType="image" copyContent={image()} />
 				</div>
 				<div class="aspect-video border-[1px] grid place-content-center rounded-md overflow-hidden">
-					<Show
-						when={image() !== ""}
-						fallback={<BiSolidImageAlt class="w-16 h-16" />}
-					>
+					<Show when={image() !== ""} fallback={<BiSolidImageAlt class="w-16 h-16" />}>
 						<img
 							src={image()}
 							ref={imgRef}
