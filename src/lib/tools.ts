@@ -53,8 +53,15 @@ export const tools: ToolCategory[] = [
 		],
 	},
 	{
-		name: "Image",
-		description: "Image manipulation tools",
-		tools: [],
+		name: "Url",
+		description: "Url related tools",
+		tools: [
+			{
+				name: "Shortener",
+				description: "Create a Shortened url",
+				href: "/tools/url/shortener",
+				icon: Icons.UrlShortenerIcon,
+			},
+		],
 	},
 ];
