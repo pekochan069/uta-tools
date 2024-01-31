@@ -16,12 +16,4 @@ export default defineConfig({
   integrations: [solidJs(), tailwind(), mdx()],
   output: "server",
   adapter: vercel(),
-  markdown: {
-    syntaxHighlight: false,
-    rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
-    shikiConfig: {
-      // theme: theme,
-      theme: "min-dark"
-    },
-  },
 });
