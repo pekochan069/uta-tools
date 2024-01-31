@@ -1,0 +1,23 @@
+---
+import ContentLayout from "./ContentLayout.astro";
+
+const { frontmatter } = Astro.props;
+---
+
+<ContentLayout category={frontmatter.category} name={frontmatter.name}>
+  <div>
+    <h1 class="mb-4 text-3xl font-bold">{frontmatter.name}</h1>
+  </div>
+  {
+    frontmatter.description && (
+      <div>
+        <p class="text-balance text-muted-foreground">
+          {frontmatter.description}
+        </p>
+      </div>
+    )
+  }
+  <div>
+    <slot />
+  </div>
+</ContentLayout>

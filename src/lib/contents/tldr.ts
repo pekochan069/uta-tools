@@ -5,7 +5,7 @@ import * as Icons from "~/components/icons";
 
 export const tldr: ContentsCategory[] = [
 	{
-		name: "video",
+		name: "Video",
 		description: "tl;dr for video related cli tools",
 		contents: [
 			{

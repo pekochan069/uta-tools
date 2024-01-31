@@ -1,0 +1,36 @@
+---
+import { getEntry } from "astro:content";
+
+import pre from "~/components/markdown/Pre.astro";
+import code from "~/components/markdown/CodeArea.astro";
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  throw new Error("No slug provided");
+}
+
+const entry = await getEntry("tldr", slug);
+
+if (!entry) {
+  Astro.redirect("/404");
+}
+
+const renderedContent = await entry?.render();
+
+if (!renderedContent) {
+  throw new Error("No rendered content");
+}
+
+const { Content, headings } = renderedContent;
+const components = {
+  code,
+  pre,
+};
+---
+
+<Content
+  components={{
+    ...components,
+  }}
+/>

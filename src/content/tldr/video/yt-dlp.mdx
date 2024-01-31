@@ -1,0 +1,24 @@
+---
+layout: ~/layouts/MdxLayout.astro
+category: Video
+name: yt-dlp
+description: 유튜브 영상을 다운로드하는 유틸리티 프로그램
+---
+
+import ControlledCode from '~/components/markdown/ControlledCode'
+import {YoutubeLink, YoutubeLinkInput} from "~/components/contents/tldr/video/yt-dlp/YoutubeLink";
+import { Format, VideoFormatInput, AudioFormatInput } from "~/components/contents/tldr/video/yt-dlp/Format";
+
+<YoutubeLinkInput client:load />
+
+<ControlledCode client:load>
+    yt-dlp <span class="text-code-muted">-F</span> <YoutubeLink client:load />
+</ControlledCode>
+
+<ControlledCode client:load>
+    yt-dlp <span class="text-code-muted">-f</span> <Format client:load/> <YoutubeLink client:load />
+</ControlledCode>
+
+<AudioFormatInput client:load />
+
+<VideoFormatInput client:load />
