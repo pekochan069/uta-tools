@@ -6,9 +6,9 @@ const paths = Astro.url.pathname
   .split("/")
   .filter((p) => p !== "" && p !== "tools");
 const category = paths[0];
-const tool = paths[1].replace("-", " ");
+const name = paths[1].replace("-", " ");
 ---
 
-<ContentLayout category={category} name={tool}>
+<ContentLayout category={category} name={name}>
   <Base64Contents client:only />
 </ContentLayout>

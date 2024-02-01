@@ -6,9 +6,9 @@ const paths = Astro.url.pathname
   .split("/")
   .filter((p) => p !== "" && p !== "tools");
 const category = paths[0];
-const tool = paths[1];
+const name = paths[1];
 ---
 
-<ContentLayout category={category} name={tool}>
+<ContentLayout category={category} name={name}>
   <HexContents client:only />
 </ContentLayout>
