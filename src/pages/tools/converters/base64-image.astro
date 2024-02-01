@@ -1,14 +1,8 @@
 ---
 import ContentLayout from "~/layouts/ContentLayout.astro";
 import Base64ImageContents from "~/components/contents/tools/converters/Base64ImageContents";
-
-const paths = Astro.url.pathname
-  .split("/")
-  .filter((p) => p !== "" && p !== "tools");
-const category = paths[0];
-const name = paths[1].replace("-", " ");
 ---
 
-<ContentLayout category={category} name={name}>
+<ContentLayout>
   <Base64ImageContents client:only />
 </ContentLayout>

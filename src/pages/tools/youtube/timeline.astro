@@ -1,15 +1,9 @@
 ---
 import ContentLayout from "~/layouts/ContentLayout.astro";
 import TimelineContents from "~/components/contents/tools/youtube/TimelineContents";
-
-const paths = Astro.url.pathname
-  .split("/")
-  .filter((p) => p !== "" && p !== "tools");
-const category = paths[0];
-const name = paths[1];
 ---
 
-<ContentLayout category={category} name={name}>
+<ContentLayout>
   <TimelineContents client:only />
   <script is:inline>
     let tag = document.createElement("script");
