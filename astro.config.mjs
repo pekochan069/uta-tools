@@ -12,7 +12,7 @@ const prettyCodeOptions = {
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [solidJs(), tailwind(), mdx()],
+  integrations: [solidJs(), tailwind()],
   output: "server",
   adapter: vercel(),
   markdown: {
