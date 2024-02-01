@@ -16,7 +16,7 @@ export default defineConfig({
   output: "server",
   adapter: vercel(),
   markdown: {
-    rehypePlugins: [rehypePrettyCode, [prettyCodeOptions]],
+    rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
     shikiConfig: {
       theme: theme,
     },
