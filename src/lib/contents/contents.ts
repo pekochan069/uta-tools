@@ -5,10 +5,12 @@ import { tools } from "./tools";
 export const contents: Contents[] = [
 	{
 		name: "Tools",
+		slug: "tools",
 		categories: tools,
 	},
 	{
 		name: "tl;dr",
+		slug: "tldr",
 		categories: tldr,
 	},
 ];
