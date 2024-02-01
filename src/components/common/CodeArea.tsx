@@ -1,5 +1,5 @@
 import { JSX } from "solid-js";
-import CodeCopyButton from "./CodeCopyButton";
+import CodeCopyButton from "./CodeAreaCopyButton";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-solid";
 
 type ControlledCodeProps = {
@@ -15,7 +15,7 @@ export default (props: ControlledCodeProps) => {
         <OverlayScrollbarsComponent>
           <div
             ref={codeRef}
-            class="ml-6 mr-10 select-all rounded py-4 font-mono text-sm text-white break-all"
+            class="ml-6 mr-10 select-all break-all rounded py-4 font-mono text-sm text-white"
           >
             {props.children}
           </div>
