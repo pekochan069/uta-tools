@@ -1,5 +1,3 @@
-import type { JSX } from "astro/jsx-runtime";
-
 import * as Icons from "~/components/icons";
 import type { ContentsCategory } from "./contents-types";
 
