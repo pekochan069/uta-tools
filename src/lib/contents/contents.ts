@@ -14,3 +14,17 @@ export const contents: Contents[] = [
 		categories: tldr,
 	},
 ];
+
+export function getContent(largeCategorySlug: string, categorySlug: string, contentSlug: string) {
+	const largeCategory = contents.find((c) => c.slug === largeCategorySlug);
+	if (!largeCategory) {
+		return null;
+	}
+
+	const category = largeCategory.categories.find((c) => c.slug === categorySlug);
+	if (!category) {
+		return null;
+	}
+
+	return category.contents.find((c) => c.slug === contentSlug);
+}
