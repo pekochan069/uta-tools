@@ -1,27 +1,22 @@
 ---
 import ContentLayout from "./ContentLayout.astro";
+import { currentContent } from "~/atoms/currentContent";
 
-const paths = Astro.url.pathname
-  .split("/")
-  .filter((p) => p !== "" && p !== "tools");
-const category = paths[0];
-const name = paths[1].replace("-", " ");
+import { H1, P, Muted } from "~/components/ui/typography";
 
-const description = "";
+const { name, description } = currentContent.get();
 ---
 
-<ContentLayout category={category} name={name}>
-  <div>
-    <h1 class="mb-4 text-3xl font-bold">{name}</h1>
-  </div>
+<ContentLayout>
+  <H1>
+    {name}
+  </H1>
   {
-    description && (
-      <div>
-        <p class="text-balance text-muted-foreground">{description}</p>
-      </div>
+    description !== "" && (
+      <P>
+        <Muted>{description}</Muted>
+      </P>
     )
   }
-  <div>
-    <slot />
-  </div>
+  <slot />
 </ContentLayout>

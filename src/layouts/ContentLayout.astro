@@ -3,6 +3,7 @@ import { TbChevronRight } from "solid-icons/tb";
 
 import WithSidebar from "./WithSidebar.astro";
 import { getContent } from "~/lib/contents/contents";
+import { currentContent } from "~/atoms/currentContent";
 
 const paths = Astro.url.pathname.split("/");
 
@@ -16,7 +17,8 @@ if (content.isNone()) {
   Astro.redirect("/404");
 }
 
-const { largeCategory, category, name } = content.unwrap();
+const { largeCategory, category, name, description } = content.unwrap();
+currentContent.set({ largeCategory, category, name, description });
 ---
 
 <WithSidebar title={name}>

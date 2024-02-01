@@ -1,6 +1,16 @@
-import { splitProps, type Component, type ComponentProps } from "solid-js";
+import {
+  splitProps,
+  type Component,
+  type ComponentProps,
+  Switch,
+  Match,
+} from "solid-js";
+import { Collapsible } from "@kobalte/core";
+import { useStore } from "@nanostores/solid";
 
 import { cn } from "~/lib/utils";
+import { openDescription } from "~/atoms/tldr";
+import { TbChevronDown, TbChevronUp } from "solid-icons/tb";
 
 const H1: Component<ComponentProps<"h1">> = (props) => {
   const [, rest] = splitProps(props, ["class", "children"]);
@@ -34,6 +44,33 @@ const H2: Component<ComponentProps<"h2">> = (props) => {
   );
 };
 
+const H2Description: Component<ComponentProps<"h2"> & { text?: string }> = (
+  props,
+) => {
+  const [, rest] = splitProps(props, ["class", "children", "text"]);
+
+  const $openDescription = useStore(openDescription);
+
+  return (
+    <Collapsible.Root open={$openDescription()} defaultOpen={false}>
+      <Collapsible.Trigger class="mt-10 w-full cursor-default scroll-m-20 border-b pb-2 outline-none">
+        <h2
+          class={cn(
+            "cursor-text select-text text-left text-3xl font-semibold tracking-tight first:mt-0",
+            props.class,
+          )}
+          {...rest}
+        >
+          {props.text}
+        </h2>
+      </Collapsible.Trigger>
+      <Collapsible.Content class="mt-6">
+        <p class="leading-7">{props.children}</p>
+      </Collapsible.Content>
+    </Collapsible.Root>
+  );
+};
+
 const H3: Component<ComponentProps<"h3">> = (props) => {
   const [, rest] = splitProps(props, ["class", "children"]);
 
@@ -50,19 +87,73 @@ const H3: Component<ComponentProps<"h3">> = (props) => {
   );
 };
 
+const H3Description: Component<ComponentProps<"h3"> & { text?: string }> = (
+  props,
+) => {
+  const [, rest] = splitProps(props, ["class", "children", "text"]);
+
+  const $openDescription = useStore(openDescription);
+
+  return (
+    <Collapsible.Root open={$openDescription()} defaultOpen={false}>
+      <Collapsible.Trigger class="mt-8 w-full cursor-default scroll-m-20 outline-none">
+        <h3
+          class={cn(
+            "cursor-text select-text text-left text-2xl font-semibold tracking-tight",
+            props.class,
+          )}
+          {...rest}
+        >
+          {props.text}
+        </h3>
+      </Collapsible.Trigger>
+      <Collapsible.Content class="mt-6">
+        <p class="leading-7">{props.children}</p>
+      </Collapsible.Content>
+    </Collapsible.Root>
+  );
+};
+
 const H4: Component<ComponentProps<"h4">> = (props) => {
   const [, rest] = splitProps(props, ["class", "children"]);
 
   return (
     <h4
       class={cn(
-        "scroll-m-20 text-xl font-semibold tracking-tight",
+        "mt-6 scroll-m-20 text-xl font-semibold tracking-tight",
         props.class,
       )}
       {...rest}
     >
       {props.children}
     </h4>
+  );
+};
+
+const H4Description: Component<ComponentProps<"h4"> & { text?: string }> = (
+  props,
+) => {
+  const [, rest] = splitProps(props, ["class", "children", "text"]);
+
+  const $openDescription = useStore(openDescription);
+
+  return (
+    <Collapsible.Root open={$openDescription()} defaultOpen={false}>
+      <Collapsible.Trigger class="mt-6 w-full cursor-default scroll-m-20 outline-none">
+        <h4
+          class={cn(
+            "cursor-text select-text text-left text-xl font-semibold tracking-tight",
+            props.class,
+          )}
+          {...rest}
+        >
+          {props.text}
+        </h4>
+      </Collapsible.Trigger>
+      <Collapsible.Content class="mt-6">
+        <p class="leading-7">{props.children}</p>
+      </Collapsible.Content>
+    </Collapsible.Root>
   );
 };
 
@@ -246,6 +337,9 @@ export {
   H2,
   H3,
   H4,
+  H2Description,
+  H3Description,
+  H4Description,
   P,
   BlockQuote,
   TypographyTable,
