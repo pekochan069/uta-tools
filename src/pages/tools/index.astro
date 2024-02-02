@@ -5,6 +5,10 @@ import WithSidebar from "~/layouts/WithSidebar.astro";
 import { contents } from "~/lib/contents/contents";
 
 const tools = contents.find((c) => c.slug === tools);
+
+if (!tools) {
+  throw new Error("Cannot find contents!");
+}
 ---
 
 <WithSidebar title="Uta Tools">
