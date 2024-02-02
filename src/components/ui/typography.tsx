@@ -9,7 +9,7 @@ import { Collapsible } from "@kobalte/core";
 import { useStore } from "@nanostores/solid";
 
 import { cn } from "~/lib/utils";
-import { openDescription } from "~/atoms/tldr";
+import { showDescription } from "~/atoms/tldr";
 import { TbChevronDown, TbChevronUp } from "solid-icons/tb";
 
 const H1: Component<ComponentProps<"h1">> = (props) => {
@@ -49,7 +49,7 @@ const H2Description: Component<ComponentProps<"h2"> & { text?: string }> = (
 ) => {
   const [, rest] = splitProps(props, ["class", "children", "text"]);
 
-  const $openDescription = useStore(openDescription);
+  const $openDescription = useStore(showDescription);
 
   return (
     <Collapsible.Root open={$openDescription()} defaultOpen={false}>
@@ -92,7 +92,7 @@ const H3Description: Component<ComponentProps<"h3"> & { text?: string }> = (
 ) => {
   const [, rest] = splitProps(props, ["class", "children", "text"]);
 
-  const $openDescription = useStore(openDescription);
+  const $openDescription = useStore(showDescription);
 
   return (
     <Collapsible.Root open={$openDescription()} defaultOpen={false}>
@@ -135,7 +135,7 @@ const H4Description: Component<ComponentProps<"h4"> & { text?: string }> = (
 ) => {
   const [, rest] = splitProps(props, ["class", "children", "text"]);
 
-  const $openDescription = useStore(openDescription);
+  const $openDescription = useStore(showDescription);
 
   return (
     <Collapsible.Root open={$openDescription()} defaultOpen={false}>
@@ -205,7 +205,7 @@ const TypographyTBody: Component<ComponentProps<"tbody">> = (props) => {
   return <tbody {...rest}>{props.children}</tbody>;
 };
 
-const TypographyTR: Component<ComponentProps<"tr">> = (props) => {
+const TypographyTr: Component<ComponentProps<"tr">> = (props) => {
   const [, rest] = splitProps(props, ["class", "children"]);
 
   return (
@@ -215,7 +215,7 @@ const TypographyTR: Component<ComponentProps<"tr">> = (props) => {
   );
 };
 
-const TypographyTH: Component<ComponentProps<"th">> = (props) => {
+const TypographyTh: Component<ComponentProps<"th">> = (props) => {
   const [, rest] = splitProps(props, ["class", "children"]);
 
   return (
@@ -231,7 +231,7 @@ const TypographyTH: Component<ComponentProps<"th">> = (props) => {
   );
 };
 
-const TypographyTD: Component<ComponentProps<"td">> = (props) => {
+const TypographyTd: Component<ComponentProps<"td">> = (props) => {
   const [, rest] = splitProps(props, ["class", "children"]);
 
   return (
@@ -345,9 +345,9 @@ export {
   TypographyTable,
   TypographyTHead,
   TypographyTBody,
-  TypographyTR,
-  TypographyTH,
-  TypographyTD,
+  TypographyTr,
+  TypographyTh,
+  TypographyTd,
   List,
   InlineCode,
   Lead,

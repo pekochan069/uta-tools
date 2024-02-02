@@ -1,6 +1,7 @@
 import { useStore } from "@nanostores/solid";
-import { Match, Show, Switch } from "solid-js";
+import { Match, Switch } from "solid-js";
 
+import { cn } from "~/lib/utils";
 import { format } from "~/atoms/tldr/video/yt-dlp";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
@@ -67,3 +68,22 @@ export const VideoFormatInput = () => {
     </div>
   );
 };
+
+export const FormatInput = (props: { class: string }) => {
+  return (
+    <div class={cn("grid gap-4 md:grid-cols-2", props.class)}>
+      <AudioFormatInput />
+      <VideoFormatInput />
+    </div>
+  );
+};
+
+type Format = {
+  type: "audio" | "video";
+  format: string;
+  description: string;
+};
+
+export const commonFormats: Format[] = [
+  
+];

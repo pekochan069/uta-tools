@@ -1,9 +1,14 @@
 ---
 import { YoutubeLink, YoutubeLinkInput } from "./YoutubeLink";
-import { Format, AudioFormatInput, VideoFormatInput } from "./Format";
-
+import {
+  Format,
+  AudioFormatInput,
+  VideoFormatInput,
+  FormatInput,
+} from "./Format";
 import * as Typo from "~/components/ui/typography";
 import CodeArea from "~/components/common/CodeArea";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "~/components/ui/table";
 ---
 
 <Typo.H2Description text="기본 사용법" client:visible>
@@ -50,3 +55,24 @@ import CodeArea from "~/components/common/CodeArea";
   yt-dlp -f <Format client:load />
   <YoutubeLink client:load />
 </CodeArea>
+
+<YoutubeLinkInput client:load />
+
+<FormatInput client:load class="mt-3" />
+
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>옵션</TableHead>
+      <TableHead>설명</TableHead>
+      <TableHead />
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <Typo.Code>-f</Typo.Code>
+      <Typo.Text>다운로드할 포맷을 선택합니다.</Typo.Text>
+      <Typo.Code>best</Typo.Code>
+    </TableRow>
+  </TableBody>
+</Table>
