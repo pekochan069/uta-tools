@@ -1,10 +1,9 @@
 ---
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
-import BaseLayout from "~/layouts/BaseLayout.astro";
 import WithSidebar from "~/layouts/WithSidebar.astro";
-import { contents } from "~/lib/contents/contents";
+import { collections } from "~/lib/contents";
 
-const tools = contents.find((c) => c.slug === "tools");
+const tools = collections.find((c) => c.slug === "tools");
 
 if (!tools) {
   throw new Error("Cannot find contents!");

@@ -2,7 +2,7 @@ import { For, createSignal } from "solid-js";
 import { RiSystemMenu2Fill } from "solid-icons/ri";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-solid";
 
-import { contents } from "~/lib/contents/contents";
+import { collections } from "~/lib/contents";
 import { Button } from "~/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
 import {
@@ -36,14 +36,14 @@ export default () => {
               options={{ scrollbars: { autoHide: "leave" } }}
             >
               <div class="flex h-[calc(100svh-7rem)] flex-col gap-10">
-                <For each={contents}>
-                  {(largeCategory) => (
+                <For each={collections}>
+                  {(collections) => (
                     <div class="flex flex-col gap-1">
                       <h3 class="mb-2 text-2xl font-semibold">
-                        {largeCategory.name}
+                        {collections.name}
                       </h3>
                       <div class="flex flex-col gap-4">
-                        <For each={largeCategory.categories}>
+                        <For each={collections.categories}>
                           {(category) => (
                             <div class="flex flex-col gap-1">
                               <h4 class="mb-1 text-lg font-semibold">
@@ -51,7 +51,7 @@ export default () => {
                               </h4>
                               <For each={category.contents}>
                                 {(content) => {
-                                  const href = `/${largeCategory.slug}/${category.slug}/${content.slug}`;
+                                  const href = `/${collections.slug}/${category.slug}/${content.slug}`;
                                   return (
                                     <a
                                       href={href}

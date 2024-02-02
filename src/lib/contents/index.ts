@@ -1,9 +1,9 @@
 import { None, Some } from "~/lib/types";
-import type { Contents } from "./contents-types";
+import type { Collections } from "./contents-types";
 import { tldr } from "./tldr";
 import { tools } from "./tools";
 
-export const contents: Contents[] = [
+export const collections: Collections[] = [
   {
     name: "Tools",
     slug: "tools",
@@ -21,7 +21,7 @@ export function getContent(
   categorySlug: string,
   contentSlug: string,
 ) {
-  const largeCategory = contents.find((c) => c.slug === largeCategorySlug);
+  const largeCategory = collections.find((c) => c.slug === largeCategorySlug);
   if (!largeCategory) {
     return None();
   }

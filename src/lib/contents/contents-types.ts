@@ -1,6 +1,6 @@
 import type { JSX } from "solid-js";
 
-export type Contents = {
+export type Collections = {
   name: string;
   slug: string;
   categories: ContentsCategory[];

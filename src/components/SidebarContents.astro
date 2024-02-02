@@ -1,7 +1,7 @@
 ---
 import { OverlayScrollbarsComponent } from "overlayscrollbars-solid";
 
-import { contents } from "~/lib/contents/contents";
+import { collections } from "~/lib/contents";
 ---
 
 <aside
@@ -14,12 +14,12 @@ import { contents } from "~/lib/contents/contents";
   >
     <div class="flex h-[calc(100svh-7rem)] flex-col gap-10">
       {
-        contents.map((largeCategory) => {
+        collections.map((collections) => {
           return (
             <div class="flex flex-col gap-1">
-              <h3 class="mb-2 text-2xl font-semibold">{largeCategory.name}</h3>
+              <h3 class="mb-2 text-2xl font-semibold">{collections.name}</h3>
               <div class="flex flex-col gap-4">
-                {largeCategory.categories.map((category) => {
+                {collections.categories.map((category) => {
                   return (
                     <div class="flex flex-col gap-1">
                       <h4 class="mb-1 text-lg font-semibold">
@@ -27,7 +27,7 @@ import { contents } from "~/lib/contents/contents";
                       </h4>
                       {category.contents.map((content) => (
                         <a
-                          href={`/${largeCategory.slug}/${category.slug}/${content.slug}`}
+                          href={`/${collections.slug}/${category.slug}/${content.slug}`}
                           class="text-sm text-muted-foreground hover:text-foreground active:text-foreground data-[current-path]:font-semibold data-[current-path]:text-foreground data-[current-path]:underline"
                         >
                           {content.name}
