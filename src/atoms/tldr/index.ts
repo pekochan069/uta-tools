@@ -1,3 +1,3 @@
 import { atom } from "nanostores";
 
-export const openDescription = atom(false);
+export const showDescription = atom(false);
