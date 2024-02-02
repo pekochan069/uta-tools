@@ -2,7 +2,9 @@
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import WithSidebar from "~/layouts/WithSidebar.astro";
-import { tools } from "~/lib/contents/tools";
+import { contents } from "~/lib/contents/contents";
+
+const tools = contents.find((c) => c.slug === tools);
 ---
 
 <WithSidebar title="Uta Tools">
@@ -13,20 +15,20 @@ import { tools } from "~/lib/contents/tools";
           <div>
             <h3 class="mb-4 text-xl font-semibold">{category.name}</h3>
             <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-              {category.contents.map((tool) => (
+              {category.contents.map((content) => (
                 <a
-                  href={tool.href}
+                  href={`/tools/${category.slug}/${content.slug}`}
                   class="scale-[98%] transition-transform hover:scale-100"
                 >
-                  <Card class="">
+                  <Card>
                     <CardHeader>
                       <div class="grid aspect-square select-none place-content-center rounded-md border-[1px]">
-                        <tool.icon />
+                        <content.icon />
                       </div>
                     </CardHeader>
                     <CardContent>
                       <p class="text-center text-lg font-semibold">
-                        {tool.name}
+                        {content.name}
                       </p>
                     </CardContent>
                   </Card>
