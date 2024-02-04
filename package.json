@@ -37,6 +37,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "drizzle-orm": "^0.29.3",
+    "effect": "^2.2.3",
     "mysql2": "^3.9.0",
     "nanoid": "^5.0.4",
     "nanostores": "^0.9.5",
