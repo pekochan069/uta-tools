@@ -7,30 +7,33 @@ import { currentContent } from "~/atoms/currentContent";
 
 const paths = Astro.url.pathname.split("/");
 
-const largeCategorySlug = paths[1];
+const collectionSlug = paths[1];
 const categorySlug = paths[2];
 const nameSlug = paths[3];
 
-const content = getContent(largeCategorySlug, categorySlug, nameSlug);
+const content = getContent(collectionSlug, categorySlug, nameSlug);
 
 if (content.isNone()) {
   Astro.redirect("/404");
 }
 
-const { largeCategory, category, name, description } = content.unwrap();
-currentContent.set({ largeCategory, category, name, description });
+const { collection, category, name, description } = content.unwrap();
+currentContent.set({ collection, category, name, description });
 ---
 
 <WithSidebar title={name}>
   <main class="py-4">
     <div class="mb-4 flex items-center gap-x-1 text-sm text-muted-foreground">
-      <h2>
-        {largeCategory}
-      </h2>
+      <a href={`/${collectionSlug}`} class="hover:underline">
+        {collection}
+      </a>
       <TbChevronRight class="inline-block h-4 w-4" />
-      <h2>
+      <!-- <a href={`/${collectionSlug}/${categorySlug}`} class="hover:underline">
         {category}
-      </h2>
+      </a> -->
+      <span>
+        {category}
+      </span>
       <TbChevronRight class="inline-block h-4 w-4" />
       <h3 class="font-semibold">
         {name}

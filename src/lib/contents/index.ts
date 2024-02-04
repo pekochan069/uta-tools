@@ -17,18 +17,16 @@ export const collections: Collections[] = [
 ];
 
 export function getContent(
-  largeCategorySlug: string,
+  collectionSlug: string,
   categorySlug: string,
   contentSlug: string,
 ) {
-  const largeCategory = collections.find((c) => c.slug === largeCategorySlug);
-  if (!largeCategory) {
+  const collection = collections.find((c) => c.slug === collectionSlug);
+  if (!collection) {
     return None();
   }
 
-  const category = largeCategory.categories.find(
-    (c) => c.slug === categorySlug,
-  );
+  const category = collection.categories.find((c) => c.slug === categorySlug);
   if (!category) {
     return None();
   }
@@ -40,7 +38,7 @@ export function getContent(
   }
 
   return Some({
-    largeCategory: largeCategory.name,
+    collection: collection.name,
     category: category.name,
     name: content.name,
     description: content.description,

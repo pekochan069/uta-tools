@@ -1,7 +1,7 @@
 import { atom } from "nanostores";
 
 export const currentContent = atom({
-  largeCategory: "",
+  collection: "",
   category: "",
   name: "",
   description: "",
