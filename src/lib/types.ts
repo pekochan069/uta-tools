@@ -1,5 +1,3 @@
-
-
 /** Represents a failed computation.*/
 export interface Err<T, E> {
   ok: false;
