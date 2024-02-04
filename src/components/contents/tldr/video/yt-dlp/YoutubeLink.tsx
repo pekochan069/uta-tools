@@ -26,11 +26,11 @@ export const YoutubeLink = () => {
   );
 };
 
-export const YoutubeLinkInput = () => {
+export const YoutubeLinkInput = (props: { class?: string }) => {
   const $link = useStore(link);
 
   return (
-    <div>
+    <div class={props.class}>
       <Label>
         유튜브 링크
         <Input
