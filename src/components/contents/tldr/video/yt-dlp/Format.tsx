@@ -5,6 +5,35 @@ import { cn } from "~/lib/utils";
 import { format } from "~/atoms/tldr/video/yt-dlp";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
+import { Button } from "~/components/ui/button";
+
+type Format = {
+  format: string;
+  description: string;
+};
+
+export const commonFormats: Format[] = [
+  {
+    format: "bv*+ba/b",
+    description: "오디오와 비디오를 포함하고 있는 포맷 중 가장 좋은 포맷",
+  },
+  {
+    format: "bv*",
+    description: "비디오를 포함하고 있는 포맷 중 가장 좋은 포맷",
+  },
+  {
+    format: "bv",
+    description: "비디오만 포함된 포맷 중 가장 좋은 포맷",
+  },
+  {
+    format: "ba*",
+    description: "오디오를 포함하고 있는 포맷 중 가장 좋은 포맷",
+  },
+  {
+    format: "ba",
+    description: "오디오만 포함된 포맷 중 가장 좋은 포맷",
+  },
+];
 
 export const Format = () => {
   const $format = useStore(format);
@@ -12,78 +41,34 @@ export const Format = () => {
   return (
     <span>
       <Switch>
-        <Match when={$format().audio === "" && $format().video === ""}>
+        <Match when={$format() === ""}>
           <span class="text-code-muted">{"{"}</span>
           format
           <span class="text-code-muted">{"}"}</span>
         </Match>
-        <Match when={$format().audio !== "" && $format().video === ""}>
-          {$format().audio}
-        </Match>
-        <Match when={$format().audio === "" && $format().video !== ""}>
-          {$format().video}
-        </Match>
-        <Match when={$format().audio !== "" && $format().video !== ""}>
-          {$format().audio}+{$format().video}
-        </Match>
+        <Match when={$format() !== ""}>{$format()}</Match>
       </Switch>
     </span>
   );
 };
 
-export const AudioFormatInput = () => {
+export const FormatInput = (props: { class?: string }) => {
   const $format = useStore(format);
 
   return (
-    <div>
+    <div class={props.class}>
       <Label>
-        오디오 포맷
+        포맷
         <Input
-          value={$format().audio}
-          onChange={(value) => format.set({ ...$format(), audio: value })}
-          placeholder="140"
-          type="number"
-          min="0"
+          value={$format()}
+          onChange={(value) => format.set(value)}
+          placeholder="bv*+ba/b"
         />
       </Label>
     </div>
   );
 };
 
-export const VideoFormatInput = () => {
-  const $format = useStore(format);
-
-  return (
-    <div>
-      <Label>
-        비디오 포맷
-        <Input
-          value={$format().video}
-          onChange={(value) => format.set({ ...$format(), video: value })}
-          placeholder="299"
-          type="number"
-          min="0"
-        />
-      </Label>
-    </div>
-  );
+export const SelectFormatButton = (props: { format: string }) => {
+  return <Button size="sm" onClick={() => format.set(props.format)}>선택</Button>;
 };
-
-export const FormatInput = (props: { class: string }) => {
-  return (
-    <div class={cn("grid gap-4 md:grid-cols-2", props.class)}>
-      <AudioFormatInput />
-      <VideoFormatInput />
-    </div>
-  );
-};
-
-type Format = {
-  type: "audio" | "video";
-  format: string;
-  description: string;
-};
-
-export const commonFormats: Format[] = [
-  
-];

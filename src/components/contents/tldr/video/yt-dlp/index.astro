@@ -1,15 +1,25 @@
 ---
+import CommandBuilder from "./CommandBuilder";
 import { YoutubeLink, YoutubeLinkInput } from "./YoutubeLink";
 import {
   Format,
-  AudioFormatInput,
-  VideoFormatInput,
   FormatInput,
+  commonFormats,
+  SelectFormatButton,
 } from "./Format";
 import * as Typo from "~/components/ui/typography";
 import CodeArea from "~/components/common/CodeArea";
-import { Table, TableBody, TableHead, TableHeader, TableRow } from "~/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/ui/table";
 ---
+
+<CommandBuilder client:load />
 
 <Typo.H2Description text="기본 사용법" client:visible>
   <Typo.Link href="https://github.com/yt-dlp/yt-dlp">yt-dlp</Typo.Link>는 <Typo.Link
@@ -60,19 +70,25 @@ import { Table, TableBody, TableHead, TableHeader, TableRow } from "~/components
 
 <FormatInput client:load class="mt-3" />
 
-<Table>
+<Table class="mt-3">
   <TableHeader>
     <TableRow>
-      <TableHead>옵션</TableHead>
+      <TableHead class="w-32">옵션</TableHead>
       <TableHead>설명</TableHead>
-      <TableHead />
+      <TableHead class="w-24" />
     </TableRow>
   </TableHeader>
   <TableBody>
-    <TableRow>
-      <Typo.Code>-f</Typo.Code>
-      <Typo.Text>다운로드할 포맷을 선택합니다.</Typo.Text>
-      <Typo.Code>best</Typo.Code>
-    </TableRow>
+    {
+      commonFormats.map((format) => (
+        <TableRow>
+          <TableCell class="py-2">{format.format}</TableCell>
+          <TableCell class="py-2">{format.description}</TableCell>
+          <TableCell class="w-24 py-2">
+            <SelectFormatButton client:visible format={format.format} />
+          </TableCell>
+        </TableRow>
+      ))
+    }
   </TableBody>
 </Table>
