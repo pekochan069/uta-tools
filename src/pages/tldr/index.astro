@@ -30,7 +30,9 @@ if (!tldrs) {
                       <div class="grid aspect-square select-none place-content-center rounded-md border-[1px] @container">
                         {Either.match(content.icon, {
                           onLeft: (Icon) => <Icon />,
-                          onRight: (right) => <img src={right} alt="icon" />,
+                          onRight: (right) => (
+                            <img loading="lazy" src={right} alt="icon" />
+                          ),
                         })}
                       </div>
                     </CardHeader>
