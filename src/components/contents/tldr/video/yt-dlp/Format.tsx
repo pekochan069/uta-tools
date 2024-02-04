@@ -1,11 +1,10 @@
 import { useStore } from "@nanostores/solid";
 import { Match, Switch } from "solid-js";
 
-import { cn } from "~/lib/utils";
 import { format } from "~/atoms/tldr/video/yt-dlp";
+import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { Button } from "~/components/ui/button";
 
 type Format = {
   format: string;
@@ -70,5 +69,9 @@ export const FormatInput = (props: { class?: string }) => {
 };
 
 export const SelectFormatButton = (props: { format: string }) => {
-  return <Button size="sm" onClick={() => format.set(props.format)}>선택</Button>;
+  return (
+    <Button size="sm" onClick={() => format.set(props.format)}>
+      선택
+    </Button>
+  );
 };

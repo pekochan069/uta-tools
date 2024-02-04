@@ -8,7 +8,7 @@ import {
 } from "solid-js";
 import { toast } from "solid-sonner";
 import { Spinner, SpinnerType } from "solid-spinner";
-import { match, P } from "ts-pattern";
+import { P, match } from "ts-pattern";
 
 import ClearButton from "~/components/common/ClearButton";
 import CopyButton from "~/components/common/CopyButton";

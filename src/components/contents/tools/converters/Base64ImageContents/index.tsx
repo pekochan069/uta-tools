@@ -3,10 +3,10 @@ import { BiSolidImageAdd, BiSolidImageAlt } from "solid-icons/bi";
 import { Show, createEffect, createSignal, onCleanup, onMount } from "solid-js";
 import { toast } from "solid-sonner";
 
-import { Input } from "~/components/ui/input";
+import ClearButton from "~/components/common/ClearButton";
 import CopyButton from "~/components/common/CopyButton";
 import PasteButton from "~/components/common/PasteButton";
-import ClearButton from "~/components/common/ClearButton";
+import { Input } from "~/components/ui/input";
 
 export default () => {
   let imageAddIconRef: SVGSVGElement | undefined;
@@ -17,15 +17,8 @@ export default () => {
   const [file, setFile] = createSignal<File>();
   const [validImage, setValidImage] = createSignal(false);
 
-  const textToBase64Image = (str: string) => {
-    return `data:image/png;base64,${btoa(str)}`;
-  };
-
   const windowDropEvent = (e: DragEvent) => {
     e.preventDefault();
-    // if (e.dataTransfer?.files[0]) {
-    // 	setFile(e.dataTransfer?.files[0].name);
-    // }
   };
 
   onMount(() => {

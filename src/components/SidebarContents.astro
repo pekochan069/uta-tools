@@ -17,7 +17,12 @@ import { collections } from "~/lib/contents";
         collections.map((collections) => {
           return (
             <div class="flex flex-col gap-1">
-              <a href={`/${collections.slug}`} class="mb-2 text-2xl font-semibold hover:underline">{collections.name}</a>
+              <a
+                href={`/${collections.slug}`}
+                class="mb-2 text-2xl font-semibold hover:underline"
+              >
+                {collections.name}
+              </a>
               <div class="flex flex-col gap-4">
                 {collections.categories.map((category) => {
                   return (

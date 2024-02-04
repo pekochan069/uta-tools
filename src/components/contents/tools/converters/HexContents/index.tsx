@@ -1,9 +1,10 @@
-import { Show, createSignal } from "solid-js";
-import { TbPlus, TbMinus } from "solid-icons/tb";
-import { IoSwapVertical } from "solid-icons/io";
 import { TextField } from "@kobalte/core";
+import { IoSwapVertical } from "solid-icons/io";
+import { TbMinus, TbPlus } from "solid-icons/tb";
+import { Show, createSignal } from "solid-js";
 import { toast } from "solid-sonner";
 
+import ClearButton from "~/components/common/ClearButton";
 import {
   ContentConfig,
   ContentConfigLabel,
@@ -12,7 +13,6 @@ import {
 } from "~/components/common/Config";
 import CopyButton from "~/components/common/CopyButton";
 import PasteButton from "~/components/common/PasteButton";
-import ClearButton from "~/components/common/ClearButton";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Switch } from "~/components/ui/switch";

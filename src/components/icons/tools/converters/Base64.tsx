@@ -5,7 +5,9 @@ export const Base64Icon = () => {
         <span>BA</span>
         <span>SE</span>
       </div>
-      <span class="text-5xl tracking-tight @[148px]:text-6xl @[200px]:text-7xl">64</span>
+      <span class="text-5xl tracking-tight @[148px]:text-6xl @[200px]:text-7xl">
+        64
+      </span>
     </div>
   );
 };

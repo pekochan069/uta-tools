@@ -1,6 +1,6 @@
+import { OverlayScrollbarsComponent } from "overlayscrollbars-solid";
 import { JSX } from "solid-js";
 import CodeCopyButton from "./CodeAreaCopyButton";
-import { OverlayScrollbarsComponent } from "overlayscrollbars-solid";
 
 type ControlledCodeProps = {
   children: JSX.Element;
@@ -21,8 +21,7 @@ export default (props: ControlledCodeProps) => {
           </div>
         </OverlayScrollbarsComponent>
       </div>
-      {/* biome-ignore lint/style/noNonNullAssertion: <explanation> */}
-      <CodeCopyButton str={codeRef?.textContent!} />
+      <CodeCopyButton str={codeRef?.textContent as string} />
     </div>
   );
 };

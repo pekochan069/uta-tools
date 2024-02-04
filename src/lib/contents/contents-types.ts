@@ -1,6 +1,5 @@
-import type { ImageMetadata } from "astro";
-import type { JSX } from "solid-js";
 import { Either } from "effect";
+import type { JSX } from "solid-js";
 
 export type Collections = {
   name: string;

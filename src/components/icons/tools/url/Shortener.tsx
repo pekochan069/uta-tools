@@ -1,3 +1,3 @@
 export const UrlShortenerIcon = () => {
-	return <div>Url Shortener</div>;
+  return <div>Url Shortener</div>;
 };

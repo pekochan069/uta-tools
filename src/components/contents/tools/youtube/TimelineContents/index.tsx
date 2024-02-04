@@ -1,4 +1,14 @@
 import {
+  DragDropProvider,
+  DragDropSensors,
+  DragOverlay,
+  type Id,
+  SortableProvider,
+  closestCenter,
+} from "@thisbeyond/solid-dnd";
+import { BsPersonWorkspace } from "solid-icons/bs";
+import { TbCirclePlus, TbDotsVertical, TbX } from "solid-icons/tb";
+import {
   For,
   Index,
   Show,
@@ -10,19 +20,8 @@ import {
   untrack,
 } from "solid-js";
 import { createStore, produce } from "solid-js/store";
-import { BsPersonWorkspace } from "solid-icons/bs";
-import { TbCirclePlus, TbDotsVertical, TbX } from "solid-icons/tb";
 import { toast } from "solid-sonner";
-import {
-  DragDropProvider,
-  DragDropSensors,
-  DragOverlay,
-  SortableProvider,
-  closestCenter,
-  type Id,
-} from "@thisbeyond/solid-dnd";
 
-import { checkUrl, getVideoId } from "~/lib/youtube";
 import {
   ContentConfig,
   ContentConfigLabel,
@@ -32,6 +31,7 @@ import {
 import CopyButton from "~/components/common/CopyButton";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
+import { Input } from "~/components/ui/input";
 import {
   Table,
   TableBody,
@@ -44,10 +44,10 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
-import { Input } from "~/components/ui/input";
+import { checkUrl, getVideoId } from "~/lib/youtube";
 
-import type { TimelineType } from "./timelineTypes";
 import TimelineRow from "./TimelineRow";
+import type { TimelineType } from "./timelineTypes";
 
 const FoldButton = (props: {
   fold: boolean;
@@ -402,7 +402,7 @@ export default () => {
                           )
                           .join("\n");
 
-                        navigator.clipboard.writeText(text);
+                        void navigator.clipboard.writeText(text);
                         toast("Copied timeline to clipboard");
                       }}
                       class="font-semibold"

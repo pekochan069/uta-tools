@@ -1,17 +1,17 @@
 import { TextField } from "@kobalte/core";
 import { IoSwapVertical } from "solid-icons/io";
-import { TbPlus, TbMinus } from "solid-icons/tb";
+import { TbMinus, TbPlus } from "solid-icons/tb";
 import { Show, createSignal } from "solid-js";
 import { toast } from "solid-sonner";
-import ClearButton from "~/components/tools/common/ClearButton";
+import ClearButton from "~/components/common/ClearButton";
 import {
-  ToolConfig,
-  ToolConfigLabel,
-  ToolConfigRoot,
-  ToolConfigSection,
-} from "~/components/tools/common/Config";
-import CopyButton from "~/components/tools/common/CopyButton";
-import PasteButton from "~/components/tools/common/PasteButton";
+  ContentConfig,
+  ContentConfigLabel,
+  ContentConfigRoot,
+  ContentConfigSection,
+} from "~/components/common/Config";
+import CopyButton from "~/components/common/CopyButton";
+import PasteButton from "~/components/common/PasteButton";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Switch } from "~/components/ui/switch";
@@ -43,13 +43,13 @@ export default () => {
   return (
     <div class="flex flex-col">
       <div class="mb-6">
-        <ToolConfigSection>
-          <ToolConfigRoot>
-            <ToolConfigLabel
-              tool="Operation"
+        <ContentConfigSection>
+          <ContentConfigRoot>
+            <ContentConfigLabel
+              name="Operation"
               description="Select whether to encode or decode the input"
             />
-            <ToolConfig>
+            <ContentConfig>
               <label for="operation">
                 <Show when={isEncode()} fallback="Decode">
                   Encode
@@ -60,14 +60,14 @@ export default () => {
                 checked={isEncode()}
                 onChange={() => setIsEncode((prev) => !prev)}
               />
-            </ToolConfig>
-          </ToolConfigRoot>
-          <ToolConfigRoot>
-            <ToolConfigLabel
-              tool="Repeat"
+            </ContentConfig>
+          </ContentConfigRoot>
+          <ContentConfigRoot>
+            <ContentConfigLabel
+              name="Repeat"
               description="Set repeat count for operation"
             />
-            <ToolConfig>
+            <ContentConfig>
               <Button
                 variant="outline"
                 onClick={() => {
@@ -96,9 +96,9 @@ export default () => {
               >
                 <TbPlus />
               </Button>
-            </ToolConfig>
-          </ToolConfigRoot>
-        </ToolConfigSection>
+            </ContentConfig>
+          </ContentConfigRoot>
+        </ContentConfigSection>
       </div>
       <div class="flex flex-col gap-2 md:mb-2">
         <div class="mb-4">

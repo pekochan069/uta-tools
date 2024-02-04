@@ -1,13 +1,10 @@
-import PasteButton from "../../common/PasteButton";
-import TimelineRow from "./TimelineRow";
-import type { TimelineType } from "./timelineTypes";
 import {
   DragDropProvider,
   DragDropSensors,
   DragOverlay,
+  type Id,
   SortableProvider,
   closestCenter,
-  type Id,
 } from "@thisbeyond/solid-dnd";
 import { BsPersonWorkspace } from "solid-icons/bs";
 import { TbCirclePlus, TbDotsVertical, TbX } from "solid-icons/tb";
@@ -25,12 +22,12 @@ import {
 import { createStore, produce } from "solid-js/store";
 import { toast } from "solid-sonner";
 import {
-  ToolConfig,
-  ToolConfigLabel,
-  ToolConfigRoot,
-  ToolConfigSection,
-} from "~/components/tools/common/Config";
-import CopyButton from "~/components/tools/common/CopyButton";
+  ContentConfig,
+  ContentConfigLabel,
+  ContentConfigRoot,
+  ContentConfigSection,
+} from "~/components/common/Config";
+import CopyButton from "~/components/common/CopyButton";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Input } from "~/components/ui/input";
@@ -47,6 +44,8 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { checkUrl, getVideoId } from "~/lib/youtube";
+import TimelineRow from "./TimelineRow";
+import type { TimelineType } from "./timelineTypes";
 
 const FoldButton = (props: {
   fold: boolean;
@@ -299,23 +298,23 @@ export default () => {
 
   return (
     <div class="pb-20">
-      <ToolConfigSection>
-        <ToolConfigRoot>
-          <ToolConfigLabel
+      <ContentConfigSection>
+        <ContentConfigRoot>
+          <ContentConfigLabel
             tool="Link"
             description="Link to a YouTube video to generate a timeline for"
           />
-          <ToolConfig>
+          <ContentConfig>
             <Input
               value={url()}
               onChange={setUrl}
               type="text"
-              placeholder="http://youtu.be/{videoId}"
+              placeholder="https://youtu.be/{videoId}"
               class=" min-w-[16rem] xl:min-w-[24rem]"
             />
-          </ToolConfig>
-        </ToolConfigRoot>
-      </ToolConfigSection>
+          </ContentConfig>
+        </ContentConfigRoot>
+      </ContentConfigSection>
       <div class="min-h-[100svh]">
         <div class="mt-6 flex justify-center md:mt-8">
           <div
@@ -401,7 +400,7 @@ export default () => {
                           )
                           .join("\n");
 
-                        navigator.clipboard.writeText(text);
+                        void navigator.clipboard.writeText(text);
                         toast("Copied timeline to clipboard");
                       }}
                       class="font-semibold"

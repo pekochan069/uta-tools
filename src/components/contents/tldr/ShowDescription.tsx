@@ -1,12 +1,12 @@
-import { Show, onMount } from "solid-js";
 import { useStore } from "@nanostores/solid";
+import { Show, onMount } from "solid-js";
 
 import { showDescription } from "~/atoms/tldr";
 import {
-  ContentConfigSection,
-  ContentConfigRoot,
-  ContentConfigLabel,
   ContentConfig,
+  ContentConfigLabel,
+  ContentConfigRoot,
+  ContentConfigSection,
 } from "~/components/common/Config";
 import { Switch } from "~/components/ui/switch";
 
@@ -15,11 +15,11 @@ export default () => {
 
   onMount(() => {
     const s = localStorage.getItem("showDescription");
-  })
+  });
 
   const onShowDescriptionChange = () => {
     showDescription.set(!$showDescription());
-  }
+  };
 
   return (
     <div class="mt-4">
