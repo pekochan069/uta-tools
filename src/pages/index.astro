@@ -1,7 +1,45 @@
 ---
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
 import WithSidebar from "~/layouts/WithSidebar.astro";
 ---
 
 <WithSidebar title="Uta Tools">
-  <main class="py-4"></main>
+  <main class="py-4">
+    <div class="flex flex-col gap-y-4">
+      <a href="/tools" class="group outline-none">
+        <Card
+          class="ring-foreground ring-offset-2 transition duration-100 group-hover:ring-2"
+        >
+          <div>
+            <CardHeader>
+              <CardTitle class="text-2xl">Tools</CardTitle>
+              <CardDescription>
+                A collection of tools for Vtuber Utawaku Gallery
+              </CardDescription>
+            </CardHeader>
+          </div>
+        </Card>
+      </a>
+      <a href="/tldr" class="group outline-none">
+        <Card
+          class="ring-foreground ring-offset-2 transition duration-100 group-hover:ring-2"
+        >
+          <div>
+            <CardHeader>
+              <CardTitle class="text-2xl">tldr</CardTitle>
+              <CardDescription>
+                A collection of common command line tools with examples
+              </CardDescription>
+            </CardHeader>
+          </div>
+        </Card>
+      </a>
+    </div>
+  </main>
 </WithSidebar>
