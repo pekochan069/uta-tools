@@ -19,7 +19,7 @@ export type Content = {
   name: string;
   slug: string;
   description: string;
-  icon: Either.Either<() => JSX.Element, ImageMetadata>;
+  icon: Either.Either<() => JSX.Element, string>;
   // icon?: () => JSX.Element;
   // image?: ImageMetadata;
 };
