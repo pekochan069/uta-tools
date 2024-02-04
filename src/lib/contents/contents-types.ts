@@ -1,4 +1,6 @@
+import type { ImageMetadata } from "astro";
 import type { JSX } from "solid-js";
+import { Either } from "effect";
 
 export type Collections = {
   name: string;
@@ -17,5 +19,7 @@ export type Content = {
   name: string;
   slug: string;
   description: string;
-  icon: () => JSX.Element;
+  icon: Either.Either<() => JSX.Element, ImageMetadata>;
+  // icon?: () => JSX.Element;
+  // image?: ImageMetadata;
 };
