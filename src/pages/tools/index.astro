@@ -1,4 +1,7 @@
 ---
+import { Either } from "effect";
+import { Image } from "astro:assets";
+
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import WithSidebar from "~/layouts/WithSidebar.astro";
 import { collections } from "~/lib/contents";
@@ -25,12 +28,15 @@ if (!tools) {
                 >
                   <Card>
                     <CardHeader>
-                      <div class="grid aspect-square select-none place-content-center rounded-md border-[1px]">
-                        <content.icon />
+                      <div class="grid aspect-square select-none place-content-center rounded-md border-[1px] @container">
+                        {Either.match(content.icon, {
+                          onLeft: (Icon) => <Icon />,
+                          onRight: (right) => <Image src={right} alt="icon" />,
+                        })}
                       </div>
                     </CardHeader>
-                    <CardContent>
-                      <p class="text-center text-lg font-semibold">
+                    <CardContent class="@container">
+                      <p class="text-center text-md font-semibold @[130px]:text-lg @[180px]:text-xl">
                         {content.name}
                       </p>
                     </CardContent>
