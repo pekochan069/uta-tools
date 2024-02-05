@@ -1,6 +1,3 @@
-import type { Component, ComponentProps } from "solid-js"
-import { mergeProps, onMount, createEffect, on, onCleanup, splitProps } from "solid-js"
-
 import type {
   ChartComponent,
   ChartData,
@@ -9,8 +6,8 @@ import type {
   ChartType,
   ChartTypeRegistry,
   Plugin,
-  TooltipModel
-} from "chart.js"
+  TooltipModel,
+} from "chart.js";
 import {
   ArcElement,
   BarController,
@@ -31,24 +28,32 @@ import {
   RadarController,
   RadialLinearScale,
   ScatterController,
-  Tooltip
-} from "chart.js"
-
-import { cn } from "~/lib/utils"
+  Tooltip,
+} from "chart.js";
+import type { Component, ComponentProps } from "solid-js";
+import {
+  mergeProps,
+  onMount,
+  createEffect,
+  on,
+  onCleanup,
+  splitProps,
+} from "solid-js";
+import { cn } from "~/lib/utils";
 
 export interface TypedChartProps extends ComponentProps<"div"> {
-  data: ChartData
-  options?: ChartOptions
-  plugins?: Plugin[]
+  data: ChartData;
+  options?: ChartOptions;
+  plugins?: Plugin[];
 }
 
 export interface ChartProps extends TypedChartProps {
-  type: ChartType
+  type: ChartType;
 }
 
 export interface ChartContext {
-  chart: Chart
-  tooltip: TooltipModel<keyof ChartTypeRegistry>
+  chart: Chart;
+  tooltip: TooltipModel<keyof ChartTypeRegistry>;
 }
 
 const registerMap: { [key in ChartType]: ChartComponent[] } = {
@@ -59,105 +64,117 @@ const registerMap: { [key in ChartType]: ChartComponent[] } = {
   pie: [PieController, ArcElement],
   polarArea: [PolarAreaController, ArcElement, RadialLinearScale],
   radar: [RadarController, LineElement, PointElement, RadialLinearScale],
-  scatter: [ScatterController, PointElement, LinearScale]
-}
+  scatter: [ScatterController, PointElement, LinearScale],
+};
 
 const BaseChart: Component<ChartProps> = (rawProps) => {
-  Chart.register(Colors, Filler, Legend, Tooltip, ...registerMap[rawProps.type])
+  Chart.register(
+    Colors,
+    Filler,
+    Legend,
+    Tooltip,
+    ...registerMap[rawProps.type],
+  );
 
   const props = mergeProps(
     {
       options: { responsive: true, maintainAspectRatio: false } as ChartOptions,
-      plugins: [] as Plugin[]
+      plugins: [] as Plugin[],
     },
-    rawProps
-  )
-  const [, rest] = splitProps(props, ["class", "type", "data", "options", "plugins"])
+    rawProps,
+  );
+  const [, rest] = splitProps(props, [
+    "class",
+    "type",
+    "data",
+    "options",
+    "plugins",
+  ]);
 
-  let ref: HTMLCanvasElement
-  let chart: Chart
+  let ref: HTMLCanvasElement;
+  let chart: Chart;
 
   const init = () => {
-    const ctx = ref!.getContext("2d") as ChartItem
+    const ctx = ref!.getContext("2d") as ChartItem;
     chart = new Chart(ctx, {
       type: props.type,
       data: props.data,
       options: props.options,
-      plugins: props.plugins
-    })
-  }
+      plugins: props.plugins,
+    });
+  };
 
-  onMount(() => init())
+  onMount(() => init());
 
   createEffect(
     on(
       () => props.data,
       () => {
-        chart.data = props.data
-        chart.update()
+        chart.data = props.data;
+        chart.update();
       },
-      { defer: true }
-    )
-  )
+      { defer: true },
+    ),
+  );
 
-  onCleanup(() => chart?.destroy())
+  onCleanup(() => chart?.destroy());
 
   return (
     <div class={cn("max-w-full", props.class)} {...rest}>
       <canvas ref={ref!} />
     </div>
-  )
-}
+  );
+};
 
 function showTooltip(context: ChartContext) {
-  let el = document.getElementById("chartjs-tooltip")
+  let el = document.getElementById("chartjs-tooltip");
   if (!el) {
-    el = document.createElement("div")
-    el.id = "chartjs-tooltip"
-    document.body.appendChild(el)
+    el = document.createElement("div");
+    el.id = "chartjs-tooltip";
+    document.body.appendChild(el);
   }
 
-  const model = context.tooltip
+  const model = context.tooltip;
   if (model.opacity === 0 || !model.body) {
-    el.style.opacity = "0"
-    return
+    el.style.opacity = "0";
+    return;
   }
 
   el.className = `p-2 bg-card text-card-foreground rounded-lg border shadow-sm text-sm ${
     model.yAlign ?? `no-transform`
-  }`
+  }`;
 
-  let content = ""
+  let content = "";
 
   model.title.forEach((title) => {
-    content += `<h3 class="font-semibold leading-none tracking-tight">${title}</h3>`
-  })
+    content += `<h3 class="font-semibold leading-none tracking-tight">${title}</h3>`;
+  });
 
-  content += `<div class="mt-1 text-muted-foreground">`
-  const body = model.body.flatMap((body) => body.lines)
+  content += `<div class="mt-1 text-muted-foreground">`;
+  const body = model.body.flatMap((body) => body.lines);
   body.forEach((line, i) => {
-    const colors = model.labelColors[i]
+    const colors = model.labelColors[i];
     content += `
         <div class="flex items-center">
           <span class="inline-block h-2 w-2 mr-1 rounded-full border" style="background: ${colors.backgroundColor}; border-color: ${colors.borderColor}"></span>
           ${line}
-        </div>`
-  })
-  content += `</div>`
+        </div>`;
+  });
+  content += `</div>`;
 
-  el.innerHTML = content
+  el.innerHTML = content;
 
-  const pos = context.chart.canvas.getBoundingClientRect()
-  el.style.opacity = "1"
-  el.style.position = "absolute"
-  el.style.left = `${pos.left + window.scrollX + model.caretX}px`
-  el.style.top = `${pos.top + window.scrollY + model.caretY}px`
-  el.style.pointerEvents = "none"
+  const pos = context.chart.canvas.getBoundingClientRect();
+  el.style.opacity = "1";
+  el.style.position = "absolute";
+  el.style.left = `${pos.left + window.scrollX + model.caretX}px`;
+  el.style.top = `${pos.top + window.scrollY + model.caretY}px`;
+  el.style.pointerEvents = "none";
 }
 
 function createTypedChart(type: ChartType): Component<TypedChartProps> {
-  const chartsWithScales: ChartType[] = ["bar", "line", "scatter"]
-  const chartsWithLegends: ChartType[] = ["bar", "line"]
+  const chartsWithScales: ChartType[] = ["bar", "line", "scatter"];
+  const chartsWithLegends: ChartType[] = ["bar", "line"];
 
   const options: ChartOptions = {
     responsive: true,
@@ -166,18 +183,18 @@ function createTypedChart(type: ChartType): Component<TypedChartProps> {
       ? {
           x: {
             border: { display: false },
-            grid: { display: false }
+            grid: { display: false },
           },
           y: {
             border: {
               dash: [3],
               dashOffset: 3,
-              display: false
+              display: false,
             },
             grid: {
-              color: "hsla(240, 3.8%, 46.1%, 0.4)"
-            }
-          }
+              color: "hsla(240, 3.8%, 46.1%, 0.4)",
+            },
+          },
         }
       : {},
     plugins: {
@@ -190,28 +207,28 @@ function createTypedChart(type: ChartType): Component<TypedChartProps> {
               boxWidth: 6,
               boxHeight: 6,
               color: "hsl(240, 3.8%, 46.1%)",
-              font: { size: 14 }
-            }
+              font: { size: 14 },
+            },
           }
         : { display: false },
       tooltip: {
         enabled: false,
-        external: (context) => showTooltip(context)
-      }
-    }
-  }
+        external: (context) => showTooltip(context),
+      },
+    },
+  };
 
-  return (props) => <BaseChart type={type} options={options} {...props} />
+  return (props) => <BaseChart type={type} options={options} {...props} />;
 }
 
-const BarChart = createTypedChart("bar")
-const BubbleChart = createTypedChart("bubble")
-const DonutChart = createTypedChart("doughnut")
-const LineChart = createTypedChart("line")
-const PieChart = createTypedChart("pie")
-const PolarAreaChart = createTypedChart("polarArea")
-const RadarChart = createTypedChart("radar")
-const ScatterChart = createTypedChart("scatter")
+const BarChart = createTypedChart("bar");
+const BubbleChart = createTypedChart("bubble");
+const DonutChart = createTypedChart("doughnut");
+const LineChart = createTypedChart("line");
+const PieChart = createTypedChart("pie");
+const PolarAreaChart = createTypedChart("polarArea");
+const RadarChart = createTypedChart("radar");
+const ScatterChart = createTypedChart("scatter");
 
 export {
   BaseChart as Chart,
@@ -222,5 +239,5 @@ export {
   PieChart,
   PolarAreaChart,
   RadarChart,
-  ScatterChart
-}
+  ScatterChart,
+};

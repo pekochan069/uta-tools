@@ -1,9 +1,9 @@
-import { Collapsible as CollapsiblePrimitive } from "@kobalte/core"
+import { Collapsible as CollapsiblePrimitive } from "@kobalte/core";
 
-const Collapsible = CollapsiblePrimitive.Root
+const Collapsible = CollapsiblePrimitive.Root;
 
-const CollapsibleTrigger = CollapsiblePrimitive.Trigger
+const CollapsibleTrigger = CollapsiblePrimitive.Trigger;
 
-const CollapsibleContent = CollapsiblePrimitive.Content
+const CollapsibleContent = CollapsiblePrimitive.Content;
 
-export { Collapsible, CollapsibleTrigger, CollapsibleContent }
+export { Collapsible, CollapsibleTrigger, CollapsibleContent };

@@ -1,5 +1,3 @@
-import TimelineRow from "./TimelineRow";
-import type { TimelineType } from "./timelineTypes";
 import {
   DragDropProvider,
   DragDropSensors,
@@ -23,6 +21,7 @@ import {
 } from "solid-js";
 import { createStore, produce } from "solid-js/store";
 import { toast } from "solid-sonner";
+
 import {
   ContentConfig,
   ContentConfigLabel,
@@ -46,6 +45,8 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { checkUrl, getVideoId } from "~/lib/youtube";
+import TimelineRow from "./TimelineRow";
+import type { TimelineType } from "./timelineTypes";
 
 const FoldButton = (props: {
   fold: boolean;

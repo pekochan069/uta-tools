@@ -1,9 +1,8 @@
-import { defineConfig } from "astro/config";
 import solidJs from "@astrojs/solid-js";
-import vercel from "@astrojs/vercel/serverless";
 import tailwind from "@astrojs/tailwind";
+import vercel from "@astrojs/vercel/serverless";
+import { defineConfig } from "astro/config";
 import rehypePrettyCode from "rehype-pretty-code";
-
 import theme from "./pretty-code-theme.json";
 
 const prettyCodeOptions = {

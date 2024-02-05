@@ -45,16 +45,16 @@ bun start
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
-| `bun format` | Format source files with `biome`                     |
-| `bun format:prettier` | Format source files with `prettier`                     |
-| `bun lint` | Lint source files with `biome`                     |
-| `bun vercel` | Run [vercel](https://vercel.com/dashboard) CLI Tool |
-| `bun db:pull` | Pull data from database |
+| Command               | Action                                              |
+| :-------------------- | :-------------------------------------------------- |
+| `bun install`         | Installs dependencies                               |
+| `bun dev`             | Starts local dev server at `localhost:4321`         |
+| `bun build`           | Build your production site to `./dist/`             |
+| `bun preview`         | Preview your build locally, before deploying        |
+| `bun astro ...`       | Run CLI commands like `astro add`, `astro check`    |
+| `bun astro -- --help` | Get help using the Astro CLI                        |
+| `bun format`          | Format source files with `biome`                    |
+| `bun format:prettier` | Format source files with `prettier`                 |
+| `bun lint`            | Lint source files with `biome`                      |
+| `bun vercel`          | Run [vercel](https://vercel.com/dashboard) CLI Tool |
+| `bun db:pull`         | Pull data from database                             |

@@ -45,7 +45,6 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { checkUrl, getVideoId } from "~/lib/youtube";
-
 import TimelineRow from "./TimelineRow";
 import type { TimelineType } from "./timelineTypes";
 

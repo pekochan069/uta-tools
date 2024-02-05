@@ -1,13 +1,11 @@
-import type { Component, ComponentProps } from "solid-js"
-import { mergeProps, splitProps } from "solid-js"
-
-import { TbChevronLeft, TbChevronRight, TbDots } from "solid-icons/tb"
-
-import { cn } from "~/lib/utils"
-import { buttonVariants, type ButtonProps } from "~/components/ui/button"
+import { TbChevronLeft, TbChevronRight, TbDots } from "solid-icons/tb";
+import type { Component, ComponentProps } from "solid-js";
+import { mergeProps, splitProps } from "solid-js";
+import { buttonVariants, type ButtonProps } from "~/components/ui/button";
+import { cn } from "~/lib/utils";
 
 const Pagination: Component<ComponentProps<"nav">> = (props) => {
-  const [, rest] = splitProps(props, ["class"])
+  const [, rest] = splitProps(props, ["class"]);
   return (
     <nav
       role="navigation"
@@ -15,27 +13,29 @@ const Pagination: Component<ComponentProps<"nav">> = (props) => {
       class={cn("mx-auto flex w-full justify-center", props.class)}
       {...rest}
     />
-  )
-}
+  );
+};
 
 const PaginationContent: Component<ComponentProps<"ul">> = (props) => {
-  const [, rest] = splitProps(props, ["class"])
-  return <ul class={cn("flex flex-row items-center gap-1", props.class)} {...rest} />
-}
+  const [, rest] = splitProps(props, ["class"]);
+  return (
+    <ul class={cn("flex flex-row items-center gap-1", props.class)} {...rest} />
+  );
+};
 
 const PaginationItem: Component<ComponentProps<"li">> = (props) => {
-  const [, rest] = splitProps(props, ["class"])
-  return <li class={cn("", props.class)} {...rest} />
-}
+  const [, rest] = splitProps(props, ["class"]);
+  return <li class={cn("", props.class)} {...rest} />;
+};
 
 type PaginationLinkProps = {
-  isActive?: boolean
+  isActive?: boolean;
 } & Pick<ButtonProps, "size"> &
-  ComponentProps<"a">
+  ComponentProps<"a">;
 
 const PaginationLink: Component<PaginationLinkProps> = (props) => {
-  props = mergeProps({ size: "icon" } as PaginationLinkProps, props)
-  const [, rest] = splitProps(props, ["class", "isActive", "size"])
+  props = mergeProps({ size: "icon" } as PaginationLinkProps, props);
+  const [, rest] = splitProps(props, ["class", "isActive", "size"]);
   return (
     <PaginationItem>
       <a
@@ -43,18 +43,18 @@ const PaginationLink: Component<PaginationLinkProps> = (props) => {
         class={cn(
           buttonVariants({
             variant: props.isActive ? "outline" : "ghost",
-            size: props.size
+            size: props.size,
           }),
-          props.class
+          props.class,
         )}
         {...rest}
       />
     </PaginationItem>
-  )
-}
+  );
+};
 
 const PaginationPrevious: typeof PaginationLink = (props) => {
-  const [, rest] = splitProps(props, ["class"])
+  const [, rest] = splitProps(props, ["class"]);
   return (
     <PaginationLink
       aria-label="Go to previous page"
@@ -65,11 +65,11 @@ const PaginationPrevious: typeof PaginationLink = (props) => {
       <TbChevronLeft class="h-4 w-4" />
       <span>Previous</span>
     </PaginationLink>
-  )
-}
+  );
+};
 
 const PaginationNext: typeof PaginationLink = (props) => {
-  const [, rest] = splitProps(props, ["class"])
+  const [, rest] = splitProps(props, ["class"]);
   return (
     <PaginationLink
       aria-label="Go to next page"
@@ -80,18 +80,22 @@ const PaginationNext: typeof PaginationLink = (props) => {
       <span>Next</span>
       <TbChevronRight class="h-4 w-4" />
     </PaginationLink>
-  )
-}
+  );
+};
 
 const PaginationEllipsis: Component<ComponentProps<"span">> = (props) => {
-  const [, rest] = splitProps(props, ["class"])
+  const [, rest] = splitProps(props, ["class"]);
   return (
-    <span aria-hidden class={cn("flex h-9 w-9 items-center justify-center", props.class)} {...rest}>
+    <span
+      aria-hidden
+      class={cn("flex h-9 w-9 items-center justify-center", props.class)}
+      {...rest}
+    >
       <TbDots class="h-4 w-4" />
       <span class="sr-only">More pages</span>
     </span>
-  )
-}
+  );
+};
 
 export {
   Pagination,
@@ -100,5 +104,5 @@ export {
   PaginationItem,
   PaginationLink,
   PaginationNext,
-  PaginationPrevious
-}
+  PaginationPrevious,
+};

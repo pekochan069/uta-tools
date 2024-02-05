@@ -5,8 +5,8 @@ import { eq, sql } from "drizzle-orm";
 import { createId } from "~/lib/nanoid";
 import { Err, Ok } from "~/lib/types";
 import { db } from "~/server/db";
+import { shortLink } from "~/server/db/schema";
 import { publicProcedure, router } from ".";
-import { shortLink } from "../db/schema";
 
 export const trpcRouter = router({
   checkSlug: publicProcedure

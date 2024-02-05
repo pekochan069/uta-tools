@@ -1,4 +1,5 @@
 export type Theme = "system" | "light" | "dark";
+
 const media = "(prefers-color-scheme: dark)";
 
 export const getTheme = (fallback?: Theme) => {

@@ -1,117 +1,125 @@
-import type { Component, ComponentProps } from "solid-js"
-import { splitProps } from "solid-js"
-
-import { Menubar as MenubarPrimitive } from "@kobalte/core"
-import { TbCheck, TbChevronRight, TbCircle } from "solid-icons/tb"
-
-import { cn } from "~/lib/utils"
+import { Menubar as MenubarPrimitive } from "@kobalte/core";
+import { TbCheck, TbChevronRight, TbCircle } from "solid-icons/tb";
+import type { Component, ComponentProps } from "solid-js";
+import { splitProps } from "solid-js";
+import { cn } from "~/lib/utils";
 
 const MenubarMenu: Component<MenubarPrimitive.MenubarMenuProps> = (props) => {
-  return <MenubarPrimitive.Menu gutter={8} {...props} />
-}
+  return <MenubarPrimitive.Menu gutter={8} {...props} />;
+};
 
-const MenubarGroup = MenubarPrimitive.Group
+const MenubarGroup = MenubarPrimitive.Group;
 
-const MenubarPortal = MenubarPrimitive.Portal
+const MenubarPortal = MenubarPrimitive.Portal;
 
-const MenubarSub = MenubarPrimitive.Sub
+const MenubarSub = MenubarPrimitive.Sub;
 
-const MenubarRadioGroup = MenubarPrimitive.RadioGroup
+const MenubarRadioGroup = MenubarPrimitive.RadioGroup;
 
 const Menubar: Component<MenubarPrimitive.MenubarRootProps> = (props) => {
-  const [, rest] = splitProps(props, ["class"])
+  const [, rest] = splitProps(props, ["class"]);
   return (
     <MenubarPrimitive.Root
       class={cn(
-        "bg-background flex h-10 items-center space-x-1 rounded-md border p-1",
-        props.class
+        "flex h-10 items-center space-x-1 rounded-md border bg-background p-1",
+        props.class,
       )}
       {...rest}
     />
-  )
-}
+  );
+};
 
-const MenubarTrigger: Component<MenubarPrimitive.MenubarTriggerProps> = (props) => {
-  const [, rest] = splitProps(props, ["class"])
+const MenubarTrigger: Component<MenubarPrimitive.MenubarTriggerProps> = (
+  props,
+) => {
+  const [, rest] = splitProps(props, ["class"]);
   return (
     <MenubarPrimitive.Trigger
       class={cn(
-        "focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none",
-        props.class
+        "flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+        props.class,
       )}
       {...rest}
     />
-  )
-}
+  );
+};
 
-const MenubarContent: Component<MenubarPrimitive.MenubarContentProps> = (props) => {
-  const [, rest] = splitProps(props, ["class"])
+const MenubarContent: Component<MenubarPrimitive.MenubarContentProps> = (
+  props,
+) => {
+  const [, rest] = splitProps(props, ["class"]);
   return (
     <MenubarPrimitive.Portal>
       <MenubarPrimitive.Content
         class={cn(
-          "bg-popover text-popover-foreground animate-content-hide data-[expanded]:animate-content-show z-50 min-w-[12rem] origin-[var(--kb-menu-content-transform-origin)] overflow-hidden rounded-md border p-1 shadow-md",
-          props.class
+          "z-50 min-w-[12rem] origin-[var(--kb-menu-content-transform-origin)] animate-content-hide overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md data-[expanded]:animate-content-show",
+          props.class,
         )}
         {...rest}
       />
     </MenubarPrimitive.Portal>
-  )
-}
+  );
+};
 
 const MenubarSubTrigger: Component<
   MenubarPrimitive.MenubarSubTriggerProps & { inset?: boolean }
 > = (props) => {
-  const [, rest] = splitProps(props, ["class", "children", "inset"])
+  const [, rest] = splitProps(props, ["class", "children", "inset"]);
   return (
     <MenubarPrimitive.SubTrigger
       class={cn(
-        "focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none",
+        "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
         props.inset && "pl-8",
-        props.class
+        props.class,
       )}
       {...rest}
     >
       {props.children}
       <TbChevronRight class="ml-auto h-4 w-4" />
     </MenubarPrimitive.SubTrigger>
-  )
-}
+  );
+};
 
-const MenubarSubContent: Component<MenubarPrimitive.MenubarSubContentProps> = (props) => {
-  const [, rest] = splitProps(props, ["class"])
+const MenubarSubContent: Component<MenubarPrimitive.MenubarSubContentProps> = (
+  props,
+) => {
+  const [, rest] = splitProps(props, ["class"]);
   return (
     <MenubarPrimitive.SubContent
       class={cn(
-        "bg-popover text-popover-foreground animate-in z-50 min-w-[8rem] origin-[var(--kb-menu-content-transform-origin)] overflow-hidden rounded-md border p-1 shadow-md",
-        props.class
+        "z-50 min-w-[8rem] origin-[var(--kb-menu-content-transform-origin)] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md animate-in",
+        props.class,
       )}
       {...rest}
     />
-  )
-}
+  );
+};
 
-const MenubarItem: Component<MenubarPrimitive.MenubarItemProps & { inset?: boolean }> = (props) => {
-  const [, rest] = splitProps(props, ["class", "inset"])
+const MenubarItem: Component<
+  MenubarPrimitive.MenubarItemProps & { inset?: boolean }
+> = (props) => {
+  const [, rest] = splitProps(props, ["class", "inset"]);
   return (
     <MenubarPrimitive.Item
       class={cn(
-        "focus:bg-accent focus:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
         props.inset && "pl-8",
-        props.class
+        props.class,
       )}
       {...rest}
     />
-  )
-}
+  );
+};
 
-const MenubarCheckboxItem: Component<MenubarPrimitive.MenubarCheckboxItemProps> = (props) => {
-  const [, rest] = splitProps(props, ["class", "children"])
+const MenubarCheckboxItem: Component<
+  MenubarPrimitive.MenubarCheckboxItemProps
+> = (props) => {
+  const [, rest] = splitProps(props, ["class", "children"]);
   return (
     <MenubarPrimitive.CheckboxItem
       class={cn(
-        "focus:bg-accent focus:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-        props.class
+        "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        props.class,
       )}
       {...rest}
     >
@@ -122,16 +130,18 @@ const MenubarCheckboxItem: Component<MenubarPrimitive.MenubarCheckboxItemProps> 
       </span>
       {props.children}
     </MenubarPrimitive.CheckboxItem>
-  )
-}
+  );
+};
 
-const MenubarRadioItem: Component<MenubarPrimitive.MenubarRadioItemProps> = (props) => {
-  const [, rest] = splitProps(props, ["class", "children"])
+const MenubarRadioItem: Component<MenubarPrimitive.MenubarRadioItemProps> = (
+  props,
+) => {
+  const [, rest] = splitProps(props, ["class", "children"]);
   return (
     <MenubarPrimitive.RadioItem
       class={cn(
-        "focus:bg-accent focus:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-        props.class
+        "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        props.class,
       )}
       {...rest}
     >
@@ -142,49 +152,65 @@ const MenubarRadioItem: Component<MenubarPrimitive.MenubarRadioItemProps> = (pro
       </span>
       {props.children}
     </MenubarPrimitive.RadioItem>
-  )
-}
+  );
+};
 
-const MenubarItemLabel: Component<MenubarPrimitive.MenubarItemLabelProps & { inset?: boolean }> = (
-  props
-) => {
-  const [, rest] = splitProps(props, ["class", "inset"])
+const MenubarItemLabel: Component<
+  MenubarPrimitive.MenubarItemLabelProps & { inset?: boolean }
+> = (props) => {
+  const [, rest] = splitProps(props, ["class", "inset"]);
   return (
     <MenubarPrimitive.ItemLabel
-      class={cn("px-2 py-1.5 text-sm font-semibold", props.inset && "pl-8", props.class)}
+      class={cn(
+        "px-2 py-1.5 text-sm font-semibold",
+        props.inset && "pl-8",
+        props.class,
+      )}
       {...rest}
     />
-  )
-}
+  );
+};
 
 const MenubarGroupLabel: Component<
   MenubarPrimitive.MenubarGroupLabelProps & { inset?: boolean }
 > = (props) => {
-  const [, rest] = splitProps(props, ["class", "inset"])
+  const [, rest] = splitProps(props, ["class", "inset"]);
   return (
     <MenubarPrimitive.GroupLabel
-      class={cn("px-2 py-1.5 text-sm font-semibold", props.inset && "pl-8", props.class)}
+      class={cn(
+        "px-2 py-1.5 text-sm font-semibold",
+        props.inset && "pl-8",
+        props.class,
+      )}
       {...rest}
     />
-  )
-}
+  );
+};
 
-const MenubarSeparator: Component<MenubarPrimitive.MenubarSeparatorProps> = (props) => {
-  const [, rest] = splitProps(props, ["class"])
+const MenubarSeparator: Component<MenubarPrimitive.MenubarSeparatorProps> = (
+  props,
+) => {
+  const [, rest] = splitProps(props, ["class"]);
   return (
-    <MenubarPrimitive.Separator class={cn("bg-muted -mx-1 my-1 h-px", props.class)} {...rest} />
-  )
-}
+    <MenubarPrimitive.Separator
+      class={cn("-mx-1 my-1 h-px bg-muted", props.class)}
+      {...rest}
+    />
+  );
+};
 
 const MenubarShortcut: Component<ComponentProps<"span">> = (props) => {
-  const [, rest] = splitProps(props, ["class"])
+  const [, rest] = splitProps(props, ["class"]);
   return (
     <span
-      class={cn("text-muted-foreground ml-auto text-xs tracking-widest", props.class)}
+      class={cn(
+        "ml-auto text-xs tracking-widest text-muted-foreground",
+        props.class,
+      )}
       {...rest}
     />
-  )
-}
+  );
+};
 
 export {
   Menubar,
@@ -203,5 +229,5 @@ export {
   MenubarSubTrigger,
   MenubarGroup,
   MenubarSub,
-  MenubarShortcut
-}
+  MenubarShortcut,
+};

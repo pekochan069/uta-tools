@@ -1,3 +1,6 @@
+import { Collapsible } from "@kobalte/core";
+import { useStore } from "@nanostores/solid";
+import { TbChevronDown, TbChevronUp } from "solid-icons/tb";
 import {
   splitProps,
   type Component,
@@ -5,12 +8,8 @@ import {
   Switch,
   Match,
 } from "solid-js";
-import { Collapsible } from "@kobalte/core";
-import { useStore } from "@nanostores/solid";
-
-import { cn } from "~/lib/utils";
 import { showDescription } from "~/atoms/tldr";
-import { TbChevronDown, TbChevronUp } from "solid-icons/tb";
+import { cn } from "~/lib/utils";
 
 const H1: Component<ComponentProps<"h1">> = (props) => {
   const [, rest] = splitProps(props, ["class", "children"]);

@@ -36,7 +36,7 @@ type TimelineRowProps = {
 
 export default (props: TimelineRowProps) => {
   const sortable = createSortable(props.item.id);
-  // @ts-expect-error Library issue
+  // @ts-ignore
   const [state] = useDragDropContext();
 
   return (
