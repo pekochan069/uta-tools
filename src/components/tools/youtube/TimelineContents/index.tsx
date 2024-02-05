@@ -1,3 +1,5 @@
+import TimelineRow from "./TimelineRow";
+import type { TimelineType } from "./timelineTypes";
 import {
   DragDropProvider,
   DragDropSensors,
@@ -44,8 +46,6 @@ import {
   TooltipTrigger,
 } from "~/components/ui/tooltip";
 import { checkUrl, getVideoId } from "~/lib/youtube";
-import TimelineRow from "./TimelineRow";
-import type { TimelineType } from "./timelineTypes";
 
 const FoldButton = (props: {
   fold: boolean;
@@ -301,7 +301,7 @@ export default () => {
       <ContentConfigSection>
         <ContentConfigRoot>
           <ContentConfigLabel
-            tool="Link"
+            name="Link"
             description="Link to a YouTube video to generate a timeline for"
           />
           <ContentConfig>
