@@ -27,6 +27,12 @@ export const tools: ContentsCategory[] = [
         description: "Encode/Decode hex values to/from strings",
         icon: Either.left(Icons.HexIcon),
       },
+      {
+        name: "Cookies",
+        slug: "cookies",
+        description: "Convert cookies to other formats",
+        icon: Either.left(Icons.CookiesIcon),
+      },
     ],
   },
   {
