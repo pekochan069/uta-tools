@@ -150,3 +150,8 @@ export function None(): None {
 }
 
 Object.freeze(None);
+
+export type ErrorType = {
+  _tag: string;
+  message: string;
+};
