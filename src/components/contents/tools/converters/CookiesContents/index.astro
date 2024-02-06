@@ -1,0 +1,62 @@
+---
+import {
+  ContentConfig,
+  ContentConfigLabel,
+  ContentConfigRoot,
+  ContentConfigSection,
+} from "~/components/common/Config";
+import { Label } from "~/components/ui/label";
+import { From, To, JSONFormat } from "./Config";
+import {
+  CookiesInput,
+  CookiesInputClearButton,
+  CookiesInputCopyButton,
+  CookiesInputPasteButton,
+} from "./CookiesInput";
+import { CookiesOutput, CookiesOutputCopyButton } from "./CookiesOutput";
+import { SwapFormat } from "./SwapFormat";
+---
+
+<ContentConfigSection>
+  <ContentConfigRoot>
+    <ContentConfigLabel name="From" description="Convert from" />
+    <ContentConfig>
+      <From client:load />
+    </ContentConfig>
+  </ContentConfigRoot>
+  <ContentConfigRoot>
+    <ContentConfigLabel name="To" description="Convert to" />
+    <ContentConfig>
+      <To client:load />
+    </ContentConfig>
+  </ContentConfigRoot>
+  <ContentConfigRoot>
+    <ContentConfigLabel name="Format JSON" description="Prettify or minify" />
+    <ContentConfig>
+      <JSONFormat client:load />
+    </ContentConfig>
+  </ContentConfigRoot>
+</ContentConfigSection>
+
+<div class="mt-6">
+  <div class="mb-2 flex items-end justify-between">
+    <Label for="cookies-input">Input</Label>
+    <div class="h-10">
+      <SwapFormat client:only />
+      <CookiesInputClearButton client:only />
+      <CookiesInputPasteButton client:only />
+      <CookiesInputCopyButton client:only />
+    </div>
+  </div>
+  <CookiesInput client:load />
+</div>
+
+<div class="mb-6 mt-6">
+  <div class="mb-2 flex items-end justify-between">
+    <Label for="cookies-output">Output</Label>
+    <div class="h-10">
+      <CookiesOutputCopyButton client:only />
+    </div>
+  </div>
+  <CookiesOutput client:load />
+</div>
