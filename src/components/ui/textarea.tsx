@@ -33,6 +33,7 @@ type TextAreaProps = Omit<
   readOnly?: boolean;
   children?: JSX.Element;
   labelClass?: string;
+  errorMessage?: string;
 };
 
 const TextArea: Component<TextAreaProps> = (props) => {
@@ -49,6 +50,7 @@ const TextArea: Component<TextAreaProps> = (props) => {
     "class",
     "children",
     "labelClass",
+    "errorMessage",
   ]);
 
   return (
@@ -75,11 +77,16 @@ const TextArea: Component<TextAreaProps> = (props) => {
       </Show>
       <TextField.TextArea
         class={cn(
-          "flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+          "flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ui-invalid:border-destructive ui-invalid:text-destructive",
           props.class,
         )}
         {...rest}
       />
+      <Show when={props.errorMessage}>
+        <TextField.ErrorMessage class="text-sm font-medium text-destructive">
+          {props.errorMessage}
+        </TextField.ErrorMessage>
+      </Show>
     </TextField.Root>
   );
 };
