@@ -1,6 +1,10 @@
 import { useStore } from "@nanostores/solid";
 
-import { Label } from "~/components/ui/label";
+import {
+  type CookieFormat,
+  format,
+  jsonFormat,
+} from "~/atoms/tools/converters/cookies";
 import {
   Select,
   SelectContent,
@@ -8,8 +12,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { Switch } from "~/components/ui/switch";
-import { type CookieFormat, format, jsonFormat } from "./atoms";
 
 export const From = () => {
   const $format = useStore(format);

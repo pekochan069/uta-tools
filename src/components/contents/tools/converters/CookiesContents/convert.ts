@@ -1,7 +1,6 @@
 import { Effect, pipe } from "effect";
 
 import { type ErrorType } from "~/lib/types";
-import { jsonFormat } from "./atoms";
 
 export type CookieError = ErrorType;
 

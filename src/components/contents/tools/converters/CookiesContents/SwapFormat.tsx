@@ -1,12 +1,12 @@
 import { IoSwapVertical } from "solid-icons/io";
 
+import { format } from "~/atoms/tools/converters/cookies";
 import { Button } from "~/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
-import { format } from "./atoms";
 
 export const SwapFormat = () => {
   return (

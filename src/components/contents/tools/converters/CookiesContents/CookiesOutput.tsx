@@ -3,9 +3,14 @@ import { Effect, Exit } from "effect";
 import { createEffect } from "solid-js";
 import { match } from "ts-pattern";
 
+import {
+  format,
+  input,
+  jsonFormat,
+  output,
+} from "~/atoms/tools/converters/cookies";
 import CopyButton from "~/components/common/CopyButton";
 import { TextArea } from "~/components/ui/textarea";
-import { format, input, jsonFormat, output } from "./atoms";
 import { type CookieError, jsonToNetscape, netscapeToJson } from "./convert";
 
 export const CookiesOutput = () => {
