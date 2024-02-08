@@ -2,6 +2,7 @@
 import { ViewTransitions } from "astro:transitions";
 import "overlayscrollbars/overlayscrollbars.css";
 import { Toaster } from "solid-sonner";
+import SpeedInsights from "@vercel/speed-insights/astro";
 
 import Navbar from "../components/navbar/Navbar.astro";
 import ScrollToTop from "~/components/ScrollToTop.astro";
@@ -39,6 +40,7 @@ const { title = "Uta Tools", useTransitions = false } = Astro.props;
         client:load
       />
       <ScrollToTop />
+      <SpeedInsights />
     </div>
   </body>
   <script>

@@ -32,6 +32,7 @@
     "@thisbeyond/solid-dnd": "^0.7.5",
     "@trpc/client": "next",
     "@trpc/server": "next",
+    "@vercel/speed-insights": "^1.0.9",
     "astro": "^4.1.0",
     "chart.js": "^4.4.1",
     "class-variance-authority": "^0.7.0",
