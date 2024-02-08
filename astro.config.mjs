@@ -13,7 +13,11 @@ const prettyCodeOptions = {
 export default defineConfig({
   integrations: [solidJs(), tailwind()],
   output: "server",
-  adapter: vercel(),
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true,
+    }
+  }),
   markdown: {
     rehypePlugins: [[rehypePrettyCode, prettyCodeOptions]],
     shikiConfig: {
