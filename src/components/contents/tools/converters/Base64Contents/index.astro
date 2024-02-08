@@ -1,5 +1,67 @@
 ---
-
+import {
+  ContentConfigSection,
+  ContentConfigRoot,
+  ContentConfigLabel,
+  ContentConfig,
+} from "~/components/common/Config";
+import { Label } from "~/components/ui/label";
+import { Operation, Repeat } from "./Config";
+import {
+  Base64Input,
+  Base64InputClearButton,
+  Base64InputCopyButton,
+  Base64InputPasteButton,
+} from "./Input";
+import { Base64Output, Base64OutputCopyButton } from "./Output";
+import SwapInputOutput from "./SwapInputOutput";
 ---
 
-<div></div>
+<div>
+  <ContentConfigSection>
+    <ContentConfigRoot>
+      <ContentConfigLabel
+        name="Operation"
+        description="Select whether to encode or decode the input"
+      />
+      <ContentConfig>
+        <Operation client:load />
+      </ContentConfig>
+    </ContentConfigRoot>
+    <ContentConfigRoot class="py-2.5 md:py-4">
+      <ContentConfigLabel
+        name="Repeat"
+        description="Set repeat count for operation"
+      />
+      <ContentConfig>
+        <Repeat client:load />
+      </ContentConfig>
+    </ContentConfigRoot>
+  </ContentConfigSection>
+</div>
+
+<div class="mt-6">
+  <div class="mb-2 flex items-end justify-between">
+    <Label for="base64-input" class="font-semibold">Input</Label>
+    <div class="h-10">
+      <Base64InputClearButton client:only />
+      <Base64InputPasteButton client:only />
+      <Base64InputCopyButton client:only />
+    </div>
+  </div>
+  <Base64Input client:load />
+</div>
+
+<div class="mt-10 grid h-12 place-content-center">
+  <SwapInputOutput client:only />
+</div>
+
+<div class="mb-6">
+  <div class="mb-2 flex items-end justify-between">
+    <Label for="base64-output" class="font-semibold">Output</Label>
+    <div class="h-10">
+      <Base64OutputCopyButton client:only />
+    </div>
+  </div>
+  <Base64Output client:load />
+</div>
