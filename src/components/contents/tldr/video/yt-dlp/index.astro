@@ -1,5 +1,5 @@
 ---
-import CommandBuilder from "./CommandBuilder";
+import CommandBuilder from "./CommandBuilder.astro";
 import { YoutubeLink, YoutubeLinkInput } from "./YoutubeLink";
 import {
   Format,
@@ -19,7 +19,8 @@ import {
 } from "~/components/ui/table";
 ---
 
-<CommandBuilder client:load />
+<Typo.H2> 커맨드 생성기 </Typo.H2>
+<CommandBuilder />
 
 <Typo.H2Description text="기본 사용법" client:visible>
   <Typo.Link href="https://github.com/yt-dlp/yt-dlp">yt-dlp</Typo.Link>는 <Typo.Link

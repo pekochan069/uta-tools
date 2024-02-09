@@ -1,0 +1,24 @@
+---
+import CodeArea from "~/components/common/CodeArea";
+
+import { YoutubeLinkInput } from "./YoutubeLink";
+import {
+  Command,
+  SelectType,
+  OptionBadges,
+  OptionsInputs
+} from "./CommandBuilderComponents";
+---
+
+<CodeArea client:load>yt-dlp<Command client:only /></CodeArea>
+
+<SelectType client:load />
+
+<div class="flex flex-wrap gap-x-2 gap-y-3 mt-3">
+  <OptionBadges client:load />
+</div>
+
+<div class="mt-4 flex flex-col gap-2">
+  <YoutubeLinkInput client:load />
+  <OptionsInputs client:load />
+</div>
