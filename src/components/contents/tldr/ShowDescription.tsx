@@ -8,6 +8,7 @@ import {
   ContentConfigRoot,
   ContentConfigSection,
 } from "~/components/common/Config";
+import { Label } from "~/components/ui/label";
 import { Switch } from "~/components/ui/switch";
 
 export default () => {
@@ -30,11 +31,11 @@ export default () => {
             description="각 항목에 대한 부가설명을 보이게 하거나 숨깁니다."
           />
           <ContentConfig>
-            <label for="operation">
+            <Label for="show-description">
               <Show when={$showDescription()} fallback="숨기기">
                 보이기
               </Show>
-            </label>
+            </Label>
             <Switch
               id="show-description"
               checked={$showDescription()}
