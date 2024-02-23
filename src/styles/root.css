@@ -105,42 +105,6 @@
       "rlig" 1,
       "calt" 1;
   }
-
-  [data-rehype-pretty-code-figure] {
-    @apply relative;
-  }
-
-  [data-rehype-pretty-code-fragment] code {
-    @apply grid min-w-full break-words rounded-none border-0 bg-transparent p-0;
-    counter-reset: line;
-    box-decoration-break: clone;
-  }
-
-  [data-rehype-pretty-code-fragment] .line {
-    @apply inline-block min-h-[1rem] w-full px-4 py-0.5;
-  }
-
-  [data-rehype-pretty-code-fragment] [data-line-numbers] .line {
-    @apply px-2;
-  }
-
-  [data-rehype-pretty-code-fragment] [data-line-numbers] > .line::before {
-    @apply text-xs text-zinc-50/40;
-    counter-increment: line;
-    content: counter(line);
-    display: inline-block;
-    width: 1.8rem;
-    margin-right: 1.4rem;
-    text-align: right;
-  }
-
-  [data-rehype-pretty-code-fragment] .line--highlighted {
-    @apply bg-zinc-700/50;
-  }
-
-  [data-rehype-pretty-code-fragment] .line-highlighted span {
-    @apply relative;
-  }
 }
 
 [data-sonner-toaster] {

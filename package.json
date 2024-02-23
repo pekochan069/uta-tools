@@ -39,12 +39,10 @@
     "clsx": "^2.1.0",
     "drizzle-orm": "^0.29.3",
     "effect": "^2.2.3",
-    "mysql2": "^3.9.0",
     "nanoid": "^5.0.4",
     "nanostores": "^0.9.5",
     "overlayscrollbars": "^2.4.6",
     "overlayscrollbars-solid": "^0.5.2",
-    "rehype-pretty-code": "^0.12.6",
     "solid-icons": "^1.1.0",
     "solid-js": "^1.8.8",
     "solid-sonner": "^0.2.2",
@@ -58,10 +56,10 @@
   "devDependencies": {
     "@biomejs/biome": "^1.4.1",
     "drizzle-kit": "^0.20.13",
+    "mysql2": "^3.9.1",
     "prettier": "^3.2.4",
     "prettier-plugin-astro": "^0.13.0",
     "prettier-plugin-tailwindcss": "^0.5.11",
-    "shiki": "^1.0.0-beta.2",
     "vercel": "^33.0.2"
   }
 }
