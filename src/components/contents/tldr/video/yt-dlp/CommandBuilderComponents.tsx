@@ -23,6 +23,7 @@ import {
   SelectValue,
 } from "~/components/ui/select";
 import { formatTime, toggleOption } from "./CommandBuilder";
+import { FormatInput } from "./Format";
 
 export const Command = () => {
   const $link = useStore(link);
@@ -58,6 +59,7 @@ const YoutubeVideo = () => {
 const YoutubeStream = () => {
   return (
     <>
+      <span> --live-from-start</span>
       <Cookies />
     </>
   );
@@ -88,7 +90,7 @@ const Cookies = () => {
         {" "}
         --cookies{" "}
         {$cookies().value === "" ? (
-          <span class="capitalize text-muted-foreground">Cookies</span>
+          <span class="text-muted-foreground">./cookies.txt</span>
         ) : (
           $cookies().value
         )}
@@ -106,7 +108,7 @@ const Format = () => {
         {" "}
         -f{" "}
         {$format().value === "" ? (
-          <span class="capitalize text-muted-foreground">Format</span>
+          <span class="text-muted-foreground">bv*+ba/b</span>
         ) : (
           $format().value
         )}
@@ -132,6 +134,21 @@ const Time = () => {
 export const SelectType = () => {
   const $command = useStore(command);
 
+  const getLabel = (
+    str:
+      | "youtube-video"
+      | "youtube-stream"
+      | "youtube-playlist"
+      | "external-video",
+  ) => {
+    return match(str)
+      .with("youtube-video", () => "유튜브 비디오")
+      .with("youtube-stream", () => "유튜브 라이브스트림")
+      .with("youtube-playlist", () => "유튜브 플레이리스트")
+      .with("external-video", () => "외부 비디오")
+      .exhaustive();
+  };
+
   return (
     <Select
       value={$command()}
@@ -140,37 +157,21 @@ export const SelectType = () => {
 
         command.set(value);
       }}
-      options={
-        [
-          "youtube-video",
-          "youtube-stream",
-          "youtube-playlist",
-          "external-video",
-        ] as CommandType[]
-      }
+      options={[
+        "youtube-video",
+        "youtube-stream",
+        "youtube-playlist",
+        "external-video",
+      ]}
       itemComponent={(props) => (
         <SelectItem item={props.item}>
-          {match(props.item.rawValue)
-            .returnType<string>()
-            .with("youtube-video", () => "유튜브 비디오")
-            .with("youtube-stream", () => "유튜브 라이브스트림")
-            .with("youtube-playlist", () => "유튜브 플레이리스트")
-            .with("external-video", () => "외부 비디오")
-            .exhaustive()}
+          {getLabel(props.item.rawValue)}
         </SelectItem>
       )}
     >
       <SelectTrigger>
         <SelectValue<CommandType>>
-          {(state) =>
-            match(state.selectedOption())
-              .returnType<string>()
-              .with("youtube-video", () => "유튜브 비디오")
-              .with("youtube-stream", () => "유튜브 라이브스트림")
-              .with("youtube-playlist", () => "유튜브 플레이리스트")
-              .with("external-video", () => "외부 비디오")
-              .exhaustive()
-          }
+          {(state) => getLabel(state.selectedOption())}
         </SelectValue>
       </SelectTrigger>
       <SelectContent />
@@ -274,28 +275,6 @@ const ExternalVideoOptionsInputs = () => {
     <>
       <CookiesInput />
     </>
-  );
-};
-
-const InputLabel = (props: { children: JSX.Element }) => {
-  return <Label>{props.children}</Label>;
-};
-
-const FormatInput = () => {
-  const $format = useStore(format);
-
-  return (
-    <Show when={$format().enabled}>
-      <div>
-        <Label>
-          포맷
-          <Input
-            value={$format().value}
-            onChange={(value) => format.set({ ...$format(), value })}
-          />
-        </Label>
-      </div>
-    </Show>
   );
 };
 

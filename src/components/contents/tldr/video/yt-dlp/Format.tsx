@@ -40,12 +40,12 @@ export const Format = () => {
   return (
     <span>
       <Switch>
-        <Match when={$format() === ""}>
+        <Match when={$format().value === ""}>
           <span class="text-code-muted">{"{"}</span>
           format
           <span class="text-code-muted">{"}"}</span>
         </Match>
-        <Match when={$format() !== ""}>{$format()}</Match>
+        <Match when={$format().value !== ""}>{$format().value}</Match>
       </Switch>
     </span>
   );
@@ -59,8 +59,8 @@ export const FormatInput = (props: { class?: string }) => {
       <Label>
         포맷
         <Input
-          value={$format()}
-          onChange={(value) => format.set(value)}
+          value={$format().value}
+          onChange={(value) => format.set({ ...$format(), value: value })}
           placeholder="bv*+ba/b"
         />
       </Label>
@@ -69,8 +69,12 @@ export const FormatInput = (props: { class?: string }) => {
 };
 
 export const SelectFormatButton = (props: { format: string }) => {
+  const $format = useStore(format);
   return (
-    <Button size="sm" onClick={() => format.set(props.format)}>
+    <Button
+      size="sm"
+      onClick={() => format.set({ ...$format(), value: props.format })}
+    >
       선택
     </Button>
   );
