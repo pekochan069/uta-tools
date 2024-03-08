@@ -32,6 +32,8 @@ import CopyButton from "~/components/common/CopyButton";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Input } from "~/components/ui/input";
+import { Label } from "~/components/ui/label";
+import { Switch } from "~/components/ui/switch";
 import {
   Table,
   TableBody,
@@ -77,6 +79,7 @@ export default () => {
   let playerContainerRef: HTMLDivElement | undefined;
 
   const [url, setUrl] = createSignal("");
+  const [rememberData, setRememberData] = createSignal(false);
   const videoId = () => getVideoId(url());
   const [prevVideoId, setPrevVideoId] = createSignal("");
   const [mainInput, setMainInput] = createSignal("");
@@ -251,8 +254,31 @@ export default () => {
   };
 
   onMount(() => {
-    calculateMaxRows();
+    batch(() => {
+      const useData = localStorage.getItem("save-data") === "true";
+
+      setRememberData(useData);
+
+      if (useData) {
+        if (localStorage.getItem("youtube-url") !== null) {
+          // setUrl(localStorage.getItem("youtube-url") ?? "");
+        }
+
+        if (localStorage.getItem("youtube-timeline") !== null) {
+          setTimelines(
+            JSON.parse(localStorage.getItem("youtube-timeline") ?? "[]"),
+          );
+        }
+      }
+
+      calculateMaxRows();
+    });
+
     window.addEventListener("resize", onWindowScroll);
+    document.onvisibilitychange = () => {
+      localStorage.setItem("youtube-url", url());
+      localStorage.setItem("youtube-timeline", JSON.stringify(timelines));
+    };
   });
 
   onCleanup(() => {
@@ -297,6 +323,10 @@ export default () => {
     });
   });
 
+  createEffect(() => {
+    localStorage.setItem("save-data", `${rememberData()}`);
+  });
+
   return (
     <div class="pb-20">
       <ContentConfigSection>
@@ -312,6 +342,22 @@ export default () => {
               type="text"
               placeholder="http://youtu.be/{videoId}"
               class=" min-w-[16rem] xl:min-w-[24rem]"
+            />
+          </ContentConfig>
+        </ContentConfigRoot>
+        <ContentConfigRoot>
+          <ContentConfigLabel
+            name="Remember Data"
+            description="Remember timeline data"
+          />
+          <ContentConfig>
+            <Label for="operation" class="select-none capitalize">
+              {rememberData() ? "Remember" : "Don't remember"}
+            </Label>
+            <Switch
+              id="operation"
+              checked={rememberData()}
+              onChange={() => setRememberData(!rememberData())}
             />
           </ContentConfig>
         </ContentConfigRoot>
