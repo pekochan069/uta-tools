@@ -2,11 +2,11 @@ import { useStore } from "@nanostores/solid";
 import { batch } from "solid-js";
 import { toast } from "solid-sonner";
 
-import { format, input } from "~/atoms/tools/converters/cookies";
 import ClearButton from "~/components/common/ClearButton";
 import CopyButton from "~/components/common/CopyButton";
 import PasteButton from "~/components/common/PasteButton";
 import { TextArea } from "~/components/ui/textarea";
+import { format, input } from "./cookieAtoms";
 
 export const CookiesInput = () => {
   const $input = useStore(input);

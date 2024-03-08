@@ -1,11 +1,11 @@
 import { useStore } from "@nanostores/solid";
 import { toast } from "solid-sonner";
 
-import { input } from "~/atoms/tools/converters/base64";
 import ClearButton from "~/components/common/ClearButton";
 import CopyButton from "~/components/common/CopyButton";
 import PasteButton from "~/components/common/PasteButton";
 import { TextArea } from "~/components/ui/textarea";
+import { input } from "./base64Atoms";
 
 export const Base64Input = () => {
   const $input = useStore(input);

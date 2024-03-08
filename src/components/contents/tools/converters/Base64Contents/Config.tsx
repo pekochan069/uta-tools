@@ -1,11 +1,11 @@
 import { useStore } from "@nanostores/solid";
 import { TbMinus, TbPlus } from "solid-icons/tb";
 
-import { operation, repeat } from "~/atoms/tools/converters/base64";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Switch } from "~/components/ui/switch";
+import { operation, repeat } from "./base64Atoms";
 
 export const Operation = () => {
   const $operation = useStore(operation);

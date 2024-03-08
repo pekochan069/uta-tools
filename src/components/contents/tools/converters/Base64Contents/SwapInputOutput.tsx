@@ -1,13 +1,13 @@
 import { useStore } from "@nanostores/solid";
 import { IoSwapVertical } from "solid-icons/io";
 
-import { input, output } from "~/atoms/tools/converters/base64";
 import { Button } from "~/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "~/components/ui/tooltip";
+import { input, output } from "./base64Atoms";
 
 export default () => {
   const $output = useStore(output);

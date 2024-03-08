@@ -1,17 +1,13 @@
 import { useStore } from "@nanostores/solid";
 
 import {
-  type CookieFormat,
-  format,
-  jsonFormat,
-} from "~/atoms/tools/converters/cookies";
-import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
+import { type CookieFormat, format, jsonFormat } from "./cookieAtoms";
 
 export const From = () => {
   const $format = useStore(format);
