@@ -709,7 +709,14 @@
 }
 
 .os-scrollbar {
+  --os-size: 8px;
   --os-handle-bg: hsl(var(--muted-foreground));
   --os-handle-bg-hover: hsl(var(--foreground));
   --os-handle-bg-active: hsl(var(--foreground));
+}
+
+@media (min-width: 768px) {
+  .os-scrollbar {
+    --os-size: 10px;
+  }
 }
