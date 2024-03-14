@@ -1,10 +1,12 @@
 ---
 import ContentLayout from "~/layouts/ContentLayout.astro";
-import TimelineContents from "~/components/contents/tools/youtube/TimelineContents";
+// import TimelineContents from "~/components/contents/tools/youtube/TimelineContents";
+import Timelines from "~/components/contents/tools/youtube/TimelineContents/Timelines.astro";
 ---
 
 <ContentLayout>
-  <TimelineContents client:only />
+  <!-- <TimelineContents client:only /> -->
+  <Timelines />
   <script is:inline>
     let tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";

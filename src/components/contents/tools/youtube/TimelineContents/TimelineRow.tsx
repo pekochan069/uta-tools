@@ -144,7 +144,7 @@ export default (props: TimelineRowProps) => {
       <TableCell class="invisible hidden w-6 p-0 sm:visible sm:table-cell md:w-8">
         <div
           data-fold={props.fold ? "fold" : "unfold"}
-          class="grid place-content-center text-muted-foreground hover:text-foreground data-[fold=fold]:text-muted"
+          class="grid cursor-grab place-content-center text-muted-foreground hover:text-foreground data-[disabled=true]:cursor-not-allowed data-[disabled=true]:text-muted data-[fold=fold]:text-muted"
           {...(props.fold ? {} : sortable.dragActivators)}
         >
           <TbDotsVertical class="h-6 w-6" />
