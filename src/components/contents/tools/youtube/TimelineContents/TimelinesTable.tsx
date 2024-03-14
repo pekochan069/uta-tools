@@ -295,7 +295,6 @@ export default () => {
                     // setTimelines((prev) => prev.toSpliced(index(), 1));
                     const currentIndex = timelines.indexOf(item);
                     setTimelines(prev => prev.toSpliced(currentIndex, 1));
-                    console.log(currentIndex);
                   }}
                   setChecked={(checked) =>
                     setTimelines(
