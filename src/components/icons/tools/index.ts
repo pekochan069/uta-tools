@@ -4,5 +4,6 @@ export * from "./converters/Hex";
 export * from "./converters/Cookies";
 
 export * from "./youtube/Timeline";
+export * from "./youtube/Thumbnail"
 
 export * from "./url/Shortener";

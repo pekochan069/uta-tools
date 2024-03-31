@@ -46,6 +46,12 @@ export const tools: ContentsCategory[] = [
         description: "Create a timeline of a youtube video",
         icon: Either.left(Icons.TimelineIcon),
       },
+      {
+        name: "Thumbnail",
+        slug: "thumbnail",
+        description: "Get the thumbnail of a youtube video",
+        icon: Either.left(Icons.ThumbnailIcon),
+      }
     ],
   },
   {
