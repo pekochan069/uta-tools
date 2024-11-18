@@ -1,5 +1,5 @@
 import type { ConvertInput, WorkerResult } from "./types";
-import { imageFormatToMimeType } from "./types";
+import { imageFormatToMimeType } from "./utils";
 import { convertImageFormat } from "./vips";
 
 globalThis.addEventListener("message", async (e) => {

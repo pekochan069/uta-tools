@@ -9,7 +9,7 @@ import { Batch } from "./Batch";
 import ConvertQueue from "./ConvertQueue";
 import ImagesQueue from "./ImagesQueue";
 import Results from "./Results";
-import { accept } from "./types";
+import { accept } from "./utils";
 
 export default () => {
   const windowDropEvent = (e: DragEvent) => {

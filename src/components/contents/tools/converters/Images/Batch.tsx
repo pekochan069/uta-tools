@@ -20,7 +20,7 @@ import {
   SliderValueLabel,
 } from "~/components/ui/slider";
 import { $batchFormat, $convertQueue, $imagesQueue } from "./atoms";
-import { availableFormats, imageFormatToExtension } from "./types";
+import { availableFormats, imageFormatToExtension } from "./utils";
 import { createTask } from "./worker";
 
 export function Batch() {

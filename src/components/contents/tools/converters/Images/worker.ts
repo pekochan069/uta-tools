@@ -3,7 +3,7 @@ import { toast } from "solid-sonner";
 import { PngIcoConverter } from "~/lib/png2icojs";
 import { $convertQueue, $results } from "./atoms";
 import ImageConvertWorker from "./image-convert-worker?worker";
-import { imageFormatToExtension } from "./types";
+import { imageFormatToExtension } from "./utils";
 
 const workers: Worker[] = [];
 const idleWorkers: number[] = [];

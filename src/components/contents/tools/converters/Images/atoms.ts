@@ -9,7 +9,7 @@ import type {
 import { atom, computed } from "nanostores";
 import { toast } from "solid-sonner";
 import { createId } from "~/lib/nanoid";
-import { mimeTypeToImageFormat } from "./types";
+import { mimeTypeToImageFormat } from "./utils";
 
 export const $imagesQueue = atom<ImageQueueItem[]>([]);
 

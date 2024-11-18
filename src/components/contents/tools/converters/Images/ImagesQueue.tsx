@@ -24,7 +24,7 @@ import {
 import { formatFileSize } from "~/lib/format-file-size";
 import { cn } from "~/lib/utils";
 import { $convertQueue, $imagesQueue, addImages } from "./atoms";
-import { accept, availableFormats, imageFormatToExtension } from "./types";
+import { accept, availableFormats, imageFormatToExtension } from "./utils";
 import { createTask } from "./worker";
 
 export default (props: { class: string }) => {
