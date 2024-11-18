@@ -1,6 +1,7 @@
 import type { ImageFormat } from "./types";
 import { useStore } from "@nanostores/solid";
 import { createSignal } from "solid-js";
+import { toast } from "solid-sonner";
 import { Button } from "~/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "~/components/ui/collapsible";
 import {
@@ -34,7 +35,7 @@ export function Batch() {
         <div class="flex flex-1 flex-col text-start">
           <div class="font-semibold">Batch Convert</div>
           <div class="hidden text-sm text-muted-foreground lg:block">
-            Select target format and convert multiple images at onc
+            Select target format and convert all images at once
           </div>
         </div>
         <Select
@@ -95,6 +96,7 @@ export function Batch() {
                 createTask(task);
                 $convertQueue.value.push({ ...task, fileName });
                 $convertQueue.notify();
+                toast("Converting multiple images");
               });
             }}
           >

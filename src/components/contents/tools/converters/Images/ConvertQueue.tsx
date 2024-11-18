@@ -6,16 +6,17 @@ import { For } from "solid-js";
 import { Button } from "~/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
 import { formatFileSize } from "~/lib/format-file-size";
+import { cn } from "~/lib/utils";
 import { $convertQueue } from "./atoms";
 
-export default () => {
+export default (props: { class: string }) => {
   const convertQueue = useStore($convertQueue);
 
   return (
-    <div class="grid gap-2">
+    <div class={cn("grid gap-2", props.class)}>
       <h2 class="font-semibold">Converting</h2>
       <For each={convertQueue()}>{(item) => <QueueItem item={item} />}</For>
-      <div class="flex justify-end">
+      <div class="mt-8 flex justify-end">
         <Button
           class="items-center gap-2"
           variant="outlineDestructive"

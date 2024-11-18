@@ -2,6 +2,7 @@ import type { ImageFormat, ImageQueueItem } from "./types";
 import { useStore } from "@nanostores/solid";
 import { TbCirclePlus, TbX } from "solid-icons/tb";
 import { createSignal, For } from "solid-js";
+import { toast } from "solid-sonner";
 import { Button } from "~/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "~/components/ui/collapsible";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
@@ -21,18 +22,19 @@ import {
   SliderValueLabel,
 } from "~/components/ui/slider";
 import { formatFileSize } from "~/lib/format-file-size";
+import { cn } from "~/lib/utils";
 import { $convertQueue, $imagesQueue, addImages } from "./atoms";
 import { accept, availableFormats, imageFormatToExtension } from "./types";
 import { createTask } from "./worker";
 
-export default () => {
+export default (props: { class: string }) => {
   const images = useStore($imagesQueue);
 
   return (
-    <div class="grid gap-2">
+    <div class={cn("grid gap-2", props.class)}>
       <h2 class="font-semibold">Images</h2>
       <For each={images()}>{(image, i) => <QueueItem item={image} />}</For>
-      <div class="grid grid-cols-3">
+      <div class="mt-8 grid grid-cols-3">
         <span></span>
         <label class="justify-self-center">
           <div class="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors duration-75 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
@@ -75,7 +77,6 @@ function QueueItem(props: QueueItemProps) {
   const [format, setFormat] = createSignal<ImageFormat>("None");
   const [quality, setQuality] = createSignal(100);
   const open = () => (format() === "None" ? false : true);
-
   return (
     <Collapsible defaultOpen={false} open={open()} class="space-y-2 rounded-lg border p-4">
       <CollapsibleTrigger class="grid w-full cursor-default grid-cols-[52px_1fr_auto] items-center justify-between gap-4">
@@ -169,6 +170,7 @@ function QueueItem(props: QueueItemProps) {
               createTask(task);
               $convertQueue.value.push({ ...task, fileName });
               $convertQueue.notify();
+              toast(`Converting ${props.item.file.name} to ${format()}`);
             }}
           >
             Convert

@@ -6,7 +6,7 @@ import type {
   ItemId,
   ResultItem,
 } from "./types";
-import { atom } from "nanostores";
+import { atom, computed } from "nanostores";
 import { toast } from "solid-sonner";
 import { createId } from "~/lib/nanoid";
 import { mimeTypeToImageFormat } from "./types";

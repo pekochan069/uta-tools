@@ -5,16 +5,17 @@ import { For, Show } from "solid-js";
 import { Button } from "~/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
 import { formatFileSize } from "~/lib/format-file-size";
+import { cn } from "~/lib/utils";
 import { $convertQueue, $results } from "./atoms";
 
-export default () => {
+export default (props: { class: string }) => {
   const results = useStore($results);
 
   return (
-    <div class="grid gap-2">
+    <div class={cn("grid gap-2", props.class)}>
       <h2 class="font-semibold">Results</h2>
       <For each={results()}>{(item) => <ResultItem item={item} />}</For>
-      <div class="flex justify-end gap-2">
+      <div class="mt-8 flex justify-end gap-2">
         <Button
           class="items-center gap-2"
           variant="outlineDestructive"
