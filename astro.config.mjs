@@ -12,12 +12,6 @@ export default defineConfig({
       enabled: true,
     },
   }),
-  server: {
-    headers: {
-      "Cross-Origin-Embedder-Policy": "require-corp",
-      "Cross-Origin-Opener-Policy": "same-origin",
-    },
-  },
   vite: {
     optimizeDeps: {
       exclude: ["wasm-vips"],
