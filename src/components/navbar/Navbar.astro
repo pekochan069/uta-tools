@@ -13,9 +13,7 @@ import SidebarToggle from "./SidebarToggle";
         <div class="flex w-fit items-center gap-1 text-xl font-bold leading-5">
           <Image src="/logo/64.png" alt="Uta/Tools" width="40" height="40" />
           <div>
-            <span class="text-violet-500 dark:text-violet-400">Uta</span>/<span
-              >Tools</span
-            >
+            <span class="text-violet-500 dark:text-violet-400">Uta</span>/<span>Tools</span>
           </div>
         </div>
       </a>
@@ -32,10 +30,10 @@ import SidebarToggle from "./SidebarToggle";
         </a>
       </div>
       <div class="h-10 w-10">
-        <ThemeToggle client:only />
+        <ThemeToggle client:only="solid-js" />
       </div>
       <div class="h-10 w-10 md:hidden">
-        <SidebarToggle client:only />
+        <SidebarToggle client:only="solid-js" />
       </div>
     </div>
   </div>

@@ -1,12 +1,15 @@
-import { Alert as AlertPrimitive } from "@kobalte/core";
+import type { Component, ComponentProps, ValidComponent } from "solid-js";
+import { splitProps } from "solid-js";
+
+import * as AlertPrimitive from "@kobalte/core/alert";
+import type { PolymorphicProps } from "@kobalte/core/polymorphic";
 import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
-import type { Component, ComponentProps } from "solid-js";
-import { splitProps } from "solid-js";
+
 import { cn } from "~/lib/utils";
 
 const alertVariants = cva(
-  "[&>svg]:text-foreground relative w-full rounded-lg border p-4 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg~*]:pl-7",
+  "relative w-full rounded-lg border p-4 [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7",
   {
     variants: {
       variant: {
@@ -21,34 +24,39 @@ const alertVariants = cva(
   },
 );
 
-interface AlertProps
-  extends AlertPrimitive.AlertRootProps,
-    VariantProps<typeof alertVariants> {}
+type AlertRootProps<T extends ValidComponent = "div"> =
+  AlertPrimitive.AlertRootProps<T> &
+    VariantProps<typeof alertVariants> & { class?: string | undefined };
 
-const Alert: Component<AlertProps> = (props) => {
-  const [, rest] = splitProps(props, ["class", "variant"]);
+const Alert = <T extends ValidComponent = "div">(
+  props: PolymorphicProps<T, AlertRootProps<T>>,
+) => {
+  const [local, others] = splitProps(props as AlertRootProps, [
+    "class",
+    "variant",
+  ]);
   return (
     <AlertPrimitive.Root
-      class={cn(alertVariants({ variant: props.variant }), props.class)}
-      {...rest}
+      class={cn(alertVariants({ variant: props.variant }), local.class)}
+      {...others}
     />
   );
 };
 
 const AlertTitle: Component<ComponentProps<"h5">> = (props) => {
-  const [, rest] = splitProps(props, ["class"]);
+  const [local, others] = splitProps(props, ["class"]);
   return (
     <h5
-      class={cn("mb-1 font-medium leading-none tracking-tight", props.class)}
-      {...rest}
+      class={cn("mb-1 font-medium leading-none tracking-tight", local.class)}
+      {...others}
     />
   );
 };
 
 const AlertDescription: Component<ComponentProps<"div">> = (props) => {
-  const [, rest] = splitProps(props, ["class"]);
+  const [local, others] = splitProps(props, ["class"]);
   return (
-    <div class={cn("text-sm [&_p]:leading-relaxed", props.class)} {...rest} />
+    <div class={cn("text-sm [&_p]:leading-relaxed", local.class)} {...others} />
   );
 };
 

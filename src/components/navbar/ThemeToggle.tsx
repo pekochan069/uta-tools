@@ -1,4 +1,3 @@
-import { As } from "@kobalte/core";
 import { FaSolidLaptop } from "solid-icons/fa";
 import { TbMoon, TbSun } from "solid-icons/tb";
 import { createEffect, createSignal, onMount } from "solid-js";
@@ -36,12 +35,10 @@ export default () => {
     <Tooltip>
       <TooltipTrigger>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <As component={Button} variant="ghost" size="icon">
-              <TbSun class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-transform dark:-rotate-90 dark:scale-0" />
-              <TbMoon class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-transform dark:rotate-0 dark:scale-100" />
-              <span class="sr-only">Toggle theme</span>
-            </As>
+          <DropdownMenuTrigger as={Button} variant="ghost" size="icon">
+            <TbSun class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-transform dark:-rotate-90 dark:scale-0" />
+            <TbMoon class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-transform dark:rotate-0 dark:scale-100" />
+            <span class="sr-only">Toggle theme</span>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             <DropdownMenuItem

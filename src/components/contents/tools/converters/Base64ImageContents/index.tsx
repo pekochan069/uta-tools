@@ -1,10 +1,10 @@
 import { TextField } from "@kobalte/core";
 import { BiSolidImageAdd, BiSolidImageAlt } from "solid-icons/bi";
-import { Show, createEffect, createSignal, onCleanup, onMount } from "solid-js";
+import { createEffect, createSignal, onCleanup, onMount, Show } from "solid-js";
 import { toast } from "solid-sonner";
-
 import ClearButton from "~/components/common/ClearButton";
 import CopyButton from "~/components/common/CopyButton";
+import FileUploader from "~/components/common/FileUploader";
 import PasteButton from "~/components/common/PasteButton";
 import { Input } from "~/components/ui/input";
 
@@ -37,8 +37,6 @@ export default () => {
   });
 
   createEffect(() => {
-    console.log(file()?.name);
-
     const reader = new FileReader();
 
     if (!file()) return;
@@ -51,7 +49,8 @@ export default () => {
 
   return (
     <div class="flex flex-col gap-6">
-      <div>
+      <FileUploader onUpload={(files) => setFile(files[0])} accept="image/*" id="input-file" />
+      {/* <div>
         <Input
           type="file"
           multiple
@@ -92,7 +91,7 @@ export default () => {
         >
           <BiSolidImageAdd ref={imageAddIconRef} class="h-16 w-16" />
         </label>
-      </div>
+      </div> */}
       <div class="flex flex-col gap-2">
         <div class="mb-4">
           <div class="mb-2 flex items-end justify-between">
@@ -141,10 +140,7 @@ export default () => {
           <CopyButton copyType="image" copyContent={image()} />
         </div>
         <div class="grid aspect-video place-content-center overflow-hidden rounded-md border-[1px]">
-          <Show
-            when={image() !== ""}
-            fallback={<BiSolidImageAlt class="h-16 w-16" />}
-          >
+          <Show when={image() !== ""} fallback={<BiSolidImageAlt class="h-16 w-16" />}>
             <img
               src={image()}
               ref={imgRef}

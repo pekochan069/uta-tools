@@ -1,12 +1,9 @@
 ---
-import { ViewTransitions } from "astro:transitions";
 import "overlayscrollbars/overlayscrollbars.css";
-import { Toaster } from "solid-sonner";
 import SpeedInsights from "@vercel/speed-insights/astro";
-
-import Navbar from "../components/navbar/Navbar.astro";
+import { Toaster } from "solid-sonner";
 import ScrollToTop from "~/components/ScrollToTop.astro";
-
+import Navbar from "../components/navbar/Navbar.astro";
 import "~/styles/root.css";
 
 type Props = {
@@ -23,7 +20,6 @@ const { title = "Uta Tools", useTransitions = false } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    {useTransitions && <ViewTransitions />}
     <title>{title}</title>
   </head>
   <body>
@@ -31,9 +27,13 @@ const { title = "Uta Tools", useTransitions = false } = Astro.props;
       <Navbar /><div class="container px-4 md:px-6"><slot /></div>
       <Toaster
         toastOptions={{
-          class:
-            "group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
-          descriptionClass: "group-[.toast]:text-muted-foreground",
+          classes: {
+            toast:
+              "group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
+            description: "group-[.toast]:text-muted-foreground",
+            actionButton: "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
+            cancelButton: "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
+          },
         }}
         class="toaster group"
         position="bottom-right"
@@ -55,15 +55,10 @@ const { title = "Uta Tools", useTransitions = false } = Astro.props;
   <script is:inline>
     function setTheme(document) {
       const getThemePreference = () => {
-        if (
-          typeof localStorage !== "undefined" &&
-          localStorage.getItem("theme")
-        ) {
+        if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
           return localStorage.getItem("theme");
         }
-        return window.matchMedia("(prefers-color-scheme: dark)").matches
-          ? "dark"
-          : "light";
+        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       };
       const isDark = getThemePreference() === "dark";
 

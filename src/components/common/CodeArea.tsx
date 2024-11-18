@@ -1,5 +1,5 @@
 import { OverlayScrollbarsComponent } from "overlayscrollbars-solid";
-import { JSX } from "solid-js";
+import type { JSX } from "solid-js";
 
 import CodeCopyButton from "./CodeAreaCopyButton";
 

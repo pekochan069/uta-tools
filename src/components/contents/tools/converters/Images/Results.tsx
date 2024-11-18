@@ -1,0 +1,107 @@
+import type { ResultItem } from "./types";
+import { useStore } from "@nanostores/solid";
+import { TbDownload, TbX } from "solid-icons/tb";
+import { For } from "solid-js";
+import { Button } from "~/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
+import { formatFileSize } from "~/lib/format-file-size";
+import { $convertQueue, $results } from "./atoms";
+import { mimiTypeToExtension } from "./types";
+
+export default () => {
+  const results = useStore($results);
+
+  return (
+    <div class="grid gap-2">
+      <h2 class="font-semibold">Results</h2>
+      <For each={results()}>{(item) => <ResultItem item={item} />}</For>
+      <div class="flex justify-end gap-2">
+        <Button
+          class="items-center gap-2"
+          variant="outlineDestructive"
+          onClick={() => $results.set([])}
+        >
+          <TbX class="size-5" />
+          <span>Clear All</span>
+        </Button>
+        <Button
+          class="items-center gap-2"
+          onClick={() => {
+            results().forEach((item) => {
+              const link = document.createElement("a");
+              link.download = item.fileName;
+              link.href = URL.createObjectURL(new Blob([item.result], { type: item.type }));
+              link.click();
+            });
+          }}
+        >
+          <TbDownload class="size-5" />
+          <span>Download All</span>
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+type ResultItemProps = {
+  item: ResultItem;
+};
+
+function ResultItem(props: ResultItemProps) {
+  const blob = () => new Blob([props.item.result], { type: props.item.type });
+
+  const img = () => URL.createObjectURL(blob());
+
+  return (
+    <div class="grid grid-cols-[52px_1fr_auto] items-center justify-between gap-4 rounded-md border px-4 py-2">
+      <Dialog>
+        <DialogTrigger
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          class="pointer-events-auto"
+        >
+          <img
+            src={img()}
+            alt={props.item.fileName}
+            class="h-[52px] w-[52px] rounded-sm object-scale-down"
+          />
+        </DialogTrigger>
+        <DialogContent class="grid place-content-center">
+          <img
+            src={img()}
+            alt={props.item.fileName}
+            class="max-h-[75svh] rounded-sm object-scale-down"
+          />
+        </DialogContent>
+      </Dialog>
+      <div class="flex min-w-0 flex-col gap-1 text-start">
+        <span class="w-full truncate font-bold">{props.item.fileName}</span>
+        <span>{formatFileSize(props.item.result.byteLength)} bytes</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <Button
+          variant="outlineDestructive"
+          size="icon"
+          onClick={() => {
+            $results.value.splice($results.value.indexOf(props.item), 1);
+            $results.notify();
+          }}
+        >
+          <TbX class="size-5" />
+        </Button>
+        <Button
+          size="icon"
+          onClick={() => {
+            const link = document.createElement("a");
+            link.download = props.item.fileName;
+            link.href = img();
+            link.click();
+          }}
+        >
+          <TbDownload class="size-5" />
+        </Button>
+      </div>
+    </div>
+  );
+}

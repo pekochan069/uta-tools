@@ -33,6 +33,12 @@ export const tools: ContentsCategory[] = [
         description: "Convert cookies to other formats",
         icon: Either.left(Icons.CookiesIcon),
       },
+      {
+        name: "Images",
+        slug: "images",
+        description: "Convert images to other formats",
+        icon: Either.left(Icons.ImagesIcon),
+      },
     ],
   },
   {
@@ -51,7 +57,7 @@ export const tools: ContentsCategory[] = [
         slug: "thumbnail",
         description: "Get the thumbnail of a youtube video",
         icon: Either.left(Icons.ThumbnailIcon),
-      }
+      },
     ],
   },
   {

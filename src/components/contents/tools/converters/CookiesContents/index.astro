@@ -1,18 +1,8 @@
 ---
-import {
-  ContentConfig,
-  ContentConfigLabel,
-  ContentConfigRoot,
-  ContentConfigSection,
-} from "~/components/common/Config";
+import { ContentConfig, ContentConfigLabel, ContentConfigRoot, ContentConfigSection } from "~/components/common/Config";
 import { Label } from "~/components/ui/label";
 import { From, To, JSONFormat } from "./Config";
-import {
-  CookiesInput,
-  CookiesInputClearButton,
-  CookiesInputCopyButton,
-  CookiesInputPasteButton,
-} from "./CookiesInput";
+import { CookiesInput, CookiesInputClearButton, CookiesInputCopyButton, CookiesInputPasteButton } from "./CookiesInput";
 import { CookiesOutput, CookiesOutputCopyButton } from "./CookiesOutput";
 import { SwapFormat } from "./SwapFormat";
 ---
@@ -42,10 +32,10 @@ import { SwapFormat } from "./SwapFormat";
   <div class="mb-2 flex items-end justify-between">
     <Label for="cookies-input">Input</Label>
     <div class="h-10">
-      <SwapFormat client:only />
-      <CookiesInputClearButton client:only />
-      <CookiesInputPasteButton client:only />
-      <CookiesInputCopyButton client:only />
+      <SwapFormat client:only="solid-js" />
+      <CookiesInputClearButton client:only="solid-js" />
+      <CookiesInputPasteButton client:only="solid-js" />
+      <CookiesInputCopyButton client:only="solid-js" />
     </div>
   </div>
   <CookiesInput client:load />
@@ -55,7 +45,7 @@ import { SwapFormat } from "./SwapFormat";
   <div class="mb-2 flex items-end justify-between">
     <Label for="cookies-output">Output</Label>
     <div class="h-10">
-      <CookiesOutputCopyButton client:only />
+      <CookiesOutputCopyButton client:only="solid-js" />
     </div>
   </div>
   <CookiesOutput client:load />

@@ -1,3 +1,16 @@
 {
-  "plugins": ["prettier-plugin-astro", "prettier-plugin-tailwindcss"]
+    "printWidth": 100,
+  "importOrder": [
+    "<BUILTIN_MODULES>",
+    "<TYPES>",
+    "<TYPES>^[.]",
+    "<THIRD_PARTY_MODULES>",
+    "^@lib/(.*)$",
+    "^@components/(.*)$",
+    "^@(server|trpc)/(.*)$",
+    "^~/(.*)$",
+    "^[.]",
+    ".css$"
+  ],
+  "plugins": ["prettier-plugin-astro", "@ianvs/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"]
 }

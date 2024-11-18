@@ -1,17 +1,20 @@
-import { ToggleButton as ToggleButtonPrimitive } from "@kobalte/core";
+import type { ValidComponent } from "solid-js";
+import { splitProps } from "solid-js";
+
+import type { PolymorphicProps } from "@kobalte/core/polymorphic";
+import * as ToggleButtonPrimitive from "@kobalte/core/toggle-button";
 import { cva } from "class-variance-authority";
 import type { VariantProps } from "class-variance-authority";
-import type { Component } from "solid-js";
-import { splitProps } from "solid-js";
+
 import { cn } from "~/lib/utils";
 
 const toggleVariants = cva(
-  "focus-visible:ring-ring inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         default: "bg-transparent",
-        outline: "border-input border bg-transparent shadow-sm",
+        outline: "border border-input bg-transparent shadow-sm",
       },
       size: {
         default: "h-9 px-3",
@@ -26,21 +29,28 @@ const toggleVariants = cva(
   },
 );
 
-export interface ToggleProps
-  extends ToggleButtonPrimitive.ToggleButtonRootProps,
-    VariantProps<typeof toggleVariants> {}
+type ToggleButtonRootProps<T extends ValidComponent = "button"> =
+  ToggleButtonPrimitive.ToggleButtonRootProps<T> &
+    VariantProps<typeof toggleVariants> & { class?: string | undefined };
 
-const Toggle: Component<ToggleProps> = (props) => {
-  const [, rest] = splitProps(props, ["class", "variant", "size"]);
+const Toggle = <T extends ValidComponent = "button">(
+  props: PolymorphicProps<T, ToggleButtonRootProps<T>>,
+) => {
+  const [local, others] = splitProps(props as ToggleButtonRootProps, [
+    "class",
+    "variant",
+    "size",
+  ]);
   return (
     <ToggleButtonPrimitive.Root
       class={cn(
-        toggleVariants({ variant: props.variant, size: props.size }),
-        props.class,
+        toggleVariants({ variant: local.variant, size: local.size }),
+        local.class,
       )}
-      {...rest}
+      {...others}
     />
   );
 };
 
+export type { ToggleButtonRootProps as ToggleProps };
 export { toggleVariants, Toggle };

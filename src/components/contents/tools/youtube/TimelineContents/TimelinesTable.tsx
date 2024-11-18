@@ -40,6 +40,7 @@ import {
   timelineIds,
   timelines,
 } from "./timelineAtoms";
+import type { TimelineType } from "./timelineTypes";
 
 export default () => {
   let tableBodyRef: HTMLTableSectionElement | undefined;
@@ -96,7 +97,8 @@ export default () => {
 
     setTimelines(
       (timeline) => timeline.id === id,
-      produce((timeline) => {
+      // @ts-ignore
+      produce((timeline: TimelineType) => {
         timeline.time = time;
         timeline.formattedTime = formatTime(formattedTime);
         timeline.seconds =
@@ -294,7 +296,7 @@ export default () => {
                   deleteTimeline={() => {
                     // setTimelines((prev) => prev.toSpliced(index(), 1));
                     const currentIndex = timelines.indexOf(item);
-                    setTimelines(prev => prev.toSpliced(currentIndex, 1));
+                    setTimelines((prev) => prev.toSpliced(currentIndex, 1));
                   }}
                   setChecked={(checked) =>
                     setTimelines(

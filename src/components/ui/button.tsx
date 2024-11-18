@@ -1,6 +1,6 @@
 import type { VariantProps } from "class-variance-authority";
-import { cva } from "class-variance-authority";
 import type { Component, ComponentProps } from "solid-js";
+import { cva } from "class-variance-authority";
 import { splitProps } from "solid-js";
 import { cn } from "~/lib/utils";
 
@@ -10,12 +10,11 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline:
-          "border-input hover:bg-accent hover:text-accent-foreground border",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        outline: "border-input hover:bg-accent hover:text-accent-foreground border",
+        outlineDestructive:
+          "border-destructive border hover:bg-destructive hover:text-destructive-foreground text-destructive",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
@@ -25,10 +24,16 @@ const buttonVariants = cva(
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
       },
+      duration: {
+        default: "duration-75",
+        slow: "duration-100",
+        slower: "duration-150",
+      },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
+      duration: "default",
     },
   },
 );
@@ -41,10 +46,7 @@ const Button: Component<ButtonProps> = (props) => {
   const [, rest] = splitProps(props, ["variant", "size", "class"]);
   return (
     <button
-      class={cn(
-        buttonVariants({ variant: props.variant, size: props.size }),
-        props.class,
-      )}
+      class={cn(buttonVariants({ variant: props.variant, size: props.size }), props.class)}
       {...rest}
     />
   );

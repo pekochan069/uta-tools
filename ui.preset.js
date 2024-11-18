@@ -89,12 +89,31 @@ module.exports = {
           from: { opacity: 1, transform: "scale(1)" },
           to: { opacity: 0, transform: "scale(0.96)" },
         },
+        "collapsible-down": {
+          from: { height: 0 },
+          to: { height: "var(--kb-collapsible-content-height)" },
+        },
+        "collapsible-up": {
+          from: { height: "var(--kb-collapsible-content-height)" },
+          to: { height: 0 },
+        },
+        "bg-load": {
+          from: {
+            backgroundPosition: "right",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "content-show": "content-show 0.2s ease-out",
         "content-hide": "content-hide 0.2s ease-out",
+        "collapsible-down": "collapsible-down 0.2s ease-out",
+        "collapsible-up": "collapsible-up 0.2s ease-out",
+        "bg-load": "bg-load 2s linear infinite",
+      },
+      transitionDuration: {
+        2000: "2000ms",
       },
     },
   },
