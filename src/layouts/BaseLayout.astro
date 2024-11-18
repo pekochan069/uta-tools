@@ -82,4 +82,7 @@ const { title = "Uta Tools", useTransitions = false } = Astro.props;
       setTheme(event.newDocument);
     });
   </script>
+  <script is:raw>
+    console.log(window.crossOriginIsolated);
+  </script>
 </html>
