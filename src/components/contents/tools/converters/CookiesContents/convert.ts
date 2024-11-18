@@ -1,5 +1,4 @@
 import { Effect, pipe } from "effect";
-
 import { type ErrorType } from "~/lib/types";
 
 export type CookieError = ErrorType;
@@ -75,9 +74,7 @@ const singleJsonToNetscape = (cookie: any) => {
         includeSubdomains: cookie.domain.startsWith(".") ? "TRUE" : "FALSE",
         path: cookie.path,
         httpOnly: cookie.httpOnly ? "TRUE" : "FALSE",
-        expirationDate: cookie.expirationDate
-          ? Math.floor(cookie.expirationDate)
-          : 0,
+        expirationDate: cookie.expirationDate ? Math.floor(cookie.expirationDate) : 0,
         name: cookie.name,
         value: cookie.value,
       };
@@ -108,9 +105,7 @@ export const jsonToNetscape = (input: string) => {
   );
 };
 
-const checkNetscapeCookie = (
-  input: string[],
-): Effect.Effect<never, CookieError, string[]> => {
+const checkNetscapeCookie = (input: string[]): Effect.Effect<string[], CookieError, never> => {
   if (
     input[0].trim() === "# Netscape HTTP Cookie File" ||
     input[0].trim() === "# HTTP Cookie File"

@@ -1,6 +1,5 @@
 ---
 import { Either } from "effect";
-
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import WithSidebar from "~/layouts/WithSidebar.astro";
 import { collections } from "~/lib/contents";
@@ -30,9 +29,7 @@ if (!tldrs) {
                       <div class="grid aspect-square select-none place-content-center rounded-md border-[1px] @container">
                         {Either.match(content.icon, {
                           onLeft: (Icon) => <Icon />,
-                          onRight: (right) => (
-                            <img loading="lazy" src={right} alt="icon" />
-                          ),
+                          onRight: (right) => <img loading="lazy" src={right} alt="icon" />,
                         })}
                       </div>
                     </CardHeader>

@@ -1,5 +1,5 @@
-import { Either } from "effect";
 import type { JSX } from "solid-js";
+import { Either } from "effect";
 
 export type Collections = {
   name: string;
@@ -18,7 +18,8 @@ export type Content = {
   name: string;
   slug: string;
   description: string;
-  icon: Either.Either<() => JSX.Element, string>;
+  // icon: Either.Either<() => JSX.Element, string>;
+  icon: Either.Either<string, () => JSX.Element>;
   // icon?: () => JSX.Element;
   // image?: ImageMetadata;
 };

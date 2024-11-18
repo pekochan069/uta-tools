@@ -1,7 +1,6 @@
 import { FaSolidLaptop } from "solid-icons/fa";
 import { TbMoon, TbSun } from "solid-icons/tb";
 import { createEffect, createSignal, onMount } from "solid-js";
-
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
@@ -9,11 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
 
 export default () => {
   const [theme, setTheme] = createSignal<"light" | "dark" | "system">("light");
@@ -26,8 +21,7 @@ export default () => {
   createEffect(() => {
     const isDark =
       theme() === "dark" ||
-      (theme() === "system" &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches);
+      (theme() === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
     document.documentElement.classList[isDark ? "add" : "remove"]("dark");
   });
 

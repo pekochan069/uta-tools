@@ -44,7 +44,7 @@ export function Ok<T, E>(value: T): Result<T, E> {
     unwrapOrElse: () => value,
     isErr: () => false,
     isOk: () => true,
-  } as Ok<T, E>;
+  } as unknown as Ok<T, E>;
 }
 
 /**
@@ -63,7 +63,7 @@ export function Err<T, E>(error: E): Result<T, E> {
     unwrapOrElse: (fn: (error: E) => T) => fn(error),
     isErr: () => true,
     isOk: () => false,
-  } as Err<T, E>;
+  } as unknown as Err<T, E>;
 }
 
 export interface Some<T> {
@@ -115,10 +115,10 @@ export function Some<T>(value: T): Some<T> {
     unwrapOrElse() {
       return value;
     },
-    isSome() {
+    isSome(this: Maybe<T>): this is Some<T> {
       return true;
     },
-    isNone() {
+    isNone(this: Maybe<T>): this is None {
       return false;
     },
   };
@@ -140,10 +140,10 @@ export function None(): None {
     unwrapOrElse<T>(fn: () => T) {
       return fn();
     },
-    isSome() {
+    isSome<T>(this: Maybe<T>): this is Some<T> {
       return false;
     },
-    isNone() {
+    isNone<T>(this: Maybe<T>): this is None {
       return true;
     },
   };

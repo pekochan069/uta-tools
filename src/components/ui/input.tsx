@@ -1,5 +1,5 @@
-import { TextField } from "@kobalte/core";
 import type { Component, ComponentProps, JSX } from "solid-js";
+import { TextField } from "@kobalte/core";
 import { Show, splitProps } from "solid-js";
 import { cn } from "~/lib/utils";
 
@@ -56,6 +56,7 @@ const Input: Component<InputProps> = (props) => {
           {props.children}
         </TextField.Label>
       </Show>
+      {/* @ts-ignore */}
       <TextField.Input
         type={props.type}
         class={cn(

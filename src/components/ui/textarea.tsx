@@ -1,5 +1,5 @@
-import { TextField } from "@kobalte/core";
 import type { Component, ComponentProps, JSX } from "solid-js";
+import { TextField } from "@kobalte/core";
 import { Show, splitProps } from "solid-js";
 import { cn } from "~/lib/utils";
 
@@ -18,10 +18,7 @@ import { cn } from "~/lib/utils";
 
 // export { Textarea };
 
-type TextAreaProps = Omit<
-  ComponentProps<"textarea">,
-  "onChange" | "onchange"
-> & {
+type TextAreaProps = Omit<ComponentProps<"textarea">, "onChange" | "onchange"> & {
   rootClass?: string;
   value?: string;
   defaultValue?: string;
@@ -75,6 +72,7 @@ const TextArea: Component<TextAreaProps> = (props) => {
           {props.children}
         </TextField.Label>
       </Show>
+      {/* @ts-ignore */}
       <TextField.TextArea
         class={cn(
           "flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ui-invalid:border-destructive ui-invalid:text-destructive",

@@ -1,11 +1,11 @@
+import type { CookieError } from "./convert";
 import { useStore } from "@nanostores/solid";
 import { Effect, Exit } from "effect";
 import { createEffect } from "solid-js";
 import { match } from "ts-pattern";
-
 import CopyButton from "~/components/common/CopyButton";
 import { TextArea } from "~/components/ui/textarea";
-import { type CookieError, jsonToNetscape, netscapeToJson } from "./convert";
+import { jsonToNetscape, netscapeToJson } from "./convert";
 import { format, input, jsonFormat, output } from "./cookieAtoms";
 
 export const CookiesOutput = () => {
@@ -14,9 +14,7 @@ export const CookiesOutput = () => {
   const $output = useStore(output);
   const $jsonFormat = useStore(jsonFormat);
 
-  const processProgram = (
-    effect: Effect.Effect<never, CookieError, string>,
-  ) => {
+  const processProgram = (effect: Effect.Effect<string, CookieError, never>) => {
     return Effect.runPromiseExit(effect).then((res) => {
       return Exit.mapBoth(res, {
         onFailure(e) {
@@ -40,11 +38,9 @@ export const CookiesOutput = () => {
     }
 
     match($format())
-      .with({ from: "json", to: "netscape" }, () =>
-        processProgram(jsonToNetscape($input())),
-      )
+      .with({ from: "json", to: "netscape" }, () => processProgram(jsonToNetscape($input())))
       .with({ from: "netscape", to: "json" }, () =>
-        processProgram(netscapeToJson($input(), $jsonFormat())),
+        processProgram(netscapeToJson($input(), $jsonFormat() || "pretty")),
       )
       .run();
   });
@@ -66,9 +62,6 @@ export const CookiesOutputCopyButton = () => {
   const $output = useStore(output);
 
   return (
-    <CopyButton
-      copyType="text"
-      copyContent={$output().status === "valid" ? $output().value : ""}
-    />
+    <CopyButton copyType="text" copyContent={$output().status === "valid" ? $output().value : ""} />
   );
 };
