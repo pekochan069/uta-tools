@@ -1,7 +1,7 @@
 import type { ConvertQueueItem } from "./types";
 import { useStore } from "@nanostores/solid";
 import { ImSpinner8 } from "solid-icons/im";
-import { TbX } from "solid-icons/tb";
+import { TbArrowRight, TbX } from "solid-icons/tb";
 import { For } from "solid-js";
 import { Button } from "~/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
@@ -59,7 +59,13 @@ function QueueItem(props: QueueItemProps) {
       </Dialog>
       <div class="flex min-w-0 flex-col gap-1 text-start">
         <span class="w-full truncate font-bold">{props.item.file.name}</span>
-        <span>{formatFileSize(props.item.file.size)} bytes</span>
+        <div class="flex items-center gap-4">
+          <span>{formatFileSize(props.item.file.size)} bytes</span>
+          <div class="flex items-center gap-2">
+            <TbArrowRight />
+            <span class="font-semibold uppercase">{props.item.outputType}</span>
+          </div>
+        </div>
       </div>
       <div class="flex items-center gap-2">
         <Button

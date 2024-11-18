@@ -1,12 +1,11 @@
 import type { ResultItem } from "./types";
 import { useStore } from "@nanostores/solid";
 import { TbDownload, TbX } from "solid-icons/tb";
-import { For } from "solid-js";
+import { For, Show } from "solid-js";
 import { Button } from "~/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
 import { formatFileSize } from "~/lib/format-file-size";
 import { $convertQueue, $results } from "./atoms";
-import { mimiTypeToExtension } from "./types";
 
 export default () => {
   const results = useStore($results);
@@ -30,7 +29,7 @@ export default () => {
             results().forEach((item) => {
               const link = document.createElement("a");
               link.download = item.fileName;
-              link.href = URL.createObjectURL(new Blob([item.result], { type: item.type }));
+              link.href = URL.createObjectURL(new Blob([item.result], { type: item.outputType }));
               link.click();
             });
           }}
@@ -48,33 +47,38 @@ type ResultItemProps = {
 };
 
 function ResultItem(props: ResultItemProps) {
-  const blob = () => new Blob([props.item.result], { type: props.item.type });
+  const blob = () => new Blob([props.item.result], { type: props.item.outputType });
 
   const img = () => URL.createObjectURL(blob());
 
   return (
-    <div class="grid grid-cols-[52px_1fr_auto] items-center justify-between gap-4 rounded-md border px-4 py-2">
-      <Dialog>
-        <DialogTrigger
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-          class="pointer-events-auto"
-        >
-          <img
-            src={img()}
-            alt={props.item.fileName}
-            class="h-[52px] w-[52px] rounded-sm object-scale-down"
-          />
-        </DialogTrigger>
-        <DialogContent class="grid place-content-center">
-          <img
-            src={img()}
-            alt={props.item.fileName}
-            class="max-h-[75svh] rounded-sm object-scale-down"
-          />
-        </DialogContent>
-      </Dialog>
+    <div
+      class="grid grid-cols-[52px_1fr_auto] items-center justify-between gap-4 rounded-md border px-4 py-2 data-[error=true]:grid-cols-[1fr_auto] data-[error=true]:border-destructive data-[error=true]:text-destructive"
+      data-error={props.item.status === "error"}
+    >
+      <Show when={props.item.status === "ok"}>
+        <Dialog>
+          <DialogTrigger
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            class="pointer-events-auto"
+          >
+            <img
+              src={img()}
+              alt={props.item.fileName}
+              class="h-[52px] w-[52px] rounded-sm object-scale-down"
+            />
+          </DialogTrigger>
+          <DialogContent class="grid place-content-center">
+            <img
+              src={img()}
+              alt={props.item.fileName}
+              class="max-h-[75svh] rounded-sm object-scale-down"
+            />
+          </DialogContent>
+        </Dialog>
+      </Show>
       <div class="flex min-w-0 flex-col gap-1 text-start">
         <span class="w-full truncate font-bold">{props.item.fileName}</span>
         <span>{formatFileSize(props.item.result.byteLength)} bytes</span>
@@ -98,6 +102,7 @@ function ResultItem(props: ResultItemProps) {
             link.href = img();
             link.click();
           }}
+          disabled={props.item.status === "error"}
         >
           <TbDownload class="size-5" />
         </Button>

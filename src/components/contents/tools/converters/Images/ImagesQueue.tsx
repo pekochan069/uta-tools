@@ -1,6 +1,6 @@
 import type { ImageFormat, ImageQueueItem } from "./types";
 import { useStore } from "@nanostores/solid";
-import { TbX } from "solid-icons/tb";
+import { TbCirclePlus, TbX } from "solid-icons/tb";
 import { createSignal, For } from "solid-js";
 import { Button } from "~/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "~/components/ui/collapsible";
@@ -21,8 +21,8 @@ import {
   SliderValueLabel,
 } from "~/components/ui/slider";
 import { formatFileSize } from "~/lib/format-file-size";
-import { $convertQueue, $imagesQueue } from "./atoms";
-import { availableFormats, imageFormatToMimeType, mimiTypeToExtension } from "./types";
+import { $convertQueue, $imagesQueue, addImages } from "./atoms";
+import { accept, availableFormats, imageFormatToExtension } from "./types";
 import { createTask } from "./worker";
 
 export default () => {
@@ -32,15 +32,36 @@ export default () => {
     <div class="grid gap-2">
       <h2 class="font-semibold">Images</h2>
       <For each={images()}>{(image, i) => <QueueItem item={image} />}</For>
-      <div class="flex justify-end">
-        <Button
-          class="items-center gap-2"
-          variant="outlineDestructive"
-          onClick={() => $imagesQueue.set([])}
-        >
-          <TbX class="size-5" />
-          <span>Clear All</span>
-        </Button>
+      <div class="grid grid-cols-3">
+        <span></span>
+        <label class="justify-self-center">
+          <div class="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors duration-75 hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+            <TbCirclePlus class="size-8" />
+          </div>
+          <input
+            type="file"
+            multiple
+            accept={accept}
+            onInput={(e) => {
+              const files = e.currentTarget.files;
+
+              if (files) {
+                addImages(files);
+              }
+            }}
+            class="hidden"
+          />
+        </label>
+        <div class="flex justify-end">
+          <Button
+            class="items-center gap-2"
+            variant="outlineDestructive"
+            onClick={() => $imagesQueue.set([])}
+          >
+            <TbX class="size-5" />
+            <span>Clear All</span>
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -136,7 +157,7 @@ function QueueItem(props: QueueItemProps) {
             onClick={() => {
               const fileNameParts = props.item.file.name.split(".");
               fileNameParts.pop();
-              const fileName = `${fileNameParts.join(".")}.${mimiTypeToExtension(format())}`;
+              const fileName = `${fileNameParts.join(".")}.${imageFormatToExtension(format())}`;
 
               const task = {
                 id: props.item.id,

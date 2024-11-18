@@ -1,4 +1,11 @@
-import { onCleanup } from "solid-js";
+import type {
+  ArrayConstant,
+  Enum,
+  Flag,
+  ForeignHeifCompression,
+  ForeignHeifEncoder,
+  ForeignSubsample,
+} from "wasm-vips";
 
 export type ImageFormat =
   | "ppm"
@@ -25,14 +32,10 @@ export const availableFormats: ImageFormat[] = [
   "heif",
   "avif",
   "jpeg-xl",
-  "jpeg2000",
-  "svg",
   "tiff",
-  "pdf",
-  "ppm",
-  "ico",
   "gif",
-  "fits",
+  "ico",
+  //"svg",
 ];
 
 export function imageFormatToMimeType(format: ImageFormat): string {
@@ -77,6 +80,8 @@ export function mimeTypeToImageFormat(type: string): ImageFormat {
       return "jpeg";
     case "image/jp2":
     case "image/jpeg2000":
+    case "image/jpx":
+    case "image/jpm":
       return "jpeg2000";
     case "image/jxl":
       return "jpeg-xl";
@@ -112,8 +117,12 @@ export function mimeTypeToImageFormat(type: string): ImageFormat {
     case "image/gif":
       return "gif";
     case "image/heif":
+    case "image/heic":
       return "heif";
     case "image/x-icon":
+    case "image/ico":
+    case "image/vnd.microsoft.icon":
+    case "image/icon":
       return "ico";
     default:
       // return type.split("/")[1];
@@ -153,52 +162,6 @@ export function imageFormatToExtension(format: ImageFormat): string {
       return "gif";
     case "None":
       return "None";
-  }
-}
-
-export function mimiTypeToExtension(type: string): string {
-  switch (type) {
-    case "image/jpeg":
-      return "jpeg";
-    case "image/jp2":
-    case "image/jpx":
-    case "image/jpm":
-      return "jpeg2000";
-    case "image/jxl":
-      return "jpeg-xl";
-    case "image/tiff":
-      return "tiff";
-    case "image/png":
-      return "png";
-    case "image/webp":
-      return "webp";
-    case "image/avif":
-      return "avif";
-    case "image/fits":
-      return "fits";
-    case "application/pdf":
-      return "pdf";
-    case "image/svg+xml":
-      return "svg";
-    case "image/x-portable-pixmap":
-      return "ppm";
-    case "image/gif":
-      return "gif";
-    case "image/heif":
-    case "image/heic":
-      return "heif";
-    case "image/x-icon":
-    case "image/ico":
-    case "image/vnd.microsoft.icon":
-    case "image/icon":
-      return "ico";
-    default: {
-      const parts = type.split("/");
-      if (parts.length === 2) {
-        return parts[1];
-      }
-      return "None";
-    }
   }
 }
 
@@ -318,6 +281,53 @@ export interface SaveOptions<T extends string> {
   effort?: number;
 }
 
+export interface HeifSaveOptions {
+  /**
+   * Q factor.
+   */
+  Q?: number;
+  /**
+   * Number of bits per pixel.
+   */
+  bitdepth?: number;
+  /**
+   * Enable lossless compression.
+   */
+  lossless?: boolean;
+  /**
+   * Compression format.
+   */
+  compression?: ForeignHeifCompression | Enum;
+  /**
+   * Cpu effort.
+   */
+  effort?: number;
+  /**
+   * Select chroma subsample operation mode.
+   */
+  subsample_mode?: ForeignSubsample | Enum;
+  /**
+   * Select encoder to use.
+   */
+  encoder?: ForeignHeifEncoder | Enum;
+  /**
+   * Which metadata to retain.
+   */
+  keep?: ForeignKeep | Flag;
+  /**
+   * Background value.
+   */
+  background?: ArrayConstant;
+  /**
+   * Set page height for multipage save.
+   */
+  page_height?: number;
+  /**
+   * Filename of icc profile to embed.
+   */
+  profile?: string;
+}
+
 export interface ThumbnailOptions {
   /**
    * Options that are passed on to the underlying loader.
@@ -382,9 +392,13 @@ export type ConvertQueueItem = ConvertInput & {
 export type WorkerResult = {
   id: ItemId;
   result: ArrayBuffer;
+  outputType: ImageFormat;
+  status: "ok" | "error";
+  error?: string;
 };
 
 export type ResultItem = WorkerResult & {
   fileName: string;
-  type: ImageFormat;
 };
+
+export const accept = "image/*,image/heif,image/heic,application/pdf";

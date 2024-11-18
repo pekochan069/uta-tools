@@ -5,7 +5,14 @@
 /**
  * Internal dependencies
  */
-import type { ImageSizeCrop, ItemId, LoadOptions, SaveOptions, ThumbnailOptions } from "./types";
+import type {
+  HeifSaveOptions,
+  ImageSizeCrop,
+  ItemId,
+  LoadOptions,
+  SaveOptions,
+  ThumbnailOptions,
+} from "./types";
 import Vips from "wasm-vips";
 // eslint-disable-next-line import/no-unresolved
 import VipsHeifModule from "wasm-vips/vips-heif.wasm?url";
@@ -150,7 +157,12 @@ export async function convertImageFormat(
   }
 
   if ("image/heif" === outputType) {
-    const outBuffer = image.heifsaveBuffer({});
+    const options: HeifSaveOptions = {
+      ...saveOptions,
+      compression: 4,
+      encoder: 0,
+    };
+    const outBuffer = image.heifsaveBuffer(options);
     const result = outBuffer.buffer;
 
     cleanup?.();

@@ -19,8 +19,8 @@ export function addImage(file: File) {
 
 export function addImages(files: FileList) {
   const items = Array.from(files).map((file) => ({ id: createId(), file }));
-  const filterd = items.filter((item) => {
-    const mimeType = item.file.type;
+  const filtered = items.filter((item) => {
+    const mimeType = item.file.type || `image/${item.file.name.split(".").pop()}`;
     const imageFormat = mimeTypeToImageFormat(mimeType);
 
     if (imageFormat === "None") {
@@ -30,7 +30,7 @@ export function addImages(files: FileList) {
     return true;
   });
 
-  if (filterd.length !== items.length) {
+  if (filtered.length !== items.length) {
     toast.error("Some files are not supported");
   }
 

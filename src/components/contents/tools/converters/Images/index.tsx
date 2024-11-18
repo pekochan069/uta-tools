@@ -6,6 +6,7 @@ import { Batch } from "./Batch";
 import ConvertQueue from "./ConvertQueue";
 import ImagesQueue from "./ImagesQueue";
 import Results from "./Results";
+import { accept } from "./types";
 
 export default () => {
   const windowDropEvent = (e: DragEvent) => {
@@ -33,17 +34,16 @@ export default () => {
           addImages(files);
         }}
         multiple={true}
-        accept="image/*,application/pdf,"
+        accept={accept}
         id="input-file"
       />
       <Batch />
-      <div class="flex flex-col justify-end gap-8">
-        <ImagesQueue />
-        <Separator orientation="horizontal" class="h-[2px]" />
-        <ConvertQueue />
-        <Separator orientation="horizontal" class="h-[2px]" />
-        <Results />
-      </div>
+      <Separator class="h-[2px]" />
+      <ImagesQueue />
+      <Separator class="h-[2px]" />
+      <ConvertQueue />
+      <Separator class="h-[2px]" />
+      <Results />
     </div>
   );
 };

@@ -19,7 +19,7 @@ import {
   SliderValueLabel,
 } from "~/components/ui/slider";
 import { $batchFormat, $convertQueue, $imagesQueue } from "./atoms";
-import { availableFormats, imageFormatToMimeType, mimiTypeToExtension } from "./types";
+import { availableFormats, imageFormatToExtension } from "./types";
 import { createTask } from "./worker";
 
 export function Batch() {
@@ -83,7 +83,7 @@ export function Batch() {
               imagesQueue().forEach((item) => {
                 const fileNameParts = item.file.name.split(".");
                 fileNameParts.pop();
-                const fileName = `${fileNameParts.join(".")}.${mimiTypeToExtension(batchFormat())}`;
+                const fileName = `${fileNameParts.join(".")}.${imageFormatToExtension(batchFormat())}`;
 
                 const task = {
                   id: item.id,

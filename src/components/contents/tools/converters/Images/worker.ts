@@ -1,7 +1,9 @@
 import type { ConvertInput, WorkerResult } from "./types";
+import { toast } from "solid-sonner";
+import { PngIcoConverter } from "~/lib/png2icojs";
 import { $convertQueue, $results } from "./atoms";
 import ImageConvertWorker from "./image-convert-worker?worker";
-import { imageFormatToExtension, mimiTypeToExtension } from "./types";
+import { imageFormatToExtension } from "./types";
 
 const workers: Worker[] = [];
 const idleWorkers: number[] = [];
@@ -11,8 +13,8 @@ const maxWorkers = navigator.hardwareConcurrency || 4;
 
 for (let i = 0; i < maxWorkers; ++i) {
   const worker = new ImageConvertWorker();
-  worker.onmessage = (e) => {
-    const { id, result } = e.data as WorkerResult;
+  worker.onmessage = async (e) => {
+    const { id, result, status, error, outputType } = e.data as WorkerResult;
 
     const c = $convertQueue.get().find((c) => c.id === e.data.id);
 
@@ -26,11 +28,27 @@ for (let i = 0; i < maxWorkers; ++i) {
     fileNameParts.pop();
     const fileName = `${fileNameParts.join(".")}.${imageFormatToExtension(c.outputType)}`;
 
-    $results.value.push({ id, result, fileName, type: c.outputType });
-    $results.notify();
+    if (outputType === "ico") {
+      const converter = new PngIcoConverter();
+      const ico = await converter.convertAsync([
+        {
+          png: result,
+        },
+      ]);
+      $results.value.push({ id, result: ico, fileName, outputType, status });
+      $results.notify();
+    } else {
+      $results.value.push({ id, result, fileName, outputType, status });
+      $results.notify();
+    }
     $convertQueue.value.splice($convertQueue.value.indexOf(c), 1);
     $convertQueue.notify();
     idleWorkers.push(i);
+
+    if (status === "error") {
+      toast.error(`Failed to convert image ${fileName} [${error}]`);
+    }
+
     runTask();
   };
   workers.push(worker);
@@ -46,7 +64,11 @@ function runTask() {
   const idleWorker = idleWorkers.shift()!;
   const worker = workers[idleWorker];
 
-  worker.postMessage(task);
+  if (task.outputType === "ico") {
+    worker.postMessage({ ...task, outputType: "png" });
+  } else {
+    worker.postMessage(task);
+  }
 
   runTask();
 }
