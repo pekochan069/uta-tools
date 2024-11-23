@@ -1,8 +1,6 @@
 import type { Lang } from "~/i18n/utils";
-import { FaSolidLaptop } from "solid-icons/fa";
 import { RiEditorTranslate2 } from "solid-icons/ri";
-import { TbMoon, TbSun } from "solid-icons/tb";
-import { createEffect, createSignal, For, onMount } from "solid-js";
+import { For } from "solid-js";
 import { Button } from "~/components/ui/button";
 import {
   DropdownMenu,
