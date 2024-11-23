@@ -1,12 +1,7 @@
 import { FaSolidPaste } from "solid-icons/fa";
 import { type JSX } from "solid-js";
-
 import { Button } from "~/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
 
 type PasteButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> & {
   paste: (item: ClipboardItem) => Promise<void>;

@@ -1,17 +1,9 @@
-import { useStore } from "@nanostores/solid";
+import type { CommandType, OptionType } from "~/atoms/tldr/video/yt-dlp";
 import type { JSX } from "astro/jsx-runtime";
-import { For, Show, createSignal } from "solid-js";
+import { useStore } from "@nanostores/solid";
+import { createSignal, For, Show } from "solid-js";
 import { match } from "ts-pattern";
-
-import {
-  type CommandType,
-  type OptionType,
-  command,
-  cookies,
-  format,
-  link,
-  time,
-} from "~/atoms/tldr/video/yt-dlp";
+import { command, cookies, format, link, time } from "~/atoms/tldr/video/yt-dlp";
 import { Badge } from "~/components/ui/badge";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
@@ -37,11 +29,7 @@ export const Command = () => {
         .with("youtube-playlist", (data) => <YoutubePlaylist />)
         .with("external-video", (data) => <External />)
         .exhaustive()}{" "}
-      {$link() === "" ? (
-        <span class="capitalize text-muted-foreground">Link</span>
-      ) : (
-        $link()
-      )}
+      {$link() === "" ? <span class="capitalize text-muted-foreground">Link</span> : $link()}
     </>
   );
 };
@@ -135,11 +123,7 @@ export const SelectType = () => {
   const $command = useStore(command);
 
   const getLabel = (
-    str:
-      | "youtube-video"
-      | "youtube-stream"
-      | "youtube-playlist"
-      | "external-video",
+    str: "youtube-video" | "youtube-stream" | "youtube-playlist" | "external-video",
   ) => {
     return match(str)
       .with("youtube-video", () => "유튜브 비디오")
@@ -157,22 +141,13 @@ export const SelectType = () => {
 
         command.set(value);
       }}
-      options={[
-        "youtube-video",
-        "youtube-stream",
-        "youtube-playlist",
-        "external-video",
-      ]}
+      options={["youtube-video", "youtube-stream", "youtube-playlist", "external-video"]}
       itemComponent={(props) => (
-        <SelectItem item={props.item}>
-          {getLabel(props.item.rawValue)}
-        </SelectItem>
+        <SelectItem item={props.item}>{getLabel(props.item.rawValue)}</SelectItem>
       )}
     >
       <SelectTrigger>
-        <SelectValue<CommandType>>
-          {(state) => getLabel(state.selectedOption())}
-        </SelectValue>
+        <SelectValue<CommandType>>{(state) => getLabel(state.selectedOption())}</SelectValue>
       </SelectTrigger>
       <SelectContent />
     </Select>
@@ -215,15 +190,9 @@ export const OptionBadges = () => {
         <OptionBadge name="format">포맷</OptionBadge>,
         <OptionBadge name="time">시간</OptionBadge>,
       ])
-      .with("youtube-stream", () => [
-        <OptionBadge name="cookies">쿠키</OptionBadge>,
-      ])
-      .with("youtube-playlist", () => [
-        <OptionBadge name="cookies">쿠키</OptionBadge>,
-      ])
-      .with("external-video", () => [
-        <OptionBadge name="cookies">쿠키</OptionBadge>,
-      ])
+      .with("youtube-stream", () => [<OptionBadge name="cookies">쿠키</OptionBadge>])
+      .with("youtube-playlist", () => [<OptionBadge name="cookies">쿠키</OptionBadge>])
+      .with("external-video", () => [<OptionBadge name="cookies">쿠키</OptionBadge>])
       .exhaustive();
 
   return <For each={options()}>{(option) => option}</For>;

@@ -1,9 +1,7 @@
-import type { JSX, ValidComponent } from "solid-js";
-import { splitProps } from "solid-js";
-
-import * as AlertDialogPrimitive from "@kobalte/core/alert-dialog";
 import type { PolymorphicProps } from "@kobalte/core/polymorphic";
-
+import type { JSX, ValidComponent } from "solid-js";
+import * as AlertDialogPrimitive from "@kobalte/core/alert-dialog";
+import { splitProps } from "solid-js";
 import { cn } from "~/lib/utils";
 
 const AlertDialog = AlertDialogPrimitive.Root;
@@ -18,9 +16,7 @@ type AlertDialogOverlayProps<T extends ValidComponent = "div"> =
 const AlertDialogOverlay = <T extends ValidComponent = "div">(
   props: PolymorphicProps<T, AlertDialogOverlayProps<T>>,
 ) => {
-  const [local, others] = splitProps(props as AlertDialogOverlayProps, [
-    "class",
-  ]);
+  const [local, others] = splitProps(props as AlertDialogOverlayProps, ["class"]);
   return (
     <AlertDialogPrimitive.Overlay
       class={cn(
@@ -41,10 +37,7 @@ type AlertDialogContentProps<T extends ValidComponent = "div"> =
 const AlertDialogContent = <T extends ValidComponent = "div">(
   props: PolymorphicProps<T, AlertDialogContentProps<T>>,
 ) => {
-  const [local, others] = splitProps(props as AlertDialogContentProps, [
-    "class",
-    "children",
-  ]);
+  const [local, others] = splitProps(props as AlertDialogContentProps, ["class", "children"]);
   return (
     <AlertDialogPortal>
       <AlertDialogOverlay />
@@ -87,10 +80,7 @@ const AlertDialogTitle = <T extends ValidComponent = "h2">(
 ) => {
   const [local, others] = splitProps(props as AlertDialogTitleProps, ["class"]);
   return (
-    <AlertDialogPrimitive.Title
-      class={cn("text-lg font-semibold", local.class)}
-      {...others}
-    />
+    <AlertDialogPrimitive.Title class={cn("text-lg font-semibold", local.class)} {...others} />
   );
 };
 
@@ -102,9 +92,7 @@ type AlertDialogDescriptionProps<T extends ValidComponent = "p"> =
 const AlertDialogDescription = <T extends ValidComponent = "p">(
   props: PolymorphicProps<T, AlertDialogDescriptionProps<T>>,
 ) => {
-  const [local, others] = splitProps(props as AlertDialogDescriptionProps, [
-    "class",
-  ]);
+  const [local, others] = splitProps(props as AlertDialogDescriptionProps, ["class"]);
   return (
     <AlertDialogPrimitive.Description
       class={cn("text-sm text-muted-foreground", local.class)}

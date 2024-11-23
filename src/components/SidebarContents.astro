@@ -1,35 +1,25 @@
 ---
 import { OverlayScrollbarsComponent } from "overlayscrollbars-solid";
-
 import { collections } from "~/lib/contents";
 ---
 
 <aside
   class="invisible fixed z-50 hidden h-[calc(100svh-4.5rem)] py-4 md:visible md:sticky md:block"
 >
-  <OverlayScrollbarsComponent
-    defer
-    client:load
-    options={{ scrollbars: { autoHide: "leave" } }}
-  >
+  <OverlayScrollbarsComponent defer client:load options={{ scrollbars: { autoHide: "leave" } }}>
     <div class="flex h-[calc(100svh-7rem)] flex-col gap-10">
       {
         collections.map((collections) => {
           return (
             <div class="flex flex-col gap-1">
-              <a
-                href={`/${collections.slug}`}
-                class="mb-2 text-2xl font-semibold hover:underline"
-              >
+              <a href={`/${collections.slug}`} class="mb-2 text-2xl font-semibold hover:underline">
                 {collections.name}
               </a>
               <div class="flex flex-col gap-4">
                 {collections.categories.map((category) => {
                   return (
                     <div class="flex flex-col gap-1">
-                      <h4 class="mb-1 text-lg font-semibold">
-                        {category.name}
-                      </h4>
+                      <h4 class="mb-1 text-lg font-semibold">{category.name}</h4>
                       {category.contents.map((content) => (
                         <a
                           href={`/${collections.slug}/${category.slug}/${content.slug}`}
@@ -51,9 +41,7 @@ import { collections } from "~/lib/contents";
   <script>
     const currentUrl = new URL(window.location.href);
     const pathname = currentUrl.pathname;
-    const anchorElement = document.querySelector<HTMLAnchorElement>(
-      "a[href='" + pathname + "']",
-    );
+    const anchorElement = document.querySelector<HTMLAnchorElement>("a[href='" + pathname + "']");
     if (anchorElement) {
       anchorElement.dataset.currentPath = "true";
     }

@@ -1,8 +1,8 @@
 ---
-import ContentLayout from "./ContentLayout.astro";
 import { currentContent } from "~/atoms/currentContent";
 import ShowDescription from "~/components/contents/tldr/ShowDescription";
-import { H1, P, Muted } from "~/components/ui/typography";
+import { H1, Muted, P } from "~/components/ui/typography";
+import ContentLayout from "./ContentLayout.astro";
 
 const { name, description } = currentContent.get();
 ---

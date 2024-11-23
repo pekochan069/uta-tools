@@ -1,6 +1,5 @@
 import { useStore } from "@nanostores/solid";
 import { Match, Switch } from "solid-js";
-
 import { format } from "~/atoms/tldr/video/yt-dlp";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
@@ -71,10 +70,7 @@ export const FormatInput = (props: { class?: string }) => {
 export const SelectFormatButton = (props: { format: string }) => {
   const $format = useStore(format);
   return (
-    <Button
-      size="sm"
-      onClick={() => format.set({ ...$format(), value: props.format })}
-    >
+    <Button size="sm" onClick={() => format.set({ ...$format(), value: props.format })}>
       선택
     </Button>
   );

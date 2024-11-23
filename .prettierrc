@@ -1,5 +1,5 @@
 {
-    "printWidth": 100,
+  "printWidth": 100,
   "importOrder": [
     "<BUILTIN_MODULES>",
     "<TYPES>",
@@ -12,5 +12,9 @@
     "^[.]",
     ".css$"
   ],
-  "plugins": ["prettier-plugin-astro", "@ianvs/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"]
+  "plugins": [
+    "prettier-plugin-astro",
+    "@ianvs/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
+  ]
 }

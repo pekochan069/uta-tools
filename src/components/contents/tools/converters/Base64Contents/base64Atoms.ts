@@ -9,6 +9,6 @@ export const repeat = atom(1);
 
 export const input = atom("");
 export const output = atom({
-	status: "valid" as "valid" | "invalid",
-	value: "",
+  status: "valid" as "valid" | "invalid",
+  value: "",
 });

@@ -1,12 +1,7 @@
 import { VsClearAll } from "solid-icons/vs";
 import { type JSX } from "solid-js";
-
 import { Button } from "~/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
 
 // interface CopyButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
 // 	copyContent: string;

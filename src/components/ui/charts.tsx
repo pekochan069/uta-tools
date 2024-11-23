@@ -8,6 +8,7 @@ import type {
   Plugin,
   TooltipModel,
 } from "chart.js";
+import type { Component, ComponentProps } from "solid-js";
 import {
   ArcElement,
   BarController,
@@ -19,9 +20,9 @@ import {
   DoughnutController,
   Filler,
   Legend,
+  LinearScale,
   LineController,
   LineElement,
-  LinearScale,
   PieController,
   PointElement,
   PolarAreaController,
@@ -30,15 +31,7 @@ import {
   ScatterController,
   Tooltip,
 } from "chart.js";
-import type { Component, ComponentProps } from "solid-js";
-import {
-  mergeProps,
-  onMount,
-  createEffect,
-  on,
-  onCleanup,
-  splitProps,
-} from "solid-js";
+import { createEffect, mergeProps, on, onCleanup, onMount, splitProps } from "solid-js";
 import { cn } from "~/lib/utils";
 
 export interface TypedChartProps extends ComponentProps<"div"> {
@@ -68,13 +61,7 @@ const registerMap: { [key in ChartType]: ChartComponent[] } = {
 };
 
 const BaseChart: Component<ChartProps> = (rawProps) => {
-  Chart.register(
-    Colors,
-    Filler,
-    Legend,
-    Tooltip,
-    ...registerMap[rawProps.type],
-  );
+  Chart.register(Colors, Filler, Legend, Tooltip, ...registerMap[rawProps.type]);
 
   const props = mergeProps(
     {
@@ -83,13 +70,7 @@ const BaseChart: Component<ChartProps> = (rawProps) => {
     },
     rawProps,
   );
-  const [, rest] = splitProps(props, [
-    "class",
-    "type",
-    "data",
-    "options",
-    "plugins",
-  ]);
+  const [, rest] = splitProps(props, ["class", "type", "data", "options", "plugins"]);
 
   let ref: HTMLCanvasElement;
   let chart: Chart;

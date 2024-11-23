@@ -15,10 +15,7 @@ import { TbArrowBigUpLineFilled } from "solid-icons/tb";
 
     if (!scrollToTop) return;
 
-    if (
-      document.body.scrollTop > 20 ||
-      document.documentElement.scrollTop > 20
-    ) {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
       scrollToTop.classList.remove("hidden");
       scrollToTop.classList.add("grid");
     } else {

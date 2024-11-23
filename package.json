@@ -28,8 +28,10 @@
     "@planetscale/database": "^1.14.0",
     "@sinclair/typebox": "0.33.22",
     "@solid-primitives/upload": "0.0.117",
+    "@t3-oss/env-core": "^0.11.1",
     "@tailwindcss/container-queries": "^0.1.1",
     "@thisbeyond/solid-dnd": "^0.7.5",
+    "@tidbcloud/serverless": "^0.2.0",
     "@trpc/client": "next",
     "@trpc/server": "next",
     "@vercel/speed-insights": "^1.0.9",
@@ -37,7 +39,7 @@
     "chart.js": "4.4.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "2.1.1",
-    "drizzle-orm": "^0.29.3",
+    "drizzle-orm": "0.36.4",
     "effect": "3.10.13",
     "nanoid": "^5.0.4",
     "nanostores": "0.11.3",
@@ -57,11 +59,11 @@
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
-    "drizzle-kit": "^0.20.13",
+    "drizzle-kit": "0.28.1",
     "mysql2": "^3.9.1",
     "prettier": "^3.2.4",
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "0.6.8",
-    "vercel": "37.14.0"
+    "vercel": "39.1.1"
   }
 }

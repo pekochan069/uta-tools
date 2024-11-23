@@ -1,12 +1,7 @@
 import { useStore } from "@nanostores/solid";
 import { IoSwapVertical } from "solid-icons/io";
-
 import { Button } from "~/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
 import { input, output } from "./base64Atoms";
 
 export default () => {

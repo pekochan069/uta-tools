@@ -1,6 +1,8 @@
+import type { BadgeProps } from "~/components/ui/badge";
 import type { VariantProps } from "class-variance-authority";
-import { cva } from "class-variance-authority";
 import type { IconTypes } from "solid-icons";
+import type { Component } from "solid-js";
+import { cva } from "class-variance-authority";
 import {
   TbArrowDown,
   TbArrowDownRight,
@@ -8,18 +10,11 @@ import {
   TbArrowUp,
   TbArrowUpRight,
 } from "solid-icons/tb";
-import type { Component } from "solid-js";
 import { splitProps } from "solid-js";
-import type { BadgeProps } from "~/components/ui/badge";
 import { Badge } from "~/components/ui/badge";
 import { cn } from "~/lib/utils";
 
-type DeltaType =
-  | "increase"
-  | "moderateIncrease"
-  | "unchanged"
-  | "moderateDecrease"
-  | "decrease";
+type DeltaType = "increase" | "moderateIncrease" | "unchanged" | "moderateDecrease" | "decrease";
 
 const badgeDeltaVariants = cva("", {
   variants: {
@@ -30,9 +25,7 @@ const badgeDeltaVariants = cva("", {
     },
   },
 });
-type DeltaVariant = NonNullable<
-  VariantProps<typeof badgeDeltaVariants>["variant"]
->;
+type DeltaVariant = NonNullable<VariantProps<typeof badgeDeltaVariants>["variant"]>;
 
 const iconMap: { [key in DeltaType]: IconTypes } = {
   increase: TbArrowUp,

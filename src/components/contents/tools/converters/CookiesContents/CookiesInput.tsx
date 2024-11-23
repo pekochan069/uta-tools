@@ -1,7 +1,6 @@
 import { useStore } from "@nanostores/solid";
 import { batch } from "solid-js";
 import { toast } from "solid-sonner";
-
 import ClearButton from "~/components/common/ClearButton";
 import CopyButton from "~/components/common/CopyButton";
 import PasteButton from "~/components/common/PasteButton";

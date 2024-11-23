@@ -1,9 +1,7 @@
-import type { JSX, ValidComponent } from "solid-js";
-import { splitProps } from "solid-js";
-
 import type { PolymorphicProps } from "@kobalte/core/polymorphic";
+import type { JSX, ValidComponent } from "solid-js";
 import * as RadioGroupPrimitive from "@kobalte/core/radio-group";
-
+import { splitProps } from "solid-js";
 import { cn } from "~/lib/utils";
 
 type RadioGroupRootProps<T extends ValidComponent = "div"> =
@@ -13,12 +11,7 @@ const RadioGroup = <T extends ValidComponent = "div">(
   props: PolymorphicProps<T, RadioGroupRootProps<T>>,
 ) => {
   const [local, others] = splitProps(props as RadioGroupRootProps, ["class"]);
-  return (
-    <RadioGroupPrimitive.Root
-      class={cn("grid gap-2", local.class)}
-      {...others}
-    />
-  );
+  return <RadioGroupPrimitive.Root class={cn("grid gap-2", local.class)} {...others} />;
 };
 
 type RadioGroupItemProps<T extends ValidComponent = "div"> =
@@ -30,15 +23,9 @@ type RadioGroupItemProps<T extends ValidComponent = "div"> =
 const RadioGroupItem = <T extends ValidComponent = "div">(
   props: PolymorphicProps<T, RadioGroupItemProps<T>>,
 ) => {
-  const [local, others] = splitProps(props as RadioGroupItemProps, [
-    "class",
-    "children",
-  ]);
+  const [local, others] = splitProps(props as RadioGroupItemProps, ["class", "children"]);
   return (
-    <RadioGroupPrimitive.Item
-      class={cn("flex items-center space-x-2", local.class)}
-      {...others}
-    >
+    <RadioGroupPrimitive.Item class={cn("flex items-center space-x-2", local.class)} {...others}>
       <RadioGroupPrimitive.ItemInput />
       <RadioGroupPrimitive.ItemControl class="aspect-square size-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
         <RadioGroupPrimitive.ItemIndicator class="flex h-full items-center justify-center">

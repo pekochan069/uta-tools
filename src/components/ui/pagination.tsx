@@ -1,7 +1,8 @@
-import { TbChevronLeft, TbChevronRight, TbDots } from "solid-icons/tb";
+import type { ButtonProps } from "~/components/ui/button";
 import type { Component, ComponentProps } from "solid-js";
+import { TbChevronLeft, TbChevronRight, TbDots } from "solid-icons/tb";
 import { mergeProps, splitProps } from "solid-js";
-import { buttonVariants, type ButtonProps } from "~/components/ui/button";
+import { buttonVariants } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 
 const Pagination: Component<ComponentProps<"nav">> = (props) => {
@@ -18,9 +19,7 @@ const Pagination: Component<ComponentProps<"nav">> = (props) => {
 
 const PaginationContent: Component<ComponentProps<"ul">> = (props) => {
   const [, rest] = splitProps(props, ["class"]);
-  return (
-    <ul class={cn("flex flex-row items-center gap-1", props.class)} {...rest} />
-  );
+  return <ul class={cn("flex flex-row items-center gap-1", props.class)} {...rest} />;
 };
 
 const PaginationItem: Component<ComponentProps<"li">> = (props) => {
@@ -86,11 +85,7 @@ const PaginationNext: typeof PaginationLink = (props) => {
 const PaginationEllipsis: Component<ComponentProps<"span">> = (props) => {
   const [, rest] = splitProps(props, ["class"]);
   return (
-    <span
-      aria-hidden
-      class={cn("flex h-9 w-9 items-center justify-center", props.class)}
-      {...rest}
-    >
+    <span aria-hidden class={cn("flex h-9 w-9 items-center justify-center", props.class)} {...rest}>
       <TbDots class="h-4 w-4" />
       <span class="sr-only">More pages</span>
     </span>

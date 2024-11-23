@@ -1,6 +1,5 @@
 import { useStore } from "@nanostores/solid";
-import { Show, onMount } from "solid-js";
-
+import { onMount, Show } from "solid-js";
 import { showDescription } from "~/atoms/tldr";
 import {
   ContentConfig,

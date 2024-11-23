@@ -1,8 +1,18 @@
 ---
-import { ContentConfigSection, ContentConfigRoot, ContentConfigLabel, ContentConfig } from "~/components/common/Config";
+import {
+  ContentConfig,
+  ContentConfigLabel,
+  ContentConfigRoot,
+  ContentConfigSection,
+} from "~/components/common/Config";
 import { Label } from "~/components/ui/label";
 import { Operation, Repeat } from "./Config";
-import { Base64Input, Base64InputClearButton, Base64InputCopyButton, Base64InputPasteButton } from "./Input";
+import {
+  Base64Input,
+  Base64InputClearButton,
+  Base64InputCopyButton,
+  Base64InputPasteButton,
+} from "./Input";
 import { Base64Output, Base64OutputCopyButton } from "./Output";
 import SwapInputOutput from "./SwapInputOutput";
 ---
@@ -10,7 +20,10 @@ import SwapInputOutput from "./SwapInputOutput";
 <div>
   <ContentConfigSection>
     <ContentConfigRoot>
-      <ContentConfigLabel name="Operation" description="Select whether to encode or decode the input" />
+      <ContentConfigLabel
+        name="Operation"
+        description="Select whether to encode or decode the input"
+      />
       <ContentConfig>
         <Operation client:load />
       </ContentConfig>

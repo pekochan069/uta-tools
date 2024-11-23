@@ -1,5 +1,5 @@
-import { None, Some } from "~/lib/types";
 import type { Collections } from "./contents-types";
+import { None, Some } from "~/lib/types";
 import { tldr } from "./tldr";
 import { tools } from "./tools";
 
@@ -16,11 +16,7 @@ export const collections: Collections[] = [
   },
 ];
 
-export function getContent(
-  collectionSlug: string,
-  categorySlug: string,
-  contentSlug: string,
-) {
+export function getContent(collectionSlug: string, categorySlug: string, contentSlug: string) {
   const collection = collections.find((c) => c.slug === collectionSlug);
   if (!collection) {
     return None();

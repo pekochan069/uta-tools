@@ -1,7 +1,6 @@
-import { Either } from "effect";
-
-import * as Icons from "~/components/icons";
 import type { ContentsCategory } from "./contents-types";
+import { Either } from "effect";
+import * as Icons from "~/components/icons";
 
 export const tools: ContentsCategory[] = [
   {

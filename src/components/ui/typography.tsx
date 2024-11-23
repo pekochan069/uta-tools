@@ -1,13 +1,8 @@
+import type { Component, ComponentProps } from "solid-js";
 import { Collapsible } from "@kobalte/core";
 import { useStore } from "@nanostores/solid";
 import { TbChevronDown, TbChevronUp } from "solid-icons/tb";
-import {
-  splitProps,
-  type Component,
-  type ComponentProps,
-  Switch,
-  Match,
-} from "solid-js";
+import { Match, splitProps, Switch } from "solid-js";
 import { showDescription } from "~/atoms/tldr";
 import { cn } from "~/lib/utils";
 
@@ -16,10 +11,7 @@ const H1: Component<ComponentProps<"h1">> = (props) => {
 
   return (
     <h1
-      class={cn(
-        "scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl",
-        props.class,
-      )}
+      class={cn("scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl", props.class)}
       {...rest}
     >
       {props.children}
@@ -43,9 +35,7 @@ const H2: Component<ComponentProps<"h2">> = (props) => {
   );
 };
 
-const H2Description: Component<ComponentProps<"h2"> & { text?: string }> = (
-  props,
-) => {
+const H2Description: Component<ComponentProps<"h2"> & { text?: string }> = (props) => {
   const [, rest] = splitProps(props, ["class", "children", "text"]);
 
   const $openDescription = useStore(showDescription);
@@ -74,21 +64,13 @@ const H3: Component<ComponentProps<"h3">> = (props) => {
   const [, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <h3
-      class={cn(
-        "mt-8 scroll-m-20 text-2xl font-semibold tracking-tight",
-        props.class,
-      )}
-      {...rest}
-    >
+    <h3 class={cn("mt-8 scroll-m-20 text-2xl font-semibold tracking-tight", props.class)} {...rest}>
       {props.children}
     </h3>
   );
 };
 
-const H3Description: Component<ComponentProps<"h3"> & { text?: string }> = (
-  props,
-) => {
+const H3Description: Component<ComponentProps<"h3"> & { text?: string }> = (props) => {
   const [, rest] = splitProps(props, ["class", "children", "text"]);
 
   const $openDescription = useStore(showDescription);
@@ -117,21 +99,13 @@ const H4: Component<ComponentProps<"h4">> = (props) => {
   const [, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <h4
-      class={cn(
-        "mt-6 scroll-m-20 text-xl font-semibold tracking-tight",
-        props.class,
-      )}
-      {...rest}
-    >
+    <h4 class={cn("mt-6 scroll-m-20 text-xl font-semibold tracking-tight", props.class)} {...rest}>
       {props.children}
     </h4>
   );
 };
 
-const H4Description: Component<ComponentProps<"h4"> & { text?: string }> = (
-  props,
-) => {
+const H4Description: Component<ComponentProps<"h4"> & { text?: string }> = (props) => {
   const [, rest] = splitProps(props, ["class", "children", "text"]);
 
   const $openDescription = useStore(showDescription);
@@ -160,10 +134,7 @@ const P: Component<ComponentProps<"p">> = (props) => {
   const [, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <p
-      class={cn("leading-7 [&:not(:first-child)]:mt-6", props.class)}
-      {...rest}
-    >
+    <p class={cn("leading-7 [&:not(:first-child)]:mt-6", props.class)} {...rest}>
       {props.children}
     </p>
   );
@@ -173,10 +144,7 @@ const BlockQuote: Component<ComponentProps<"blockquote">> = (props) => {
   const [, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <blockquote
-      class={cn("mt-6 border-l-2 pl-6 italic", props.class)}
-      {...rest}
-    >
+    <blockquote class={cn("mt-6 border-l-2 pl-6 italic", props.class)} {...rest}>
       {props.children}
     </blockquote>
   );
@@ -296,10 +264,7 @@ const Small: Component<ComponentProps<"small">> = (props) => {
   const [, rest] = splitProps(props, ["class", "children"]);
 
   return (
-    <small
-      class={cn("text-sm font-medium leading-none", props.class)}
-      {...rest}
-    >
+    <small class={cn("text-sm font-medium leading-none", props.class)} {...rest}>
       {props.children}
     </small>
   );

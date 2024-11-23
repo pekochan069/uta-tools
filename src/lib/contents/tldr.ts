@@ -1,6 +1,5 @@
-import { Either } from "effect";
-
 import type { ContentsCategory } from "./contents-types";
+import { Either } from "effect";
 
 export const tldr: ContentsCategory[] = [
   {

@@ -1,6 +1,6 @@
 import type { VariantProps } from "class-variance-authority";
-import { cva } from "class-variance-authority";
 import type { Component, ComponentProps } from "solid-js";
+import { cva } from "class-variance-authority";
 import { splitProps } from "solid-js";
 import { cn } from "~/lib/utils";
 
@@ -18,18 +18,11 @@ const calloutVariants = cva("rounded-md border-l-4 p-2 pl-4", {
   },
 });
 
-export interface CalloutProps
-  extends ComponentProps<"div">,
-    VariantProps<typeof calloutVariants> {}
+export interface CalloutProps extends ComponentProps<"div">, VariantProps<typeof calloutVariants> {}
 
 const Callout: Component<CalloutProps> = (props) => {
   const [, rest] = splitProps(props, ["class"]);
-  return (
-    <div
-      class={cn(calloutVariants({ variant: props.variant }), props.class)}
-      {...rest}
-    />
-  );
+  return <div class={cn(calloutVariants({ variant: props.variant }), props.class)} {...rest} />;
 };
 
 const CalloutTitle: Component<ComponentProps<"h3">> = (props) => {

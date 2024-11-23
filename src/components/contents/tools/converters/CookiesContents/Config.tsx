@@ -1,5 +1,5 @@
+import type { CookieFormat } from "./cookieAtoms";
 import { useStore } from "@nanostores/solid";
-
 import {
   Select,
   SelectContent,
@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "~/components/ui/select";
-import { type CookieFormat, format, jsonFormat } from "./cookieAtoms";
+import { format, jsonFormat } from "./cookieAtoms";
 
 export const From = () => {
   const $format = useStore(format);
@@ -24,14 +24,10 @@ export const From = () => {
         });
       }}
       options={["json", "netscape"]}
-      itemComponent={(props) => (
-        <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
-      )}
+      itemComponent={(props) => <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>}
     >
       <SelectTrigger class="w-32">
-        <SelectValue<CookieFormat>>
-          {(state) => state.selectedOption()}
-        </SelectValue>
+        <SelectValue<CookieFormat>>{(state) => state.selectedOption()}</SelectValue>
       </SelectTrigger>
       <SelectContent />
     </Select>
@@ -51,14 +47,10 @@ export const To = () => {
         })
       }
       options={["json", "netscape"]}
-      itemComponent={(props) => (
-        <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>
-      )}
+      itemComponent={(props) => <SelectItem item={props.item}>{props.item.rawValue}</SelectItem>}
     >
       <SelectTrigger class="w-32">
-        <SelectValue<CookieFormat>>
-          {(state) => state.selectedOption()}
-        </SelectValue>
+        <SelectValue<CookieFormat>>{(state) => state.selectedOption()}</SelectValue>
       </SelectTrigger>
       <SelectContent />
     </Select>
@@ -80,9 +72,7 @@ export const JSONFormat = () => {
       )}
     >
       <SelectTrigger class="w-32 capitalize">
-        <SelectValue<CookieFormat>>
-          {(state) => state.selectedOption()}
-        </SelectValue>
+        <SelectValue<CookieFormat>>{(state) => state.selectedOption()}</SelectValue>
       </SelectTrigger>
       <SelectContent />
     </Select>

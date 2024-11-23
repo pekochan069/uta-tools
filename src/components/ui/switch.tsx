@@ -1,5 +1,5 @@
-import { Switch as SwitchPrimitive } from "@kobalte/core";
 import type { Component } from "solid-js";
+import { Switch as SwitchPrimitive } from "@kobalte/core";
 import { Show, splitProps } from "solid-js";
 import { cn } from "~/lib/utils";
 

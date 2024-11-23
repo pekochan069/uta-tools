@@ -1,5 +1,4 @@
 import { Effect } from "effect";
-
 import { type ErrorType } from "~/lib/types";
 
 type Base64Error = ErrorType;

@@ -1,7 +1,6 @@
 import { useStore } from "@nanostores/solid";
-import { createEffect } from "solid-js";
-
 import { Effect, Exit } from "effect";
+import { createEffect } from "solid-js";
 import CopyButton from "~/components/common/CopyButton";
 import { TextArea } from "~/components/ui/textarea";
 import { execute } from "./convert";
@@ -19,18 +18,16 @@ export const HexOutput = () => {
       return;
     }
 
-    Effect.runPromiseExit(execute($input(), $repeat(), $operation())).then(
-      (res) => {
-        return Exit.mapBoth(res, {
-          onFailure(e) {
-            output.set({ value: e.message, status: "invalid" });
-          },
-          onSuccess(data) {
-            output.set({ value: data, status: "valid" });
-          },
-        });
-      },
-    );
+    Effect.runPromiseExit(execute($input(), $repeat(), $operation())).then((res) => {
+      return Exit.mapBoth(res, {
+        onFailure(e) {
+          output.set({ value: e.message, status: "invalid" });
+        },
+        onSuccess(data) {
+          output.set({ value: data, status: "valid" });
+        },
+      });
+    });
   });
 
   return (
@@ -50,9 +47,6 @@ export const HexOutput = () => {
 export const HexOutputCopyButton = () => {
   const $output = useStore(output);
   return (
-    <CopyButton
-      copyType="text"
-      copyContent={$output().status === "valid" ? $output().value : ""}
-    />
+    <CopyButton copyType="text" copyContent={$output().status === "valid" ? $output().value : ""} />
   );
 };

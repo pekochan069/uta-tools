@@ -1,26 +1,17 @@
+import type { OptionType, TimeValue } from "~/atoms/tldr/video/yt-dlp";
 import { match } from "ts-pattern";
-import {
-  type OptionType,
-  type TimeValue,
-  cookies,
-  format,
-  time,
-} from "~/atoms/tldr/video/yt-dlp";
+import { cookies, format, time } from "~/atoms/tldr/video/yt-dlp";
 
 export const toggleOption = (option: OptionType) => {
   match(option)
-    .with("format", () =>
-      format.set({ enabled: !format.get().enabled, value: format.get().value }),
-    )
+    .with("format", () => format.set({ enabled: !format.get().enabled, value: format.get().value }))
     .with("cookies", () =>
       cookies.set({
         enabled: !cookies.get().enabled,
         value: cookies.get().value,
       }),
     )
-    .with("time", () =>
-      time.set({ enabled: !time.get().enabled, value: time.get().value }),
-    )
+    .with("time", () => time.set({ enabled: !time.get().enabled, value: time.get().value }))
     .exhaustive();
 };
 

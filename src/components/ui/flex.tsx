@@ -2,13 +2,7 @@ import type { Component, ComponentProps } from "solid-js";
 import { mergeProps, splitProps } from "solid-js";
 import { cn } from "~/lib/utils";
 
-type JustifyContent =
-  | "start"
-  | "end"
-  | "center"
-  | "between"
-  | "around"
-  | "evenly";
+type JustifyContent = "start" | "end" | "center" | "between" | "around" | "evenly";
 type AlignItems = "start" | "end" | "center" | "baseline" | "stretch";
 type FlexDirection = "row" | "col" | "row-reverse" | "col-reverse";
 
@@ -27,12 +21,7 @@ const Flex: Component<FlexProps> = (rawProps) => {
     } satisfies FlexProps,
     rawProps,
   );
-  const [, rest] = splitProps(props, [
-    "flexDirection",
-    "justifyContent",
-    "alignItems",
-    "class",
-  ]);
+  const [, rest] = splitProps(props, ["flexDirection", "justifyContent", "alignItems", "class"]);
 
   return (
     <div

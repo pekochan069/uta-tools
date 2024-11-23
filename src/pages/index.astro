@@ -1,10 +1,5 @@
 ---
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "~/components/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import WithSidebar from "~/layouts/WithSidebar.astro";
 ---
 
@@ -12,23 +7,17 @@ import WithSidebar from "~/layouts/WithSidebar.astro";
   <main class="py-4">
     <div class="flex flex-col gap-y-4">
       <a href="/tools" class="group outline-none">
-        <Card
-          class="ring-foreground ring-offset-2 transition duration-100 group-hover:ring-2"
-        >
+        <Card class="ring-foreground ring-offset-2 transition duration-100 group-hover:ring-2">
           <div>
             <CardHeader>
               <CardTitle class="text-2xl">Tools</CardTitle>
-              <CardDescription>
-                A collection of tools for Vtuber Utawaku Gallery
-              </CardDescription>
+              <CardDescription> A collection of tools for Vtuber Utawaku Gallery </CardDescription>
             </CardHeader>
           </div>
         </Card>
       </a>
       <a href="/tldr" class="group outline-none">
-        <Card
-          class="ring-foreground ring-offset-2 transition duration-100 group-hover:ring-2"
-        >
+        <Card class="ring-foreground ring-offset-2 transition duration-100 group-hover:ring-2">
           <div>
             <CardHeader>
               <CardTitle class="text-2xl">tldr</CardTitle>

@@ -1,6 +1,6 @@
 import type { VariantProps } from "class-variance-authority";
-import { cva } from "class-variance-authority";
 import type { Component, ComponentProps } from "solid-js";
+import { cva } from "class-variance-authority";
 import { splitProps } from "solid-js";
 import { cn } from "~/lib/utils";
 
@@ -9,8 +9,7 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default:
-          "bg-primary text-primary-foreground hover:bg-primary/80 border-transparent",
+        default: "bg-primary text-primary-foreground hover:bg-primary/80 border-transparent",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80 border-transparent",
         destructive:
@@ -24,18 +23,11 @@ const badgeVariants = cva(
   },
 );
 
-export interface BadgeProps
-  extends ComponentProps<"div">,
-    VariantProps<typeof badgeVariants> {}
+export interface BadgeProps extends ComponentProps<"div">, VariantProps<typeof badgeVariants> {}
 
 const Badge: Component<BadgeProps> = (props) => {
   const [, rest] = splitProps(props, ["variant", "class"]);
-  return (
-    <div
-      class={cn(badgeVariants({ variant: props.variant }), props.class)}
-      {...rest}
-    />
-  );
+  return <div class={cn(badgeVariants({ variant: props.variant }), props.class)} {...rest} />;
 };
 
 export { Badge, badgeVariants };

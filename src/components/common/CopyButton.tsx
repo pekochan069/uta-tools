@@ -1,13 +1,8 @@
 import { FaSolidCopy } from "solid-icons/fa";
 import { type JSX } from "solid-js";
 import { toast } from "solid-sonner";
-
 import { Button } from "~/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
 
 interface CopyButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
   copyContent: string;

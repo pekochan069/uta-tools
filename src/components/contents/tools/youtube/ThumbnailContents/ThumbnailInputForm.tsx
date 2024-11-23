@@ -1,9 +1,9 @@
-import { Input } from "~/components/ui/input";
-import { url, videoId } from "./thumbnailAtoms";
 import { useStore } from "@nanostores/solid";
-import { Button } from "~/components/ui/button";
 import { onMount } from "solid-js";
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
 import { getVideoId } from "~/lib/youtube";
+import { url, videoId } from "./thumbnailAtoms";
 
 export default () => {
   const $url = useStore(url);
@@ -12,7 +12,7 @@ export default () => {
   const onSubmit = (e: Event) => {
     e.preventDefault();
 
-    videoId.set(computedVideoId())
+    videoId.set(computedVideoId());
   };
 
   return (
@@ -25,9 +25,7 @@ export default () => {
           onChange={(value) => url.set(value)}
           placeholder="https://www.youtube.com/watch?v=pgXpM4l_MwI"
         />
-        <Button type="submit">
-          Get
-        </Button>
+        <Button type="submit">Get</Button>
       </div>
     </form>
   );

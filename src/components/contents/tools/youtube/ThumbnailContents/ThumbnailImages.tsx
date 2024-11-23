@@ -1,20 +1,14 @@
 import { useStore } from "@nanostores/solid";
 import { TbDownload } from "solid-icons/tb";
 import { createEffect, For, Show } from "solid-js";
-
-import { videoId } from "./thumbnailAtoms";
 import { Button } from "~/components/ui/button";
+import { videoId } from "./thumbnailAtoms";
 
 export default () => {
   const $videoId = useStore(videoId);
 
   const baseUrl = "https://img.youtube.com/vi";
-  const imgList = [
-    "maxresdefault.jpg",
-    "sddefault.jpg",
-    "hqdefault.jpg",
-    "mqdefault.jpg",
-  ];
+  const imgList = ["maxresdefault.jpg", "sddefault.jpg", "hqdefault.jpg", "mqdefault.jpg"];
 
   return (
     <>
@@ -24,9 +18,7 @@ export default () => {
             {(imgType) => (
               <div class="hidden" id={imgType}>
                 <div class="flex items-end justify-between">
-                  <p class="font-lg font-semibold">
-                    {imgType.replace(".jpg", "")}
-                  </p>
+                  <p class="font-lg font-semibold">{imgType.replace(".jpg", "")}</p>
                   {/* <Button
                     class="cursor-default bg-none text-muted hover:bg-none hover:text-muted"
                     size="icon"
@@ -45,9 +37,7 @@ export default () => {
                   onLoad={(e) => {
                     const target = e.target as HTMLImageElement;
                     if (target.naturalWidth !== 120) {
-                      document
-                        .getElementById(imgType)!
-                        .classList.remove("hidden");
+                      document.getElementById(imgType)!.classList.remove("hidden");
                     }
                   }}
                 />

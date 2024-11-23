@@ -6,10 +6,7 @@ const Table: Component<ComponentProps<"table">> = (props) => {
   const [, rest] = splitProps(props, ["class"]);
   return (
     <div class="relative w-full overflow-auto">
-      <table
-        class={cn("w-full caption-bottom text-sm", props.class)}
-        {...rest}
-      />
+      <table class={cn("w-full caption-bottom text-sm", props.class)} {...rest} />
     </div>
   );
 };
@@ -21,18 +18,13 @@ const TableHeader: Component<ComponentProps<"thead">> = (props) => {
 
 const TableBody: Component<ComponentProps<"tbody">> = (props) => {
   const [, rest] = splitProps(props, ["class"]);
-  return (
-    <tbody class={cn("[&_tr:last-child]:border-0", props.class)} {...rest} />
-  );
+  return <tbody class={cn("[&_tr:last-child]:border-0", props.class)} {...rest} />;
 };
 
 const TableFooter: Component<ComponentProps<"tfoot">> = (props) => {
   const [, rest] = splitProps(props, ["class"]);
   return (
-    <tfoot
-      class={cn("bg-primary font-medium text-primary-foreground", props.class)}
-      {...rest}
-    />
+    <tfoot class={cn("bg-primary font-medium text-primary-foreground", props.class)} {...rest} />
   );
 };
 
@@ -64,31 +56,12 @@ const TableHead: Component<ComponentProps<"th">> = (props) => {
 
 const TableCell: Component<ComponentProps<"td">> = (props) => {
   const [, rest] = splitProps(props, ["class"]);
-  return (
-    <td
-      class={cn("p-4 align-middle [&:has([role=checkbox])]:pr-0", props.class)}
-      {...rest}
-    />
-  );
+  return <td class={cn("p-4 align-middle [&:has([role=checkbox])]:pr-0", props.class)} {...rest} />;
 };
 
 const TableCaption: Component<ComponentProps<"caption">> = (props) => {
   const [, rest] = splitProps(props, ["class"]);
-  return (
-    <caption
-      class={cn("mt-4 text-sm text-muted-foreground", props.class)}
-      {...rest}
-    />
-  );
+  return <caption class={cn("mt-4 text-sm text-muted-foreground", props.class)} {...rest} />;
 };
 
-export {
-  Table,
-  TableHeader,
-  TableBody,
-  TableFooter,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableCaption,
-};
+export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption };

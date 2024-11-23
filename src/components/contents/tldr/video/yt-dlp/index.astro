@@ -1,10 +1,17 @@
 ---
-import CommandBuilder from "./CommandBuilder.astro";
-import { YoutubeLink, YoutubeLinkInput } from "./YoutubeLink";
-import { Format, FormatInput, commonFormats, SelectFormatButton } from "./Format";
-import * as Typo from "~/components/ui/typography";
 import CodeArea from "~/components/common/CodeArea";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/ui/table";
+import * as Typo from "~/components/ui/typography";
+import CommandBuilder from "./CommandBuilder.astro";
+import { commonFormats, Format, FormatInput, SelectFormatButton } from "./Format";
+import { YoutubeLink, YoutubeLinkInput } from "./YoutubeLink";
 ---
 
 <Typo.H2> 커맨드 생성기 </Typo.H2>
@@ -15,12 +22,13 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~
     href="https://github.com/ytdl-org/youtube-dl"
   >
     youtube-dl
-  </Typo.Link>의 포크로, <Typo.InlineCode>youtube-dl</Typo.InlineCode>의 기능을 확장하고 개선한 프로젝트입니다.
+  </Typo.Link>의 포크로, <Typo.InlineCode>youtube-dl</Typo.InlineCode>의 기능을 확장하고 개선한
+  프로젝트입니다.
 </Typo.H2Description>
 
 <Typo.H3Description text="유튜브 영상 포맷 확인" client:visible>
-  유튜브 영상의 포맷을 확인하려면 <Typo.InlineCode>-F</Typo.InlineCode> 옵션을 사용합니다. 포맷은 영상과 음성의 코덱, 화질,
-  화면 비율 등을 나타냅니다.
+  유튜브 영상의 포맷을 확인하려면 <Typo.InlineCode>-F</Typo.InlineCode> 옵션을 사용합니다. 포맷은 영상과
+  음성의 코덱, 화질, 화면 비율 등을 나타냅니다.
 </Typo.H3Description>
 
 <CodeArea client:load>
@@ -30,17 +38,19 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "~
 <YoutubeLinkInput client:load />
 
 <Typo.H3Description text="유튜브 영상 다운로드" client:visible>
-  유튜브 영상을 다운로드하려면 <Typo.InlineCode>-f</Typo.InlineCode> 옵션을 사용합니다. 위에서 확인한 포맷 중 하나를 선택하여
-  입력합니다. <Typo.InlineCode> -f </Typo.InlineCode> 옵션을 사용하지 않으면 <Typo.InlineCode> best </Typo.InlineCode> 포맷으로
-  다운로드합니다. 자주 사용하는 포맷은
+  유튜브 영상을 다운로드하려면 <Typo.InlineCode>-f</Typo.InlineCode> 옵션을 사용합니다. 위에서 확인한
+  포맷 중 하나를 선택하여 입력합니다. <Typo.InlineCode> -f </Typo.InlineCode> 옵션을 사용하지 않으면
+  <Typo.InlineCode> best </Typo.InlineCode> 포맷으로 다운로드합니다. 자주 사용하는 포맷은
   <Typo.InlineCode>best</Typo.InlineCode>, <Typo.InlineCode> 299+140 </Typo.InlineCode>, <Typo.InlineCode
     >bv*+ba/b</Typo.InlineCode
   > 등이 있습니다.
-  <Typo.InlineCode>best</Typo.InlineCode>는 다운로드 받을 수 있는 최고 화질의 영상과 음성을 선택하고, <Typo.InlineCode
-    >299+140</Typo.InlineCode
-  >은 299번 영상 포맷과 140번 음성 포맷을 선택합니다.
+  <Typo.InlineCode>best</Typo.InlineCode>는 다운로드 받을 수 있는 최고 화질의 영상과 음성을
+  선택하고, <Typo.InlineCode>299+140</Typo.InlineCode>은 299번 영상 포맷과 140번 음성 포맷을
+  선택합니다.
   <Typo.InlineCode>-f</Typo.InlineCode> 옵션 뒤에 포맷을 입력하면 해당 포맷으로 영상을 다운로드합니다.
-  <Typo.InlineCode>-f</Typo.InlineCode> 옵션을 사용하지 않으면 <Typo.InlineCode> best </Typo.InlineCode> 포맷으로 다운로드합니다.
+  <Typo.InlineCode>-f</Typo.InlineCode> 옵션을 사용하지 않으면 <Typo.InlineCode>
+    best
+  </Typo.InlineCode> 포맷으로 다운로드합니다.
 </Typo.H3Description>
 
 <CodeArea client:visible>

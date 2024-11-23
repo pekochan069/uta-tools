@@ -1,6 +1,5 @@
 import { useStore } from "@nanostores/solid";
 import { TbMinus, TbPlus } from "solid-icons/tb";
-
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
@@ -16,11 +15,7 @@ export const Operation = () => {
       <Label for="operation" class="select-none capitalize">
         {label()}
       </Label>
-      <Switch
-        id="operation"
-        checked={$operation()}
-        onChange={() => operation.set(!$operation())}
-      />
+      <Switch id="operation" checked={$operation()} onChange={() => operation.set(!$operation())} />
     </>
   );
 };

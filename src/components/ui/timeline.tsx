@@ -1,11 +1,6 @@
 import type { ComponentProps, ParentComponent } from "solid-js";
-import {
-  splitProps,
-  type Component,
-  type JSXElement,
-  mergeProps,
-  Show,
-} from "solid-js";
+import type { Component, JSXElement } from "solid-js";
+import { mergeProps, Show, splitProps } from "solid-js";
 import { cn } from "~/lib/utils";
 
 export type TimelinePropsItem = Omit<
@@ -44,12 +39,8 @@ const Timeline: Component<TimelineProps> = (rawProps) => {
             description={item.description}
             bullet={item.bullet}
             isLast={index === props.items.length - 1}
-            isActive={
-              props.activeItem === -1 ? false : props.activeItem >= index + 1
-            }
-            isActiveBullet={
-              props.activeItem === -1 ? false : props.activeItem >= index
-            }
+            isActive={props.activeItem === -1 ? false : props.activeItem >= index + 1}
+            isActiveBullet={props.activeItem === -1 ? false : props.activeItem >= index}
             bulletSize={props.bulletSize}
             lineSize={props.lineSize}
           />
@@ -139,11 +130,7 @@ const TimelineItemBullet: Component<TimelineItemBulletProps> = (props) => {
 };
 
 const TimelineItemTitle: ParentComponent = (props) => {
-  return (
-    <div class="mb-1 text-base font-semibold leading-none">
-      {props.children}
-    </div>
-  );
+  return <div class="mb-1 text-base font-semibold leading-none">{props.children}</div>;
 };
 
 const TimelineItemDescription: Component<ComponentProps<"p">> = (props) => {

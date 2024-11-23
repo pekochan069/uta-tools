@@ -1,11 +1,6 @@
 import { IoSwapVertical } from "solid-icons/io";
-
 import { Button } from "~/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
 import { format } from "./cookieAtoms";
 
 export const SwapFormat = () => {
