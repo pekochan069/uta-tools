@@ -1,4 +1,4 @@
-import type { Lang } from "~/i18n/ui";
+import type { Lang } from "~/i18n/utils";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-solid";
 import { RiSystemMenu2Fill } from "solid-icons/ri";
 import { createSignal, For } from "solid-js";

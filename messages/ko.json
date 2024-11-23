@@ -7,6 +7,7 @@
   "navbar_toggle_theme_dark": "다크",
   "navbar_toggle_theme_system": "시스템",
   "navbar_toggle_sidebar": "사이드바 전환",
+  "navbar_toggle_lang": "언어 전환",
   "tools_title": "도구들",
   "tools_common_input": "입력",
   "tools_common_invalid_input": "잘못된 입력",

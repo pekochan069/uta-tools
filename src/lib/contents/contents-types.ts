@@ -1,4 +1,4 @@
-import type { Lang } from "~/i18n/ui";
+import type { Lang } from "~/i18n/utils";
 import type { JSX } from "solid-js";
 import { Either } from "effect";
 
