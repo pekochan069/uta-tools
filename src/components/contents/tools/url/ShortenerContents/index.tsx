@@ -1,15 +1,7 @@
-import {
-  Match,
-  Show,
-  Suspense,
-  Switch,
-  createResource,
-  createSignal,
-} from "solid-js";
+import { createResource, createSignal, Match, Show, Suspense, Switch } from "solid-js";
 import { toast } from "solid-sonner";
 import { Spinner, SpinnerType } from "solid-spinner";
-import { P, match } from "ts-pattern";
-
+import { match, P } from "ts-pattern";
 import ClearButton from "~/components/common/ClearButton";
 import CopyButton from "~/components/common/CopyButton";
 import PasteButton from "~/components/common/PasteButton";
@@ -18,11 +10,7 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Skeleton } from "~/components/ui/skeleton";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
 import { trpc } from "~/lib/trpc";
 import { Err, Ok } from "~/lib/types";
 
@@ -31,7 +19,7 @@ const createLink = async (url: string) => {
     return Err<string, string>("No URL provided");
   }
 
-  const result = await trpc.createLink.mutate(url);
+  const result = await trpc.createUrl.mutate(url);
   return match(result)
     .with({ ok: true, value: P.string }, ({ value }) =>
       Ok<string, string>(`https://utaurl.vercel.app/${value}`),
@@ -134,10 +122,7 @@ export default () => {
                 <div class="flex flex-col">
                   <div class="mb-2 flex items-end justify-between">
                     <span class="text-sm">Shortened URL</span>
-                    <CopyButton
-                      copyType="text"
-                      copyContent={result()?.unwrap() ?? ""}
-                    />
+                    <CopyButton copyType="text" copyContent={result()?.unwrap() ?? ""} />
                   </div>
                   <Alert>
                     <AlertTitle>
@@ -157,9 +142,7 @@ export default () => {
               </Match>
               <Match when={result()?.isErr()}>
                 <Alert variant="destructive" class="mt-12 h-[78px]">
-                  <AlertTitle class="font-bold tracking-wide">
-                    Error!
-                  </AlertTitle>
+                  <AlertTitle class="font-bold tracking-wide">Error!</AlertTitle>
                   <AlertDescription>
                     <div>{(result() as Err<string, string>)?.error}</div>
                   </AlertDescription>
