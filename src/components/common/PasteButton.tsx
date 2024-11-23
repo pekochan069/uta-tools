@@ -2,6 +2,7 @@ import { FaSolidPaste } from "solid-icons/fa";
 import { type JSX } from "solid-js";
 import { Button } from "~/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
+import * as m from "~/paraglide/messages";
 
 type PasteButtonProps = JSX.ButtonHTMLAttributes<HTMLButtonElement> & {
   paste: (item: ClipboardItem) => Promise<void>;
@@ -34,7 +35,7 @@ export default (props: PasteButtonProps) => {
           <FaSolidPaste class="h-[1.2rem] w-[1.2rem]" />
         </Button>
       </TooltipTrigger>
-      <TooltipContent>{props.tooltip ? props.tooltip : "Paste"}</TooltipContent>
+      <TooltipContent>{props.tooltip ? props.tooltip : m.tools_common_paste()}</TooltipContent>
     </Tooltip>
   );
 };

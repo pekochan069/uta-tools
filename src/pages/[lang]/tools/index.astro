@@ -1,4 +1,5 @@
 ---
+import type { Lang } from "~/i18n/ui";
 import { Either } from "effect";
 import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import WithSidebar from "~/layouts/WithSidebar.astro";
@@ -9,6 +10,8 @@ const tools = collections.find((c) => c.slug === "tools");
 if (!tools) {
   throw new Error("Cannot find contents!");
 }
+
+const { lang } = Astro.params as { lang: Lang };
 ---
 
 <WithSidebar title="Uta Tools">
@@ -17,11 +20,11 @@ if (!tools) {
       {
         tools.categories.map((category) => (
           <div>
-            <h3 class="mb-4 text-xl font-semibold">{category.name}</h3>
+            <h3 class="mb-4 text-xl font-semibold">{category.i18n[lang]}</h3>
             <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {category.contents.map((content) => (
                 <a
-                  href={`/tools/${category.slug}/${content.slug}`}
+                  href={`/${lang}/tools/${category.slug}/${content.slug}`}
                   class="scale-[98%] transition-transform hover:scale-100"
                 >
                   <Card>
@@ -35,7 +38,7 @@ if (!tools) {
                     </CardHeader>
                     <CardContent class="@container">
                       <p class="text-md text-center font-semibold @[130px]:text-lg @[180px]:text-xl">
-                        {content.name}
+                        {content.i18n[lang]}
                       </p>
                     </CardContent>
                   </Card>

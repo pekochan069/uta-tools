@@ -1,4 +1,5 @@
 import { Button } from "~/components/ui/button";
+import * as m from "~/paraglide/messages";
 import { setTimelines, timelines } from "./atoms";
 
 export default () => {
@@ -19,11 +20,11 @@ export default () => {
         }}
         class="font-semibold"
       >
-        Sort
+        {m.tools_common_sort()}
       </Button>
-      <div class="absolute top-12 z-50 w-max -translate-x-1/4 rounded-md border border-border bg-background px-3 py-1.5 text-center text-sm opacity-0 shadow-md transition-opacity duration-200 ease-in-out group-hover:opacity-100">
-        Sort Timelines
-      </div>
+      {/* <div class="absolute top-12 z-50 w-max -translate-x-1/4 rounded-md border border-border bg-background px-3 py-1.5 text-center text-sm opacity-0 shadow-md transition-opacity duration-200 ease-in-out group-hover:opacity-100">
+        {m.tools_youtube_timeline_sort_timelines()}
+      </div> */}
     </div>
   );
 };

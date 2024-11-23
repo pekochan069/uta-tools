@@ -13,6 +13,7 @@ import { Skeleton } from "~/components/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
 import { trpc } from "~/lib/trpc";
 import { Err, Ok } from "~/lib/types";
+import * as m from "~/paraglide/messages";
 
 const createLink = async (url: string) => {
   if (url === "") {
@@ -61,7 +62,7 @@ export default () => {
         <div>
           <div class="mb-2 flex items-end justify-between">
             <Label for="input" class="text-sm font-semibold">
-              Enter URL
+              {m.tools_url_shortener_input()}
             </Label>
             <div>
               <ClearButton onClick={() => setInput("")} />
@@ -72,7 +73,7 @@ export default () => {
                     const textData = await data.text();
                     setInput(textData);
                   } catch {
-                    toast.error("Cannot paste text from clipboard");
+                    toast.error(m.tools_common_cannot_paste_msg());
                   }
                 }}
               />
@@ -92,12 +93,12 @@ export default () => {
           <Tooltip>
             <TooltipTrigger>
               <Button type="submit">
-                <Show when={result.loading} fallback={<span>Create</span>}>
+                <Show when={result.loading} fallback={<span>{m.tools_common_create()}</span>}>
                   <Spinner type={SpinnerType.puff} />
                 </Show>
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Click to create a short link</TooltipContent>
+            <TooltipContent>{m.tools_urL_shortener_input_tooltip()}</TooltipContent>
           </Tooltip>
         </div>
       </form>
@@ -106,7 +107,7 @@ export default () => {
           when={url() !== ""}
           fallback={
             <Alert class="mt-12 flex h-[78px] items-center text-lg text-muted-foreground">
-              Shortened URL will appear hear
+              {m.tools_url_shortener_output_placeholder()}
             </Alert>
           }
         >
@@ -121,7 +122,7 @@ export default () => {
               <Match when={result()?.isOk()}>
                 <div class="flex flex-col">
                   <div class="mb-2 flex items-end justify-between">
-                    <span class="text-sm">Shortened URL</span>
+                    <span class="text-sm">{m.tools_url_shortened_url()}</span>
                     <CopyButton copyType="text" copyContent={result()?.unwrap() ?? ""} />
                   </div>
                   <Alert>
@@ -142,7 +143,7 @@ export default () => {
               </Match>
               <Match when={result()?.isErr()}>
                 <Alert variant="destructive" class="mt-12 h-[78px]">
-                  <AlertTitle class="font-bold tracking-wide">Error!</AlertTitle>
+                  <AlertTitle class="font-bold tracking-wide">{m.tools_common_error()}!</AlertTitle>
                   <AlertDescription>
                     <div>{(result() as Err<string, string>)?.error}</div>
                   </AlertDescription>

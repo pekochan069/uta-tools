@@ -1,4 +1,5 @@
 ---
+import type { Lang } from "~/i18n/ui";
 import {
   ContentConfig,
   ContentConfigLabel,
@@ -6,6 +7,7 @@ import {
   ContentConfigSection,
 } from "~/components/common/Config";
 import { Label } from "~/components/ui/label";
+import * as m from "~/paraglide/messages";
 import { Operation, Repeat } from "./Config";
 import {
   Base64Input,
@@ -15,21 +17,26 @@ import {
 } from "./Input";
 import { Base64Output, Base64OutputCopyButton } from "./Output";
 import SwapInputOutput from "./SwapInputOutput";
+
+const { lang } = Astro.params as { lang: Lang };
 ---
 
 <div>
   <ContentConfigSection>
     <ContentConfigRoot>
       <ContentConfigLabel
-        name="Operation"
-        description="Select whether to encode or decode the input"
+        name={m.tools_converters_config_operation()}
+        description={m.tools_converters_config_operation_description()}
       />
       <ContentConfig>
         <Operation client:load />
       </ContentConfig>
     </ContentConfigRoot>
     <ContentConfigRoot class="py-2.5 md:py-4">
-      <ContentConfigLabel name="Repeat" description="Set repeat count for operation" />
+      <ContentConfigLabel
+        name={m.tools_converters_config_repeat()}
+        description={m.tools_converters_config_repeat_description()}
+      />
       <ContentConfig>
         <Repeat client:load />
       </ContentConfig>
@@ -39,7 +46,7 @@ import SwapInputOutput from "./SwapInputOutput";
 
 <div class="mt-6">
   <div class="mb-2 flex items-end justify-between">
-    <Label for="base64-input" class="font-semibold">Input</Label>
+    <Label for="base64-input" class="font-semibold">{m.tools_common_input()}</Label>
     <div class="h-10">
       <Base64InputClearButton client:only="solid-js" />
       <Base64InputPasteButton client:only="solid-js" />
@@ -55,7 +62,7 @@ import SwapInputOutput from "./SwapInputOutput";
 
 <div class="mb-6">
   <div class="mb-2 flex items-end justify-between">
-    <Label for="base64-output" class="font-semibold">Output</Label>
+    <Label for="base64-output" class="font-semibold">{m.tools_common_output()}</Label>
     <div class="h-10">
       <Base64OutputCopyButton client:only="solid-js" />
     </div>

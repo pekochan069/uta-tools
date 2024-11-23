@@ -1,6 +1,7 @@
 import { IoSwapVertical } from "solid-icons/io";
 import { Button } from "~/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
+import * as m from "~/paraglide/messages";
 import { format } from "./cookieAtoms";
 
 export const SwapFormat = () => {
@@ -18,7 +19,7 @@ export const SwapFormat = () => {
           <IoSwapVertical class="h-[1.2rem] w-[1.2rem]" />
         </Button>
       </TooltipTrigger>
-      <TooltipContent>Swap format</TooltipContent>
+      <TooltipContent>{m.tools_converters_swap_io()}</TooltipContent>
     </Tooltip>
   );
 };

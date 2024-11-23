@@ -2,6 +2,7 @@ import { useStore } from "@nanostores/solid";
 import { IoSwapVertical } from "solid-icons/io";
 import { Button } from "~/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
+import * as m from "~/paraglide/messages";
 import { input, output } from "./hexAtoms";
 
 export default () => {
@@ -23,7 +24,7 @@ export default () => {
           <IoSwapVertical class="h-8 w-8" />
         </Button>
       </TooltipTrigger>
-      <TooltipContent>Swap input and output</TooltipContent>
+      <TooltipContent>{m.tools_converters_swap_io()}</TooltipContent>
     </Tooltip>
   );
 };

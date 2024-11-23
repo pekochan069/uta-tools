@@ -2,12 +2,7 @@ import { VsClearAll } from "solid-icons/vs";
 import { type JSX } from "solid-js";
 import { Button } from "~/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
-
-// interface CopyButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
-// 	copyContent: string;
-// 	copyType: "text" | "image";
-// 	tooltip?: string;
-// }
+import * as m from "~/paraglide/messages";
 
 interface ClearButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
   tooltip?: string;
@@ -21,7 +16,7 @@ export default (props: ClearButtonProps) => {
           <VsClearAll class="h-[1.2rem] w-[1.2rem]" />
         </Button>
       </TooltipTrigger>
-      <TooltipContent>{props.tooltip ? props.tooltip : "Clear"}</TooltipContent>
+      <TooltipContent>{props.tooltip ? props.tooltip : m.tools_common_clear()}</TooltipContent>
     </Tooltip>
   );
 };

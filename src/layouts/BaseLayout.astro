@@ -5,6 +5,7 @@ import { Toaster } from "solid-sonner";
 import ScrollToTop from "~/components/ScrollToTop.astro";
 import Navbar from "../components/navbar/Navbar.astro";
 import "~/styles/root.css";
+import { languageTag } from "../paraglide/runtime";
 
 type Props = {
   title?: string;
@@ -14,7 +15,7 @@ type Props = {
 const { title = "Uta Tools", useTransitions = false } = Astro.props;
 ---
 
-<html lang="en">
+<html lang={languageTag()} }>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />

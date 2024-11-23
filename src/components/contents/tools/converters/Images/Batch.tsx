@@ -19,6 +19,7 @@ import {
   SliderTrack,
   SliderValueLabel,
 } from "~/components/ui/slider";
+import * as m from "~/paraglide/messages";
 import { $batchFormat, $convertQueue, $imagesQueue } from "./atoms";
 import { availableFormats, imageFormatToExtension } from "./utils";
 import { createTask } from "./worker";
@@ -33,9 +34,9 @@ export function Batch() {
     <Collapsible defaultOpen={false} open={open()} class="space-y-2 rounded-lg border p-4">
       <CollapsibleTrigger class="flex w-full flex-1 cursor-default items-center justify-between">
         <div class="flex flex-1 flex-col text-start">
-          <div class="font-semibold">Batch Convert</div>
+          <div class="font-semibold">{m.tools_converters_images_batch()}</div>
           <div class="hidden text-sm text-muted-foreground lg:block">
-            Select target format and convert all images at once
+            {m.tools_converters_images_batch_description()}
           </div>
         </div>
         <Select
@@ -68,7 +69,7 @@ export function Batch() {
               class="space-y-2"
             >
               <div class="w-full space-x-2">
-                <SliderLabel>Quality</SliderLabel>
+                <SliderLabel>{m.tools_common_quality()}</SliderLabel>
                 <SliderValueLabel class="font-bold" />
               </div>
               <SliderTrack class="ml-5">
@@ -96,11 +97,11 @@ export function Batch() {
                 createTask(task);
                 $convertQueue.value.push({ ...task, fileName });
                 $convertQueue.notify();
-                toast("Converting multiple images");
+                toast(m.tools_converters_images_batch_msg());
               });
             }}
           >
-            Convert
+            {m.tools_common_convert()}
           </Button>
         </div>
       </CollapsibleContent>

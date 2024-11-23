@@ -3,6 +3,7 @@ import { type JSX } from "solid-js";
 import { toast } from "solid-sonner";
 import { Button } from "~/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
+import * as m from "~/paraglide/messages";
 
 interface CopyButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
   copyContent: string;
@@ -16,7 +17,7 @@ export default (props: CopyButtonProps) => {
 
     if (props.copyType === "text") {
       void navigator.clipboard.writeText(props.copyContent).then(() => {
-        toast("Copied text to clipboard");
+        toast(m.tools_common_copy_msg());
       });
     } else {
       const imageBase64 = props.copyContent;
@@ -24,7 +25,7 @@ export default (props: CopyButtonProps) => {
       const image = new Image();
       image.src = imageBase64;
       image.onerror = () => {
-        toast.error("Failed to copy image to clipboard");
+        toast.error(m.tools_common_copy_fail_msg());
       };
       image.onload = () => {
         const canvas = document.createElement("canvas");
@@ -62,7 +63,7 @@ export default (props: CopyButtonProps) => {
           <FaSolidCopy class="h-[1.2rem] w-[1.2rem]" />
         </Button>
       </TooltipTrigger>
-      <TooltipContent>{props.tooltip ? props.tooltip : "Copy"}</TooltipContent>
+      <TooltipContent>{props.tooltip ? props.tooltip : m.tools_common_copy()}</TooltipContent>
     </Tooltip>
   );
 };

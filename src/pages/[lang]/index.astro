@@ -1,0 +1,27 @@
+---
+import { Card, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
+import type { Lang } from "~/i18n/ui";
+import WithSidebar from "~/layouts/WithSidebar.astro";
+import { collections } from "~/lib/contents";
+
+const { lang } = Astro.params as { lang: Lang};
+---
+
+<WithSidebar title="Uta Tools">
+  <main class="py-4">
+    <div class="flex flex-col gap-y-4">
+      {collections.map(collection => (
+        <a href=`${lang}/${collection.slug}` class="group outline-none">
+        <Card class="ring-foreground ring-offset-2 transition duration-100 group-hover:ring-2">
+          <div>
+            <CardHeader>
+              <CardTitle class="text-2xl">{collection.i18n[lang]}</CardTitle>
+              <CardDescription>{collection.description[lang]}</CardDescription>
+            </CardHeader>
+          </div>
+        </Card>
+      </a>
+      ))}
+    </div>
+  </main>
+</WithSidebar>

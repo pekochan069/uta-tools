@@ -1,8 +1,9 @@
 import { atom } from "nanostores";
 
 export const currentContent = atom({
-  collection: "",
-  category: "",
   name: "",
-  description: "",
+  collection: { ko: "", en: "" },
+  category: { ko: "", en: "" },
+  description: { ko: "", en: "" },
+  i18n: { ko: "", en: "" },
 });

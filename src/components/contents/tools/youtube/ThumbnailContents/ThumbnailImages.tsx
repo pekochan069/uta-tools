@@ -1,24 +1,38 @@
 import { useStore } from "@nanostores/solid";
-import { TbDownload } from "solid-icons/tb";
-import { createEffect, For, Show } from "solid-js";
-import { Button } from "~/components/ui/button";
-import { videoId } from "./thumbnailAtoms";
+import { For, Show } from "solid-js";
+import * as m from "~/paraglide/messages";
+import { $videoId } from "./thumbnailAtoms";
+
+function translateImgType(imgType: string) {
+  switch (imgType.replace(".jpg", "")) {
+    case "maxresdefault":
+      return m.tools_youtube_thumbnail_maxresdefault();
+    case "sddefault":
+      return m.tools_youtube_thumbnail_sddefault();
+    case "hqdefault":
+      return m.tools_youtube_thumbnail_hqdefault();
+    case "mqdefault":
+      return m.tools_youtube_thumbnail_mqdefault();
+  }
+}
 
 export default () => {
-  const $videoId = useStore(videoId);
+  const videoId = useStore($videoId);
 
   const baseUrl = "https://img.youtube.com/vi";
   const imgList = ["maxresdefault.jpg", "sddefault.jpg", "hqdefault.jpg", "mqdefault.jpg"];
 
   return (
     <>
-      <Show when={$videoId()}>
-        <div class="flex flex-col items-center gap-8">
+      <Show when={videoId()}>
+        <div class="flex flex-col items-start gap-8">
           <For each={imgList}>
             {(imgType) => (
               <div class="hidden" id={imgType}>
                 <div class="flex items-end justify-between">
-                  <p class="font-lg font-semibold">{imgType.replace(".jpg", "")}</p>
+                  <p class="font-lg font-semibold">
+                    {translateImgType(imgType.replace(".jpg", ""))}
+                  </p>
                   {/* <Button
                     class="cursor-default bg-none text-muted hover:bg-none hover:text-muted"
                     size="icon"
@@ -33,7 +47,7 @@ export default () => {
                 <img
                   class="mt-1"
                   id={`${imgType}-img`}
-                  src={`${baseUrl}/${$videoId()}/${imgType}`}
+                  src={`${baseUrl}/${videoId()}/${imgType}`}
                   onLoad={(e) => {
                     const target = e.target as HTMLImageElement;
                     if (target.naturalWidth !== 120) {

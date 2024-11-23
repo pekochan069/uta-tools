@@ -4,6 +4,7 @@ import ClearButton from "~/components/common/ClearButton";
 import CopyButton from "~/components/common/CopyButton";
 import PasteButton from "~/components/common/PasteButton";
 import { TextArea } from "~/components/ui/textarea";
+import * as m from "~/paraglide/messages";
 import { input } from "./base64Atoms";
 
 export const Base64Input = () => {
@@ -33,7 +34,7 @@ export const Base64InputPasteButton = () => {
           const textData = await data.text();
           input.set(textData);
         } catch {
-          toast.error("Cannot paste text from clipboard");
+          toast.error(m.tools_common_cannot_paste_msg());
           return;
         }
       }}

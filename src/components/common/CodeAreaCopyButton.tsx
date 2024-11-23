@@ -1,5 +1,6 @@
 import { FaSolidCopy } from "solid-icons/fa";
 import { toast } from "solid-sonner";
+import * as m from "~/paraglide/messages";
 
 export default (props: { str: string }) => {
   return (
@@ -13,10 +14,10 @@ export default (props: { str: string }) => {
 
         try {
           void navigator.clipboard.writeText(code).then(() => {
-            toast("Copied text to clipboard");
+            toast(m.tools_common_copy_msg());
           });
         } catch {
-          toast("Failed to copy text to clipboard");
+          toast(m.tools_common_copy_fail_msg());
         }
       }}
     >

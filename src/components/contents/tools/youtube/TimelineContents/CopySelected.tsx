@@ -1,4 +1,5 @@
 import CopyButton from "~/components/common/CopyButton";
+import * as m from "~/paraglide/messages";
 import { timelines } from "./atoms";
 
 export default () => {
@@ -13,7 +14,7 @@ export default () => {
         class="text-foreground hover:bg-foreground hover:text-background active:bg-foreground active:text-background"
       />
       <div class="absolute top-12 z-50 w-max -translate-x-1/4 rounded-md border border-border bg-background px-3 py-1.5 text-center text-sm opacity-0 shadow-md transition-opacity duration-200 ease-in-out group-hover:opacity-100">
-        Copy Selected
+        {m.tools_common_copy_selected()}
       </div>
     </div>
   );

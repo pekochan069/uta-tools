@@ -1,6 +1,9 @@
 ---
+import type { Lang } from "~/i18n/ui";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-solid";
 import { collections } from "~/lib/contents";
+
+const { lang } = Astro.params as { lang: Lang };
 ---
 
 <aside
@@ -12,20 +15,23 @@ import { collections } from "~/lib/contents";
         collections.map((collections) => {
           return (
             <div class="flex flex-col gap-1">
-              <a href={`/${collections.slug}`} class="mb-2 text-2xl font-semibold hover:underline">
-                {collections.name}
+              <a
+                href={`/${lang}/${collections.slug}`}
+                class="mb-2 text-2xl font-semibold hover:underline"
+              >
+                {collections.i18n[lang]}
               </a>
               <div class="flex flex-col gap-4">
                 {collections.categories.map((category) => {
                   return (
                     <div class="flex flex-col gap-1">
-                      <h4 class="mb-1 text-lg font-semibold">{category.name}</h4>
+                      <h4 class="mb-1 text-lg font-semibold">{category.i18n[lang]}</h4>
                       {category.contents.map((content) => (
                         <a
-                          href={`/${collections.slug}/${category.slug}/${content.slug}`}
+                          href={`/${lang}/${collections.slug}/${category.slug}/${content.slug}`}
                           class="text-sm text-muted-foreground hover:text-foreground active:text-foreground data-[current-path]:font-semibold data-[current-path]:text-foreground data-[current-path]:underline"
                         >
-                          {content.name}
+                          {content.i18n[lang]}
                         </a>
                       ))}
                     </div>

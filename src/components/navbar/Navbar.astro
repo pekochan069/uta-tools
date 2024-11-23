@@ -1,14 +1,19 @@
 ---
+import type { Lang } from "~/i18n/ui";
 import { Image } from "astro:assets";
 import { TbBrandGithub } from "solid-icons/tb";
 import SidebarToggle from "./SidebarToggle";
 import ThemeToggle from "./ThemeToggle";
+
+const { lang } = Astro.params as { lang: Lang };
+
+console.log(lang);
 ---
 
 <header class="container px-4 py-2 md:px-6 md:py-3">
   <div class="flex items-center justify-between">
     <nav>
-      <a href="/">
+      <a href=`/${lang}`>
         <div class="flex w-fit items-center gap-1 text-xl font-bold leading-5">
           <Image src="/logo/64.png" alt="Uta/Tools" width="40" height="40" />
           <div>
@@ -32,7 +37,7 @@ import ThemeToggle from "./ThemeToggle";
         <ThemeToggle client:only="solid-js" />
       </div>
       <div class="h-10 w-10 md:hidden">
-        <SidebarToggle client:only="solid-js" />
+        <SidebarToggle client:only="solid-js" lang={lang} />
       </div>
     </div>
   </div>

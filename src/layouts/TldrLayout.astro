@@ -1,23 +1,21 @@
 ---
+import type { Lang } from "~/i18n/ui";
 import { currentContent } from "~/atoms/currentContent";
 import ShowDescription from "~/components/contents/tldr/ShowDescription";
 import { H1, Muted, P } from "~/components/ui/typography";
 import ContentLayout from "./ContentLayout.astro";
 
-const { name, description } = currentContent.get();
+const { lang } = Astro.params as { lang: Lang };
+const { i18n, description } = currentContent.get();
 ---
 
 <ContentLayout>
   <H1>
-    {name}
+    {i18n[lang]}
   </H1>
-  {
-    description !== "" && (
-      <P>
-        <Muted>{description}</Muted>
-      </P>
-    )
-  }
+  <P>
+    <Muted>{description[lang]}</Muted>
+  </P>
   <ShowDescription client:load />
   <slot />
 </ContentLayout>

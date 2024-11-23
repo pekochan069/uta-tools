@@ -4,6 +4,7 @@ import FileUploader from "~/components/common/FileUploader";
 import { Callout, CalloutContent, CalloutTitle } from "~/components/ui/callout";
 import { Separator } from "~/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger } from "~/components/ui/tabs";
+import * as m from "~/paraglide/messages";
 import { $convertQueue, $imagesQueue, $results, addImages } from "./atoms";
 import { Batch } from "./Batch";
 import ConvertQueue from "./ConvertQueue";
@@ -91,10 +92,10 @@ function Inner() {
       <Separator class="h-[2px]" />
       <Tabs onChange={(v) => setActive(v)} value={active()}>
         <TabsList class="grid w-full grid-cols-3">
-          <TabsTrigger value="images">Images</TabsTrigger>
+          <TabsTrigger value="images">{m.tools_common_image()}</TabsTrigger>
           <TabsTrigger value="converting">
             <div class="relative">
-              Converting
+              {m.tools_common_converting()}
               <div
                 class="absolute inset-0 -left-5 top-1/2 hidden size-3 -translate-y-1/2 animate-pulse rounded-full bg-primary data-[visible=true]:block"
                 data-visible={showConvertingPing()}
@@ -103,7 +104,7 @@ function Inner() {
           </TabsTrigger>
           <TabsTrigger value="results" class="relative">
             <div class="relative">
-              Results
+              {m.tools_common_result()}
               <div
                 class="absolute inset-0 -left-5 top-1/2 hidden size-3 -translate-y-1/2 animate-pulse rounded-full bg-primary data-[visible=true]:block"
                 data-visible={showResultsPing()}
@@ -123,14 +124,9 @@ function Inner() {
         </div>
       </div>
       <Callout variant="warning">
-        <CalloutTitle>주의사항</CalloutTitle>
+        <CalloutTitle>{m.tools_common_cautions()}</CalloutTitle>
         <CalloutContent>
-          <p>
-            이미지 변환은 클라이언트에서 이루어지며, 변환 중에 페이지를 닫거나 새로고침하면 변환
-            작업이 중단됩니다. 또한 변환시 많은 양의 메모리를 사용하기 때문에 변환 후에는 이미지들을
-            제거해 메모리를 해제해주세요. 너무 많은 이미지 변환은 메모리 부족 현상을 일으켜
-            브라우저가 렉이 심하게 걸리거나 페이지가 죽을 수 있습니다.
-          </p>
+          <p>{m.tools_converters_images_warning()}</p>
         </CalloutContent>
       </Callout>
     </div>

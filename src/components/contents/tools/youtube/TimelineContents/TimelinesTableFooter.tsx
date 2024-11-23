@@ -3,6 +3,7 @@ import { BsPersonWorkspace } from "solid-icons/bs";
 import { TbCirclePlus } from "solid-icons/tb";
 import { Button } from "~/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
+import * as m from "~/paraglide/messages";
 import { $fold, $maxRows, addTimeline, timelines } from "./atoms";
 import { scrollToWorkspace } from "./ScrollToWorkspace";
 
@@ -18,7 +19,7 @@ export default () => {
             <BsPersonWorkspace class="h-8 w-8" />
           </Button>
         </TooltipTrigger>
-        <TooltipContent>Scroll to Workspace</TooltipContent>
+        <TooltipContent>{m.tools_youtube_timeline_scroll_to_workspace()}</TooltipContent>
       </Tooltip>
       <Tooltip>
         <TooltipTrigger>
@@ -42,7 +43,7 @@ export default () => {
             <TbCirclePlus class="h-8 w-8" />
           </Button>
         </TooltipTrigger>
-        <TooltipContent>Add empty timeline</TooltipContent>
+        <TooltipContent>{m.tools_youtube_timeline_add_empty_timeline()}</TooltipContent>
       </Tooltip>
     </div>
   );

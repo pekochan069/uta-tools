@@ -23,6 +23,7 @@ import {
 } from "~/components/ui/slider";
 import { formatFileSize } from "~/lib/format-file-size";
 import { cn } from "~/lib/utils";
+import * as m from "~/paraglide/messages";
 import { $convertQueue, $imagesQueue, addImages } from "./atoms";
 import { accept, availableFormats, imageFormatToExtension } from "./utils";
 import { createTask } from "./worker";
@@ -32,7 +33,7 @@ export default (props: { class: string }) => {
 
   return (
     <div class={cn("grid gap-2", props.class)}>
-      <h2 class="font-semibold">Images</h2>
+      <h2 class="font-semibold">{m.tools_common_image()}</h2>
       <For each={images()}>{(image, i) => <QueueItem item={image} />}</For>
       <div class="mt-8 grid grid-cols-3">
         <span></span>
@@ -61,7 +62,7 @@ export default (props: { class: string }) => {
             onClick={() => $imagesQueue.set([])}
           >
             <TbX class="size-5" />
-            <span>Clear All</span>
+            <span>{m.tools_common_clear_all()}</span>
           </Button>
         </div>
       </div>
@@ -102,7 +103,7 @@ function QueueItem(props: QueueItemProps) {
         </Dialog>
         <div class="flex min-w-0 flex-col gap-1 text-start">
           <span class="w-full truncate font-bold">{props.item.file.name}</span>
-          <span>{formatFileSize(props.item.file.size)} bytes</span>
+          <span>{formatFileSize(props.item.file.size)}</span>
         </div>
         <div class="flex gap-4">
           <Select
@@ -145,7 +146,7 @@ function QueueItem(props: QueueItemProps) {
               class="space-y-2"
             >
               <div class="w-full space-x-2">
-                <SliderLabel>Quality</SliderLabel>
+                <SliderLabel>{m.tools_common_quality()}</SliderLabel>
                 <SliderValueLabel class="font-bold" />
               </div>
               <SliderTrack class="ml-5">
@@ -173,7 +174,7 @@ function QueueItem(props: QueueItemProps) {
               toast(`Converting ${props.item.file.name} to ${format()}`);
             }}
           >
-            Convert
+            {m.tools_common_convert()}
           </Button>
         </div>
       </CollapsibleContent>

@@ -5,6 +5,7 @@ import {
   ContentConfigRoot,
   ContentConfigSection,
 } from "~/components/common/Config";
+import * as m from "~/paraglide/messages";
 import CopyTimelinesButton from "./CopyTimelinesButton";
 import InputForm from "./InputForm";
 import SortTimelinesButton from "./SortTimelinesButton";
@@ -17,15 +18,18 @@ import TimelineTableFooter from "./TimelinesTableFooter";
   <ContentConfigSection>
     <ContentConfigRoot>
       <ContentConfigLabel
-        name="Link"
-        description="Link to a YouTube video to generate a timeline for"
+        name={m.tools_common_link()}
+        description={m.tools_youtube_timeline_link_description()}
       />
       <ContentConfig>
         <YoutubeUrl client:load />
       </ContentConfig>
     </ContentConfigRoot>
     <ContentConfigRoot>
-      <ContentConfigLabel name="Save Data" description="Save timeline data" />
+      <ContentConfigLabel
+        name={m.tools_youtube_timeline_save()}
+        description={m.tools_youtube_timeline_save_description()}
+      />
       <ContentConfig>
         <RememberData client:only="solid-js" />
       </ContentConfig>

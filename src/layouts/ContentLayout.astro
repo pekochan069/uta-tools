@@ -1,14 +1,17 @@
 ---
+import type { Lang } from "~/i18n/ui";
 import { TbChevronRight } from "solid-icons/tb";
 import { currentContent } from "~/atoms/currentContent";
 import { getContent } from "~/lib/contents";
 import WithSidebar from "./WithSidebar.astro";
 
+const { lang } = Astro.params as { lang: Lang };
+
 const paths = Astro.url.pathname.split("/");
 
-const collectionSlug = paths[1];
-const categorySlug = paths[2];
-const nameSlug = paths[3];
+const collectionSlug = paths[2];
+const categorySlug = paths[3];
+const nameSlug = paths[4];
 
 const content = getContent(collectionSlug, categorySlug, nameSlug);
 
@@ -16,26 +19,26 @@ if (content.isNone()) {
   Astro.redirect("/404");
 }
 
-const { collection, category, name, description } = content.unwrap();
-currentContent.set({ collection, category, name, description });
+const { collection, category, name, description, i18n } = content.unwrap();
+currentContent.set({ collection, category, name, description, i18n });
 ---
 
 <WithSidebar title={name}>
   <main class="py-4">
     <div class="mb-4 flex items-center gap-x-1 text-sm text-muted-foreground">
       <a href={`/${collectionSlug}`} class="hover:underline">
-        {collection}
+        {collection[lang]}
       </a>
       <TbChevronRight class="inline-block h-4 w-4" />
       <!-- <a href={`/${collectionSlug}/${categorySlug}`} class="hover:underline">
         {category}
       <!-- </a> -->
       <span>
-        {category}
+        {category[lang]}
       </span>
       <TbChevronRight class="inline-block h-4 w-4" />
       <h3 class="font-semibold">
-        {name}
+        {i18n[lang]}
       </h3>
     </div>
     <slot />

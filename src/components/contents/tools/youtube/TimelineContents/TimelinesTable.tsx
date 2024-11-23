@@ -16,6 +16,7 @@ import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "~/components/ui/table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
+import * as m from "~/paraglide/messages";
 import { $fold, $maxRows, $url, formatTime, setTimelines, timelineIds, timelines } from "./atoms";
 import FoldButton from "./FoldButton";
 import { scrollToWorkspace } from "./ScrollToWorkspace";
@@ -171,10 +172,10 @@ function Inner() {
               }}
             />
           </TableHead>
-          <TableHead class="w-[5.5rem] py-2 pr-4 sm:pl-0 md:p-4">Time</TableHead>
+          <TableHead class="w-[5.5rem] py-2 pr-4 sm:pl-0 md:p-4">{m.tools_common_time()}</TableHead>
           <TableHead class="p-2 pl-0 md:px-4">
             <div class="flex items-center">
-              <div class="flex-1">Text</div>
+              <div class="flex-1">{m.tools_common_text()}</div>
               <div class="flex-0 flex gap-1 sm:gap-2">
                 <div class="sm:invisible sm:hidden">
                   <FoldButton />
@@ -190,7 +191,7 @@ function Inner() {
                       <BsPersonWorkspace class="h-[1.2rem] w-[1.2rem]" />
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>Scroll to Workspace</TooltipContent>
+                  <TooltipContent>{m.tools_youtube_timeline_scroll_to_workspace()}</TooltipContent>
                 </Tooltip>
                 <div class="invisible hidden sm:visible sm:block">
                   <CopyButton
@@ -199,7 +200,7 @@ function Inner() {
                       .filter((timeline) => timeline.checked)
                       .map((timeline) => `${timeline.formattedTime} ${timeline.text}`)
                       .join("\n")}
-                    tooltip="Copy selected"
+                    tooltip={m.tools_common_copy_selected()}
                     class="text-foreground hover:bg-foreground hover:text-background active:bg-foreground active:text-background"
                   />
                 </div>
@@ -210,14 +211,13 @@ function Inner() {
                       variant="ghost"
                       onClick={() => {
                         setTimelines(timelines.filter((timeline) => !timeline.checked));
-                        // $timelines.set($timelines.value.filter((timeline) => !timeline.checked));
                       }}
                       class="text-foreground hover:bg-foreground hover:text-background active:bg-foreground active:text-background"
                     >
                       <TbX class="h-[1.2rem] w-[1.2rem]" />
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>Remove Selected</TooltipContent>
+                  <TooltipContent>{m.tools_common_remove_selected()}</TooltipContent>
                 </Tooltip>
               </div>
             </div>

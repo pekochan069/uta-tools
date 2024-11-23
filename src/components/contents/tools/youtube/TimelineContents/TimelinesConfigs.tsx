@@ -3,6 +3,7 @@ import { batch, createEffect, onMount, untrack } from "solid-js";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Switch } from "~/components/ui/switch";
+import * as m from "~/paraglide/messages";
 import { $player, $playerReady, $prevVideoId, $rememberData, $url, $videoId } from "./atoms";
 import { scrollToWorkspace } from "./ScrollToWorkspace";
 
@@ -88,7 +89,7 @@ export const RememberData = () => {
   return (
     <>
       <Label for="operation" class="select-none capitalize">
-        {rememberData() ? "On" : "Off"}
+        {rememberData() ? m.tools_common_on() : m.tools_common_off()}
       </Label>
       <Switch
         id="operation"

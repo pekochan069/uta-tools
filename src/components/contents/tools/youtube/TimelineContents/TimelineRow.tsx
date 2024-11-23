@@ -11,6 +11,7 @@ import { Input } from "~/components/ui/input";
 import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
 import { TableCell, TableRow } from "~/components/ui/table";
 import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
+import * as m from "~/paraglide/messages";
 
 type TimelineRowProps = {
   item: TimelineType;
@@ -55,7 +56,7 @@ export default (props: TimelineRowProps) => {
                 max={99}
                 labelClass="text-sm"
               >
-                Hour
+                {m.tools_common_hour()}
               </Input>
               <Input
                 value={props.item.time[1].toString()}
@@ -65,7 +66,7 @@ export default (props: TimelineRowProps) => {
                 max={59}
                 labelClass="text-sm"
               >
-                Minutes
+                {m.tools_common_minute()}
               </Input>
               <Input
                 value={props.item.time[2].toString()}
@@ -75,7 +76,7 @@ export default (props: TimelineRowProps) => {
                 max={59}
                 labelClass="text-sm"
               >
-                Seconds
+                {m.tools_common_second()}
               </Input>
             </div>
           </PopoverContent>
@@ -101,7 +102,7 @@ export default (props: TimelineRowProps) => {
                   const textData = await data.text();
                   props.onTimelineChange(textData);
                 } catch {
-                  toast.error("Cannot paste text from clipboard");
+                  toast.error(m.tools_common_cannot_paste_msg());
                   return;
                 }
               }}
@@ -123,7 +124,7 @@ export default (props: TimelineRowProps) => {
                   <TbX class="h-[1.2rem] w-[1.2rem]" />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>Remove</TooltipContent>
+              <TooltipContent>{m.tools_common_remove()}</TooltipContent>
             </Tooltip>
           </div>
         </div>

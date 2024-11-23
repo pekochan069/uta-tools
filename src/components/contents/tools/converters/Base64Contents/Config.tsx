@@ -4,11 +4,12 @@ import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Switch } from "~/components/ui/switch";
+import * as m from "~/paraglide/messages";
 import { operation, repeat } from "./base64Atoms";
 
 export const Operation = () => {
   const $operation = useStore(operation);
-  const label = () => ($operation() ? "encode" : "decode");
+  const label = () => ($operation() ? m.tools_common_encode() : m.tools_common_decode());
 
   return (
     <>

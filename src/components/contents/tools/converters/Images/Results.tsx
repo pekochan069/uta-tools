@@ -6,14 +6,15 @@ import { Button } from "~/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
 import { formatFileSize } from "~/lib/format-file-size";
 import { cn } from "~/lib/utils";
-import { $convertQueue, $results } from "./atoms";
+import * as m from "~/paraglide/messages";
+import { $results } from "./atoms";
 
 export default (props: { class: string }) => {
   const results = useStore($results);
 
   return (
     <div class={cn("grid gap-2", props.class)}>
-      <h2 class="font-semibold">Results</h2>
+      <h2 class="font-semibold">{m.tools_common_result()}</h2>
       <For each={results()}>{(item) => <ResultItem item={item} />}</For>
       <div class="mt-8 flex justify-end gap-2">
         <Button
@@ -22,7 +23,7 @@ export default (props: { class: string }) => {
           onClick={() => $results.set([])}
         >
           <TbX class="size-5" />
-          <span>Clear All</span>
+          <span>{m.tools_common_clear_all()}</span>
         </Button>
         <Button
           class="items-center gap-2"
@@ -36,7 +37,7 @@ export default (props: { class: string }) => {
           }}
         >
           <TbDownload class="size-5" />
-          <span>Download All</span>
+          <span>{m.tools_common_download_all()}</span>
         </Button>
       </div>
     </div>
@@ -82,7 +83,7 @@ function ResultItem(props: ResultItemProps) {
       </Show>
       <div class="flex min-w-0 flex-col gap-1 text-start">
         <span class="w-full truncate font-bold">{props.item.fileName}</span>
-        <span>{formatFileSize(props.item.result.byteLength)} bytes</span>
+        <span>{formatFileSize(props.item.result.byteLength)}</span>
       </div>
       <div class="flex items-center gap-2">
         <Button

@@ -7,6 +7,7 @@ import { Button } from "~/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "~/components/ui/dialog";
 import { formatFileSize } from "~/lib/format-file-size";
 import { cn } from "~/lib/utils";
+import * as m from "~/paraglide/messages";
 import { $convertQueue } from "./atoms";
 
 export default (props: { class: string }) => {
@@ -14,7 +15,7 @@ export default (props: { class: string }) => {
 
   return (
     <div class={cn("grid gap-2", props.class)}>
-      <h2 class="font-semibold">Converting</h2>
+      <h2 class="font-semibold">{m.tools_common_converting()}</h2>
       <For each={convertQueue()}>{(item) => <QueueItem item={item} />}</For>
       <div class="mt-8 flex justify-end">
         <Button
@@ -23,7 +24,7 @@ export default (props: { class: string }) => {
           onClick={() => $convertQueue.set([])}
         >
           <TbX class="size-5" />
-          <span>Clear All</span>
+          <span>{m.tools_common_clear_all()}</span>
         </Button>
       </div>
     </div>
@@ -61,7 +62,7 @@ function QueueItem(props: QueueItemProps) {
       <div class="flex min-w-0 flex-col gap-1 text-start">
         <span class="w-full truncate font-bold">{props.item.file.name}</span>
         <div class="flex items-center gap-4">
-          <span>{formatFileSize(props.item.file.size)} bytes</span>
+          <span>{formatFileSize(props.item.file.size)}</span>
           <div class="flex items-center gap-2">
             <TbArrowRight />
             <span class="font-semibold uppercase">{props.item.outputType}</span>
