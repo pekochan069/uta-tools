@@ -15,7 +15,8 @@ type Props = {
 const { title = "Uta Tools", useTransitions = false } = Astro.props;
 ---
 
-<html lang={languageTag()} }>
+<!-- @ts-ignore -->
+<html lang={languageTag()} } dir={Astro.locals.paraglide.dir}>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />
