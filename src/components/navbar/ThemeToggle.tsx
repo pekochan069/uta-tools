@@ -1,4 +1,3 @@
-import type { Lang } from "~/i18n/ui";
 import { FaSolidLaptop } from "solid-icons/fa";
 import { TbMoon, TbSun } from "solid-icons/tb";
 import { createEffect, createSignal, onMount } from "solid-js";
