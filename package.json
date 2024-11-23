@@ -18,10 +18,10 @@
     "postinstall": "paraglide-js compile --project ./project.inlang --outdir ./src\\paraglide"
   },
   "dependencies": {
-    "@astrojs/check": "0.9.4",
-    "@astrojs/solid-js": "4.4.2",
-    "@astrojs/tailwind": "5.1.2",
-    "@astrojs/vercel": "8.0.0-beta.3",
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/solid-js": "4.4.4-beta.0",
+    "@astrojs/tailwind": "^5.1.2",
+    "@astrojs/vercel": "8.0.0-beta.4",
     "@decs/typeschema": "^0.12.2",
     "@inlang/paraglide-astro": "^0.2.2",
     "@kobalte/core": "0.13.7",
@@ -37,7 +37,7 @@
     "@trpc/client": "next",
     "@trpc/server": "next",
     "@vercel/speed-insights": "^1.0.9",
-    "astro": "5.0.0-beta.7",
+    "astro": "5.0.0-beta.10",
     "chart.js": "4.4.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "2.1.1",
