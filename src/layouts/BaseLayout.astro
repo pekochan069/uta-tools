@@ -9,10 +9,9 @@ import { languageTag } from "../paraglide/runtime";
 
 type Props = {
   title?: string;
-  useTransitions?: boolean;
 };
 
-const { title = "Uta Tools", useTransitions = false } = Astro.props;
+const { title = "Uta Tools" } = Astro.props;
 // @ts-ignore
 const dir = Astro.locals.paraglide.dir;
 ---

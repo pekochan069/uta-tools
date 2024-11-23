@@ -24,7 +24,7 @@ export default (props: { lang: Lang; url: string }) => {
           <DropdownMenuContent>
             <For each={Array.from(langs)}>
               {(lang) => (
-                <DropdownMenuItem onSelect={() => {}} as="a" href={`/${lang}/${props.url}`}>
+                <DropdownMenuItem as="a" href={`/${lang}/${props.url}`}>
                   <span>{langNames[lang]}</span>
                 </DropdownMenuItem>
               )}

@@ -3,9 +3,10 @@ import type { Lang } from "~/i18n/utils";
 import { TbChevronRight } from "solid-icons/tb";
 import { currentContent } from "~/atoms/currentContent";
 import { getContent } from "~/lib/contents";
+import { languageTag } from "~/paraglide/runtime";
 import WithSidebar from "./WithSidebar.astro";
 
-const { lang } = Astro.params as { lang: Lang };
+const lang = languageTag();
 
 const paths = Astro.url.pathname.split("/");
 

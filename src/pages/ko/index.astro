@@ -4,14 +4,14 @@ import type { Lang } from "~/i18n/utils";
 import WithSidebar from "~/layouts/WithSidebar.astro";
 import { collections } from "~/lib/contents";
 
-const { lang } = Astro.params as { lang: Lang };
+const lang = "ko" as Lang;
 ---
 
 <WithSidebar title="Uta Tools">
   <main class="py-4">
     <div class="flex flex-col gap-y-4">
       {collections.map(collection => (
-        <a href=`/${lang}/${collection.slug}` class="group outline-none">
+        <a href=`/ko/${collection.slug}` class="group outline-none">
         <Card class="ring-foreground ring-offset-2 transition duration-100 group-hover:ring-2">
           <div>
             <CardHeader>

@@ -2,8 +2,9 @@
 import type { Lang } from "~/i18n/utils";
 import { OverlayScrollbarsComponent } from "overlayscrollbars-solid";
 import { collections } from "~/lib/contents";
+import { languageTag } from "~/paraglide/runtime";
 
-const { lang } = Astro.params as { lang: Lang };
+const lang = languageTag();
 ---
 
 <aside

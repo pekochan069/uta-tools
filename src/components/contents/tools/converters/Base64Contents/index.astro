@@ -8,6 +8,7 @@ import {
 } from "~/components/common/Config";
 import { Label } from "~/components/ui/label";
 import * as m from "~/paraglide/messages";
+import { languageTag } from "~/paraglide/runtime";
 import { Operation, Repeat } from "./Config";
 import {
   Base64Input,
@@ -18,7 +19,7 @@ import {
 import { Base64Output, Base64OutputCopyButton } from "./Output";
 import SwapInputOutput from "./SwapInputOutput";
 
-const { lang } = Astro.params as { lang: Lang };
+const lang = languageTag();
 ---
 
 <div>

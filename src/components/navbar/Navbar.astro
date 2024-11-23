@@ -2,12 +2,13 @@
 import type { Lang } from "~/i18n/utils";
 import { Image } from "astro:assets";
 import { TbBrandGithub } from "solid-icons/tb";
+import { languageTag } from "~/paraglide/runtime";
 import LangToggle from "./LangToggle";
 import SidebarToggle from "./SidebarToggle";
 import ThemeToggle from "./ThemeToggle";
 
 const url = Astro.url.pathname.split("/").slice(2).join("/");
-const { lang } = Astro.params as { lang: Lang };
+const lang = languageTag();
 ---
 
 <header class="container px-4 py-2 md:px-6 md:py-3">
