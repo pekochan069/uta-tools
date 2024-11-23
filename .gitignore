@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # drizzle orm
 drizzle/
+
+# vercel
+.vercel/
+.github/

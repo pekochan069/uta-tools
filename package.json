@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "start": "astro dev",
+    "start": "NODE_ENV=production astro dev",
     "build": "paraglide-js compile --project ./project.inlang --outdir ./src\\paraglide && astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
