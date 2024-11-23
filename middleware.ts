@@ -1,6 +1,7 @@
-import { next } from "@vercel/edge";
+// import { next } from "@vercel/edge";
+const { next } = require("@vercel/edge");
 
-export default function middleware(request: Request) {
+function middleware(request: Request) {
   const url = new URL(request.url);
 
   if (url.pathname === "/tools/converters/images") {
@@ -14,3 +15,5 @@ export default function middleware(request: Request) {
 
   return next();
 }
+
+module.exports = middleware;
