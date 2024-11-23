@@ -1,17 +1,25 @@
 ---
-import { ContentConfigSection, ContentConfigRoot, ContentConfigLabel, ContentConfig } from "~/components/common/Config";
-import SortTimelinesButton from "./SortTimelinesButton";
+import {
+  ContentConfig,
+  ContentConfigLabel,
+  ContentConfigRoot,
+  ContentConfigSection,
+} from "~/components/common/Config";
 import CopyTimelinesButton from "./CopyTimelinesButton";
 import InputForm from "./InputForm";
+import SortTimelinesButton from "./SortTimelinesButton";
+import { RememberData, YoutubeUrl } from "./TimelinesConfigs";
 import TimelinesTable from "./TimelinesTable";
 import TimelineTableFooter from "./TimelinesTableFooter";
-import { YoutubeUrl, RememberData } from "./TimelinesConfigs";
 ---
 
 <div class="pb-20">
   <ContentConfigSection>
     <ContentConfigRoot>
-      <ContentConfigLabel name="Link" description="Link to a YouTube video to generate a timeline for" />
+      <ContentConfigLabel
+        name="Link"
+        description="Link to a YouTube video to generate a timeline for"
+      />
       <ContentConfig>
         <YoutubeUrl client:load />
       </ContentConfig>

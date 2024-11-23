@@ -1,7 +1,5 @@
-import { useStore } from "@nanostores/solid";
-
 import CopyButton from "~/components/common/CopyButton";
-import { timelines } from "./timelineAtoms";
+import { timelines } from "./atoms";
 
 export default () => {
   return (

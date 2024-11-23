@@ -1,7 +1,5 @@
-import { useStore } from "@nanostores/solid";
-
 import { Button } from "~/components/ui/button";
-import { setTimelines, timelines } from "./timelineAtoms";
+import { setTimelines, timelines } from "./atoms";
 
 export default () => {
   return (

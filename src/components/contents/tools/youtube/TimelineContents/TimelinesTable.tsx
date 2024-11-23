@@ -1,64 +1,66 @@
+import type { Id } from "@thisbeyond/solid-dnd";
 import { useStore } from "@nanostores/solid";
 import {
+  closestCenter,
   DragDropProvider,
   DragDropSensors,
   DragOverlay,
-  type Id,
   SortableProvider,
-  closestCenter,
 } from "@thisbeyond/solid-dnd";
 import { BsPersonWorkspace } from "solid-icons/bs";
 import { TbX } from "solid-icons/tb";
-import { For, Index, batch, createSignal, onMount } from "solid-js";
+import { createEffect, createSignal, For, Index, onMount } from "solid-js";
 import { produce } from "solid-js/store";
-
 import CopyButton from "~/components/common/CopyButton";
-import { YoutubeLink } from "~/components/contents/tldr/video/yt-dlp/YoutubeLink";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "~/components/ui/table";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "~/components/ui/table";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
+import { $fold, $maxRows, $url, formatTime, setTimelines, timelineIds, timelines } from "./atoms";
 import FoldButton from "./FoldButton";
 import { scrollToWorkspace } from "./ScrollToWorkspace";
 import TimelineRow from "./TimelineRow";
-import {
-  url,
-  fold,
-  formatTime,
-  maxRows,
-  setTimelines,
-  timelineIds,
-  timelines,
-} from "./timelineAtoms";
-import type { TimelineType } from "./timelineTypes";
 
 export default () => {
+  onMount(() => {
+    const useData = localStorage.getItem("save-data") === "true";
+
+    if (useData) {
+      if (localStorage.getItem("youtube-url") !== null) {
+        $url.set(localStorage.getItem("youtube-url") ?? "");
+      }
+
+      if (localStorage.getItem("youtube-timeline") !== null) {
+        setTimelines(JSON.parse(localStorage.getItem("youtube-timeline") ?? "[]"));
+      }
+    }
+
+    document.onvisibilitychange = () => {
+      localStorage.setItem("youtube-url", $url.get());
+      localStorage.setItem("youtube-timeline", JSON.stringify(timelines));
+    };
+
+    // $timelines.notify();
+  });
+
+  return <Inner />;
+};
+
+function Inner() {
   let tableBodyRef: HTMLTableSectionElement | undefined;
   const playerContainerRef = document.getElementById("player-container");
 
   const [activeId, setActiveId] = createSignal<Id | null>(null);
-  // const [maxRows, setMaxRows] = createSignal(5);
   const [onMobile, setOnMobile] = createSignal(false);
 
-  const $url = useStore(url);
-  const $fold = useStore(fold);
-  const $maxRows = useStore(maxRows);
+  const fold = useStore($fold);
+  const maxRows = useStore($maxRows);
 
-  const changeTime = (
-    type: "hour" | "minute" | "second",
-    id: number,
-    value: string,
-  ) => {
+  createEffect(() => {
+    console.log(timelines.length);
+  });
+
+  const changeTime = (type: "hour" | "minute" | "second", id: number, value: string) => {
     if (timelines.length === 0) return;
 
     const parsedValue = parseInt(value);
@@ -101,30 +103,30 @@ export default () => {
       produce((timeline: TimelineType) => {
         timeline.time = time;
         timeline.formattedTime = formatTime(formattedTime);
-        timeline.seconds =
-          formattedTime[0] * 3600 + formattedTime[1] * 60 + formattedTime[2];
+        timeline.seconds = formattedTime[0] * 3600 + formattedTime[1] * 60 + formattedTime[2];
       }),
     );
+
+    const timelineToUpdate = timelines.find((timeline) => timeline.id === id);
+    if (timelineToUpdate) {
+      timelineToUpdate.time = time;
+    }
   };
 
   const calculateMaxRows = () => {
     if (tableBodyRef === undefined || playerContainerRef === null) return;
 
     const tableBodyStart =
-      tableBodyRef.getBoundingClientRect().top +
-      document.documentElement.scrollTop;
+      tableBodyRef.getBoundingClientRect().top + document.documentElement.scrollTop;
     const playerContainerStart =
-      playerContainerRef.getBoundingClientRect().top +
-      document.documentElement.scrollTop;
+      playerContainerRef.getBoundingClientRect().top + document.documentElement.scrollTop;
     const rowHeight = window.innerWidth < 768 ? 56.5 : 72.5;
 
     const newMaxRows =
-      Math.floor(
-        (window.innerHeight - (tableBodyStart - playerContainerStart + 16)) /
-          rowHeight,
-      ) - 1;
+      Math.floor((window.innerHeight - (tableBodyStart - playerContainerStart + 16)) / rowHeight) -
+      1;
 
-    maxRows.set(newMaxRows < 2 ? 2 : newMaxRows);
+    $maxRows.set(newMaxRows < 2 ? 2 : newMaxRows);
   };
 
   const onWindowScroll = () => {
@@ -146,29 +148,9 @@ export default () => {
   };
 
   onMount(() => {
-    batch(() => {
-      const useData = localStorage.getItem("save-data") === "true";
-
-      if (useData) {
-        if (localStorage.getItem("youtube-url") !== null) {
-          // setUrl(localStorage.getItem("youtube-url") ?? "");
-        }
-
-        if (localStorage.getItem("youtube-timeline") !== null) {
-          setTimelines(
-            JSON.parse(localStorage.getItem("youtube-timeline") ?? "[]"),
-          );
-        }
-      }
-    });
-
     calculateMaxRows();
 
     window.addEventListener("resize", onWindowScroll);
-    document.onvisibilitychange = () => {
-      localStorage.setItem("youtube-url", $url());
-      localStorage.setItem("youtube-timeline", JSON.stringify(timelines));
-    };
   });
 
   return (
@@ -177,10 +159,7 @@ export default () => {
         <TableRow>
           <TableHead class="w-4 py-2 pl-0 pr-4 md:w-8 md:p-4">
             <Checkbox
-              checked={
-                timelines.length > 0 &&
-                timelines.every((current) => current.checked)
-              }
+              checked={timelines.length > 0 && timelines.every((current) => current.checked)}
               onChange={(checked) => {
                 setTimelines(
                   produce((timelines) => {
@@ -192,9 +171,7 @@ export default () => {
               }}
             />
           </TableHead>
-          <TableHead class="w-[5.5rem] py-2 pr-4 sm:pl-0 md:p-4">
-            Time
-          </TableHead>
+          <TableHead class="w-[5.5rem] py-2 pr-4 sm:pl-0 md:p-4">Time</TableHead>
           <TableHead class="p-2 pl-0 md:px-4">
             <div class="flex items-center">
               <div class="flex-1">Text</div>
@@ -220,10 +197,7 @@ export default () => {
                     copyType="text"
                     copyContent={timelines
                       .filter((timeline) => timeline.checked)
-                      .map(
-                        (timeline) =>
-                          `${timeline.formattedTime} ${timeline.text}`,
-                      )
+                      .map((timeline) => `${timeline.formattedTime} ${timeline.text}`)
                       .join("\n")}
                     tooltip="Copy selected"
                     class="text-foreground hover:bg-foreground hover:text-background active:bg-foreground active:text-background"
@@ -235,9 +209,8 @@ export default () => {
                       size="icon"
                       variant="ghost"
                       onClick={() => {
-                        setTimelines(
-                          timelines.filter((timeline) => !timeline.checked),
-                        );
+                        setTimelines(timelines.filter((timeline) => !timeline.checked));
+                        // $timelines.set($timelines.value.filter((timeline) => !timeline.checked));
                       }}
                       class="text-foreground hover:bg-foreground hover:text-background active:bg-foreground active:text-background"
                     >
@@ -279,41 +252,35 @@ export default () => {
         >
           <DragDropSensors />
           <SortableProvider ids={timelineIds()}>
-            <For
-              each={
-                $fold()
-                  ? timelines.toSpliced(0, timelines.length - $maxRows())
-                  : timelines
-              }
-            >
+            <For each={fold() ? timelines.toSpliced(0, timelines.length - maxRows()) : timelines}>
               {(item, index) => (
                 <TimelineRow
                   item={item}
-                  fold={$fold()}
-                  onTimeChange={(type, value) =>
-                    changeTime(type, item.id, value)
-                  }
+                  fold={fold()}
+                  onTimeChange={(type, value) => changeTime(type, item.id, value)}
                   deleteTimeline={() => {
-                    // setTimelines((prev) => prev.toSpliced(index(), 1));
+                    setTimelines((prev) => prev.toSpliced(index(), 1));
                     const currentIndex = timelines.indexOf(item);
                     setTimelines((prev) => prev.toSpliced(currentIndex, 1));
+                    // $timelines.value.splice(currentIndex, 1);
+                    // $timelines.notify();
                   }}
-                  setChecked={(checked) =>
+                  setChecked={(checked) => {
                     setTimelines(
                       (timeline) => timeline.id === item.id,
                       produce((timeline) => {
                         timeline.checked = checked;
                       }),
-                    )
-                  }
-                  onTimelineChange={(value) =>
+                    );
+                  }}
+                  onTimelineChange={(value) => {
                     setTimelines(
                       (timeline) => timeline.id === item.id,
                       produce((timeline) => {
                         timeline.text = value;
                       }),
-                    )
-                  }
+                    );
+                  }}
                 />
               )}
             </For>
@@ -325,9 +292,7 @@ export default () => {
                   if (timeline().id === activeId()) {
                     return (
                       <div class="flex h-12 w-full items-center justify-center rounded-md bg-foreground shadow-lg">
-                        <div class="font-semibold text-background">
-                          {timeline().formattedTime}
-                        </div>
+                        <div class="font-semibold text-background">{timeline().formattedTime}</div>
                       </div>
                     );
                   }
@@ -339,4 +304,4 @@ export default () => {
       </TableBody>
     </Table>
   );
-};
+}

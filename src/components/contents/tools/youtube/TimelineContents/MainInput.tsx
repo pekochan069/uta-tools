@@ -1,27 +1,25 @@
 import { useStore } from "@nanostores/solid";
-
 import { Input } from "~/components/ui/input";
 import { checkUrl } from "~/lib/youtube";
-import { mainInput, player } from "./timelineAtoms";
-import { url } from "./timelineAtoms";
+import { $mainInput, $player, $url } from "./atoms";
 
 export default () => {
-  const $player = useStore(player);
-  const $mainInput = useStore(mainInput);
+  const player = useStore($player);
+  const mainInput = useStore($mainInput);
 
   return (
     <Input
-      value={$mainInput()}
+      value={mainInput()}
       onChange={(value) => {
-        if ($player() === undefined) {
+        if (player() === undefined) {
           if (checkUrl(value)) {
-            url.set(value);
+            $url.set(value);
           }
 
           return;
         }
 
-        mainInput.set(value);
+        $mainInput.set(value);
       }}
       placeholder="Ado / Show"
       rootClass="flex-1"

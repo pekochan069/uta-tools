@@ -1,29 +1,16 @@
-import {
-  createSortable,
-  transformStyle,
-  useDragDropContext,
-} from "@thisbeyond/solid-dnd";
+import type { TimelineType } from "./types";
+import { createSortable, transformStyle, useDragDropContext } from "@thisbeyond/solid-dnd";
 import { TbDotsVertical, TbX } from "solid-icons/tb";
 import { toast } from "solid-sonner";
-
 import ClearButton from "~/components/common/ClearButton";
 import CopyButton from "~/components/common/CopyButton";
 import PasteButton from "~/components/common/PasteButton";
 import { Button } from "~/components/ui/button";
 import { Checkbox } from "~/components/ui/checkbox";
 import { Input } from "~/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "~/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "~/components/ui/popover";
 import { TableCell, TableRow } from "~/components/ui/table";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "~/components/ui/tooltip";
-import type { TimelineType } from "./timelineTypes";
+import { Tooltip, TooltipContent, TooltipTrigger } from "~/components/ui/tooltip";
 
 type TimelineRowProps = {
   item: TimelineType;

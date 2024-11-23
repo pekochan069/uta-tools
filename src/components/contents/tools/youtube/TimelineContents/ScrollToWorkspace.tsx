@@ -7,8 +7,7 @@ export function scrollToWorkspace() {
   if (playerContainerRef === null) return;
 
   const playerContainerStart =
-    playerContainerRef.getBoundingClientRect().top +
-    document.documentElement.scrollTop;
+    playerContainerRef.getBoundingClientRect().top + document.documentElement.scrollTop;
 
   window.scroll({
     top: playerContainerStart - 16,
