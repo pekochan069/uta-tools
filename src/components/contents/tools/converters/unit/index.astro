@@ -1,3 +1,22 @@
 ---
-
+import {
+  ContentConfig,
+  ContentConfigLabel,
+  ContentConfigRoot,
+  ContentConfigSection,
+} from "~/components/common/Config";
+import * as m from "~/paraglide/messages";
+import { SelectUnitType } from "./Config";
 ---
+
+<ContentConfigSection>
+  <ContentConfigRoot>
+    <ContentConfigLabel
+      name={m.tools_converters_config_unit()}
+      description={m.tools_converters_config_unit_description()}
+    />
+    <ContentConfig>
+      <SelectUnitType client:load />
+    </ContentConfig>
+  </ContentConfigRoot>
+</ContentConfigSection>

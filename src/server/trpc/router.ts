@@ -1,6 +1,6 @@
 import { wrap } from "@decs/typeschema";
 import { Type } from "@sinclair/typebox";
-import { eq, sql } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { createId } from "~/lib/nanoid";
 import { Err, Ok } from "~/lib/types";
 import { db } from "~/server/db";
