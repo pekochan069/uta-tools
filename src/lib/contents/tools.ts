@@ -65,16 +65,6 @@ export const tools: ContentsCategory[] = [
         description: { ko: "이미지를 다른 포맷으로 변환", en: "Convert images to other formats" },
         icon: Either.left(Icons.ImagesIcon),
       },
-      {
-        name: "Unit",
-        i18n: {
-          ko: "단위",
-          en: "Unit",
-        },
-        slug: "unit",
-        description: { ko: "단위 변환", en: "Convert between different units" },
-        icon: Either.left(Icons.UnitIcon),
-      },
     ],
   },
   {

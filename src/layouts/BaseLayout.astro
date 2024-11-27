@@ -2,10 +2,10 @@
 import "overlayscrollbars/overlayscrollbars.css";
 import SpeedInsights from "@vercel/speed-insights/astro";
 import { Toaster } from "solid-sonner";
-import Navbar from "~/components/navbar/Navbar.astro";
 import ScrollToTop from "~/components/ScrollToTop.astro";
+import Navbar from "../components/navbar/Navbar.astro";
 import "~/styles/root.css";
-import { languageTag } from "~/paraglide/runtime";
+import { languageTag } from "../paraglide/runtime";
 
 type Props = {
   title?: string;
@@ -16,7 +16,7 @@ const { title = "Uta Tools" } = Astro.props;
 const dir = Astro.locals.paraglide.dir;
 ---
 
-<html lang={languageTag()} dir={dir} data-overlayscrollbars-initialize>
+<html lang={languageTag()} dir={dir}>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />
@@ -24,7 +24,7 @@ const dir = Astro.locals.paraglide.dir;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body data-overlayscrollbars-initialize>
+  <body>
     <div class="relative bg-background" id="app">
       <Navbar /><div class="container px-4 md:px-6"><slot /></div>
       <Toaster
