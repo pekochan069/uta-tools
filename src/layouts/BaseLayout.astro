@@ -16,7 +16,7 @@ const { title = "Uta Tools" } = Astro.props;
 const dir = Astro.locals.paraglide.dir;
 ---
 
-<html lang={languageTag()} dir={dir}>
+<html lang={languageTag()} dir={dir} data-overlayscrollbars-initialize>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />
@@ -24,7 +24,7 @@ const dir = Astro.locals.paraglide.dir;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body>
+  <body data-overlayscrollbars-initialize>
     <div class="relative bg-background" id="app">
       <Navbar /><div class="container px-4 md:px-6"><slot /></div>
       <Toaster
