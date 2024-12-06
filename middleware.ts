@@ -5,10 +5,13 @@ function middleware(request: Request) {
 
   const paths = url.pathname.split("/");
   if (paths[1] !== "en" && paths[1] !== "ko") {
-    return rewrite(new URL(`/ko${url.pathname}`, request.url));
+    return rewrite(new URL(`/ko${url.pathname}`, url.origin));
   }
 
-  if (url.pathname.endsWith("/converters/images")) {
+  if (
+    url.pathname === "/ko/tools/converters/images" ||
+    url.pathname === "/en/tools/converters/images"
+  ) {
     return next({
       headers: {
         "Cross-Origin-Embedder-Policy": "require-corp",
