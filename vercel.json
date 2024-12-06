@@ -1,7 +1,17 @@
 {
+  "redirects": [
+    {
+      "source": "/tools/:path*",
+      "destination": "/ko/tools/:path*"
+    },
+    {
+      "source": "/tldr/:path*",
+      "destination": "/ko/tools/:path*"
+    }
+  ],
   "headers": [
     {
-      "source": "/",
+      "source": "/(ko|en)/tools/converters/images",
       "headers": [
         {
           "key": "Cross-Origin-Embedder-Policy",
