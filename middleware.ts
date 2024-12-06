@@ -5,7 +5,7 @@ function middleware(request: Request) {
 
   const paths = url.pathname.split("/");
   if (paths[1] !== "en" && paths[1] !== "ko") {
-    return rewrite(new URL(`/ko${url.pathname}`, url.origin));
+    return Response.redirect(new URL(`/ko${url.pathname}`, url.origin));
   }
 
   if (
