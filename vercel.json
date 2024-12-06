@@ -11,7 +11,7 @@
   ],
   "headers": [
     {
-      "source": "/(ko|en)/tools/converters/images",
+      "source": "/(ko|en)/tools/converters/images/:path*",
       "headers": [
         {
           "key": "Cross-Origin-Embedder-Policy",
