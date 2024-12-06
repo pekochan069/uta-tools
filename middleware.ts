@@ -1,10 +1,14 @@
-// import { next } from "@vercel/edge";
-const { next } = require("@vercel/edge");
+// const { next } = require("@vercel/edge");
+import { next, rewrite } from "@vercel/edge";
 
 function middleware(request: Request) {
   const url = new URL(request.url);
 
-  if (url.pathname === "/tools/converters/images") {
+  if (!url.pathname.startsWith("/ko") && !url.pathname.startsWith("/en")) {
+    return rewrite(new URL(`/ko${url.pathname}`, request.url));
+  }
+
+  if (url.pathname.endsWith("/tools/converters/images")) {
     return next({
       headers: {
         "Cross-Origin-Embedder-Policy": "require-corp",
