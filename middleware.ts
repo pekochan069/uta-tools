@@ -1,5 +1,4 @@
-// const { next } = require("@vercel/edge");
-import { next, rewrite } from "@vercel/edge";
+const { next, rewrite } = require("@vercel/edge");
 
 function middleware(request: Request) {
   const url = new URL(request.url);
