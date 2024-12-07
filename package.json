@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "NODE_ENV=production astro dev",
-    "build": "paraglide-js compile --project ./project.inlang --outdir ./src\\paraglide && astro check && astro build",
+    "build": "NODE_ENV=production paraglide-js compile --project ./project.inlang --outdir ./src\\paraglide && bun run scripts/vercel.json.ts && astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier --write --cache .",
@@ -16,7 +16,8 @@
     "db:push": "drizzle-kit push:mysql",
     "db:generate": "drizzle-kit generate:mysql",
     "postinstall": "paraglide-js compile --project ./project.inlang --outdir ./src\\paraglide",
-    "vercel-json": "bun scripts/vercel.json.ts"
+    "vercel-json": "bun scripts/vercel.json.ts",
+    "vercel-json:prod": "NODE_ENV=production bun scripts/vercel.json.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
