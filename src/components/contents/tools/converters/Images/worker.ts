@@ -9,7 +9,7 @@ const workers: Worker[] = [];
 const idleWorkers: number[] = [];
 const tasks: ConvertInput[] = [];
 
-const maxWorkers = navigator.hardwareConcurrency || 4;
+const maxWorkers = 4;
 
 for (let i = 0; i < maxWorkers; ++i) {
   const worker = new ImageConvertWorker();

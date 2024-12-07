@@ -1,6 +1,6 @@
 import type { Lang } from "~/i18n/utils";
+import type { Either } from "effect";
 import type { JSX } from "solid-js";
-import { Either } from "effect";
 
 export type Collections = {
   name: string;

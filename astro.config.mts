@@ -3,6 +3,7 @@ import tailwind from "@astrojs/tailwind";
 import vercel from "@astrojs/vercel";
 import paraglide from "@inlang/paraglide-astro";
 import { defineConfig } from "astro/config";
+import { siteConfig } from "./src/config";
 
 // https://astro.build/config
 export default defineConfig({
@@ -26,7 +27,7 @@ export default defineConfig({
     },
   },
   i18n: {
-    locales: ["en", "ko"],
-    defaultLocale: "ko",
+    locales: siteConfig.locales,
+    defaultLocale: siteConfig.defaultLocale,
   },
 });

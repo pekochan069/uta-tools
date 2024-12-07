@@ -1,17 +1,80 @@
 {
   "redirects": [
     {
-      "source": "/tools/:path*",
-      "destination": "/ko/tools/:path*"
+      "source": "/tools/converters/base64",
+      "destination": "/ko/tools/converters/base64"
     },
     {
-      "source": "/tldr/:path*",
-      "destination": "/ko/tools/:path*"
+      "source": "/tools/converters/base64-image",
+      "destination": "/ko/tools/converters/base64-image"
+    },
+    {
+      "source": "/tools/converters/hex",
+      "destination": "/ko/tools/converters/hex"
+    },
+    {
+      "source": "/tools/converters/cookies",
+      "destination": "/ko/tools/converters/cookies"
+    },
+    {
+      "source": "/tools/converters/images",
+      "destination": "/ko/tools/converters/images"
+    },
+    {
+      "source": "/tools/youtube/timeline",
+      "destination": "/ko/tools/youtube/timeline"
+    },
+    {
+      "source": "/tools/youtube/thumbnail",
+      "destination": "/ko/tools/youtube/thumbnail"
+    },
+    {
+      "source": "/tools/url/shortener",
+      "destination": "/ko/tools/url/shortener"
     }
   ],
   "headers": [
     {
-      "source": "/(ko|en)/tools/converters/images/:path*",
+      "source": "/node_modules/(.*)",
+      "headers": [
+        {
+          "key": "Cross-Origin-Embedder-Policy",
+          "value": "require-corp"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
+        }
+      ]
+    },
+    {
+      "source": "/src/components/contents/tools/converters/Images/(.*)",
+      "headers": [
+        {
+          "key": "Cross-Origin-Embedder-Policy",
+          "value": "require-corp"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
+        }
+      ]
+    },
+    {
+      "source": "/ko/tools/converters/images",
+      "headers": [
+        {
+          "key": "Cross-Origin-Embedder-Policy",
+          "value": "require-corp"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
+        }
+      ]
+    },
+    {
+      "source": "/en/tools/converters/images",
       "headers": [
         {
           "key": "Cross-Origin-Embedder-Policy",
