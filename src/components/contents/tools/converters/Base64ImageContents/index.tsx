@@ -48,7 +48,11 @@ export default () => {
 
   return (
     <div class="flex flex-col gap-6">
-      <FileUploader onUpload={(files) => setFile(files[0])} accept="image/*" id="input-file" />
+      <FileUploader
+        onUpload={(files) => setFile(() => files[0])}
+        accept="image/*"
+        id="input-file"
+      />
       <div class="flex flex-col gap-2">
         <div class="mb-4">
           <div class="mb-2 flex items-end justify-between">

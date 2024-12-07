@@ -57,15 +57,16 @@ export async function getVips(): Promise<typeof Vips> {
 
   vipsInstance = await Vips({
     locateFile: (fileName: string) => {
-      if (fileName.endsWith("vips.wasm")) {
-        fileName = VipsModule;
-      } else if (fileName.endsWith("vips-heif.wasm")) {
-        fileName = VipsHeifModule;
-      } else if (fileName.endsWith("vips-jxl.wasm")) {
-        fileName = VipsJxlModule;
+      let resolvedFileName = fileName;
+      if (resolvedFileName.endsWith("vips.wasm")) {
+        resolvedFileName = VipsModule;
+      } else if (resolvedFileName.endsWith("vips-heif.wasm")) {
+        resolvedFileName = VipsHeifModule;
+      } else if (resolvedFileName.endsWith("vips-jxl.wasm")) {
+        resolvedFileName = VipsJxlModule;
       }
 
-      return location + fileName;
+      return location + resolvedFileName;
     },
     preRun: (module: EmscriptenModule) => {
       // https://github.com/kleisauke/wasm-vips/issues/13#issuecomment-1073246828
@@ -167,7 +168,7 @@ export async function convertImageFormat(
 
     cleanup?.();
 
-    return result;
+    return result as ArrayBuffer;
   }
 
   const outBuffer = image.writeToBuffer(`.${ext}`, saveOptions);
@@ -175,7 +176,7 @@ export async function convertImageFormat(
 
   cleanup?.();
 
-  return result;
+  return result as ArrayBuffer;
 }
 
 /**
@@ -323,7 +324,7 @@ export async function resizeImage(
   const outBuffer = image.writeToBuffer(`.${ext}`, saveOptions);
 
   const result = {
-    buffer: outBuffer.buffer,
+    buffer: outBuffer.buffer as ArrayBuffer,
     width: image.width,
     height: image.pageHeight,
     originalWidth: width,

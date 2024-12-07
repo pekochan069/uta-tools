@@ -35,7 +35,7 @@ for (let i = 0; i < maxWorkers; ++i) {
           png: result,
         },
       ]);
-      $results.value.push({ id, result: ico, fileName, outputType, status });
+      $results.value.push({ id, result: ico.buffer as ArrayBuffer, fileName, outputType, status });
       $results.notify();
     } else {
       $results.value.push({ id, result, fileName, outputType, status });
