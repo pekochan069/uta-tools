@@ -16,8 +16,7 @@
     "db:push": "drizzle-kit push:mysql",
     "db:generate": "drizzle-kit generate:mysql",
     "postinstall": "paraglide-js compile --project ./project.inlang --outdir ./src\\paraglide",
-    "vercel-json": "bun scripts/vercel.json.ts",
-    "vercel-json:prod": "NODE_ENV=production bun scripts/vercel.json.ts"
+    "vercel-json": "bun scripts/vercel.json.ts"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

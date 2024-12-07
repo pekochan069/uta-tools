@@ -2,106 +2,14 @@ import { siteConfig } from "../src/config";
 import { collections } from "../src/lib/contents";
 
 let vercelJson = `{
-  "redirects": [\n`;
-
-function getHeaders(prod: boolean) {
-  if (prod) {
-    let headers = `  "header": [
+  "redirects": [
     {
-      "source": "/_astro/(.*)",
-      "headers": [
-        {
-          "key": "Cross-Origin-Embedder-Policy",
-          "value": "require-corp"
-        },
-        {
-          "key": "Cross-Origin-Opener-Policy",
-          "value": "same-origin"
-        }
-      ]
+      "source": "/",
+      "destination": "/${siteConfig.defaultLocale}",
+      "statusCode": 301
     },\n`;
-
-    siteConfig.locales.forEach((locale, i) => {
-      headers += `    {
-      "source": "/${locale}/tools/converters/images",
-      "headers": [
-        {
-          "key": "Cross-Origin-Embedder-Policy",
-          "value": "require-corp"
-        },
-        {
-          "key": "Cross-Origin-Opener-Policy",
-          "value": "same-origin"
-        }
-      ]
-    }`;
-
-      if (i === siteConfig.locales.length - 1) {
-        headers += "\n  ]\n";
-      } else {
-        headers += ",\n";
-      }
-    });
-
-    return headers;
-  }
-
-  let headers = `  "headers": [
-    {
-      "source": "/node_modules/(.*)",
-      "headers": [
-        {
-          "key": "Cross-Origin-Embedder-Policy",
-          "value": "require-corp"
-        },
-        {
-          "key": "Cross-Origin-Opener-Policy",
-          "value": "same-origin"
-        }
-      ]
-    },
-    {
-      "source": "/src/components/contents/tools/converters/Images/(.*)",
-      "headers": [
-        {
-          "key": "Cross-Origin-Embedder-Policy",
-          "value": "require-corp"
-        },
-        {
-          "key": "Cross-Origin-Opener-Policy",
-          "value": "same-origin"
-        }
-      ]
-    },\n`;
-  siteConfig.locales.forEach((locale, i) => {
-    headers += `    {
-      "source": "/${locale}/tools/converters/images",
-      "headers": [
-        {
-          "key": "Cross-Origin-Embedder-Policy",
-          "value": "require-corp"
-        },
-        {
-          "key": "Cross-Origin-Opener-Policy",
-          "value": "same-origin"
-        }
-      ]
-    }`;
-
-    if (i === siteConfig.locales.length - 1) {
-      headers += "\n  ]\n";
-    } else {
-      headers += ",\n";
-    }
-  });
-
-  return headers;
-}
 
 async function main() {
-  const prod = process.env.NODE_ENV === "production";
-
-  const headers = getHeaders(prod);
   const pathnames = collections.reduce((acc, collection) => {
     const collectionSlug = collection.slug;
     collection.categories.forEach((category) => {
@@ -126,8 +34,7 @@ async function main() {
     }
   });
 
-  vercelJson += "  ],\n";
-  vercelJson += headers;
+  vercelJson += "  ]\n";
   vercelJson += "}";
 
   await Bun.write("vercel.json", vercelJson);
