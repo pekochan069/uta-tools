@@ -28,7 +28,7 @@ export default () => {
 
     if (useData) {
       if (localStorage.getItem("youtube-url") !== null) {
-        $url.set(localStorage.getItem("youtube-url") ?? "");
+        // $url.set(localStorage.getItem("youtube-url") ?? "");
       }
 
       if (localStorage.getItem("youtube-timeline") !== null) {
@@ -37,7 +37,7 @@ export default () => {
     }
 
     document.onvisibilitychange = () => {
-      localStorage.setItem("youtube-url", $url.get());
+      // localStorage.setItem("youtube-url", $url.get());
       localStorage.setItem("youtube-timeline", JSON.stringify(timelines));
     };
 
@@ -57,14 +57,10 @@ function Inner() {
   const fold = useStore($fold);
   const maxRows = useStore($maxRows);
 
-  createEffect(() => {
-    console.log(timelines.length);
-  });
-
   const changeTime = (type: "hour" | "minute" | "second", id: number, value: string) => {
     if (timelines.length === 0) return;
 
-    const parsedValue = parseInt(value);
+    const parsedValue = Number.parseInt(value);
 
     const timeline = timelines.find((timeline) => timeline.id === id);
 
